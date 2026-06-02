@@ -4,8 +4,12 @@ Use this standard for all Public Equity Investing skills. The goal is to give th
 
 Before selecting this plugin for an untagged request, apply `shared/invocation-policy.md`. Activate Public Equity Investing only when it is explicitly named or tagged, or when the prompt is an unmistakable listed-equity investor workflow.
 
-Before an artifact-owning lead skill begins source gathering or analysis for a new substantive human-facing artifact, read `shared/deliverable-intake-policy.md` and collect any materially missing choices through its adaptive `request_user_input` preflight, subject to the workflow-resolved catalyst-calendar, explicit full earnings-deep-dive,
+Before an artifact-owning lead skill begins source gathering or analysis for a new standalone reader-facing artifact, read `shared/deliverable-intake-policy.md` and collect any materially missing choices through its adaptive `request_user_input` preflight, subject to the workflow-resolved catalyst-calendar, explicit full earnings-deep-dive,
 explicit pre-earnings-preview, explicit full event-analysis, and substantive idea-generation format defaults documented there. Respect formats already requested, preserve the surface of an existing artifact being reviewed or edited, and have downstream support or presentation skills reuse resolved choices without prompting again.
+
+Use the presentation-surface precedence in `shared/deliverable-intake-policy.md` as the controlling format rule. A new standalone reader-facing output defaults to polished standalone HTML when no explicit format, existing-artifact delivery, obvious workbook, or explicit native deck/document workflow takes precedence.
+
+When HTML is selected or defaulted, create the HTML artifact before responding. Do not reopen the presentation decision after source gathering or analysis, and do not substitute a full inline report for the selected HTML deliverable; use chat as a concise cover note linking to the hero artifact.
 
 The `public-equity-investing` router reads `internal-support/policy.md` before loading bundled internal evidence control,
 generic cleaning, rendering, style, or sector-context support. Those support capabilities do not appear as selectable skill entrypoints. `financials-normalizer` and `model-audit-tieout` remain visible when normalization or model review is the user's requested job, and may also support an owning workflow.
@@ -18,7 +22,7 @@ Choose one hero lane before drafting or running scripts:
 |---|---|---|
 | HTML dashboard or report | Substantial public-equity research, catalyst calendars, earnings previews or deep dives, event-driven work, pipeline or sector diligence, ETF/index constituent diligence, benchmark-relative research, thesis trackers, idea generation, memos, and source-heavy reports. | Polished standalone `.html` tailored to the workflow and following `shared/html-artifact-standard.md`; use internal `dashboard-builder` when a standardized or payload-driven dashboard is selected. |
 | XLSX workbook | DCF, three-statement, comps model, model update, tracker, and other workbook-style outputs. Financial normalization and data cleaning use this lane only for explicit standalone normalization/cleanup asks or when the owning workflow needs a workbook handoff. | `.xlsx` with a first visible `Cover` tab that acts as an insight dashboard. |
-| Concise chat answer | Narrow, conversational, explicitly quick, or single-section requests. | Chat response with source posture and caveats. |
+| Concise chat answer | The user explicitly requests chat, inline, quick, no-file, or a similarly lightweight response. | Chat response with source posture and caveats. |
 | Support and audit files | Reproducibility, validation, manifests, logs, deterministic runners, and data interchange. | JSON, CSV, Markdown, logs, and manifests as secondary files only. |
 
 Markdown, raw JSON, CSV, manifests, run logs, and plan files are not the default user-facing deliverable. Use them as intermediate, support, audit, or explicit-request outputs. When a deterministic runner writes a Markdown sidecar by default, name it `support_note.md` or a specific `*_support_note.md`; reserve `report.md` for explicit legacy compatibility flags.
@@ -52,8 +56,8 @@ For other workflows in this list, use `shared/deliverable-intake-policy.md`
 before selecting a materially unresolved format or depth in interactive runs.
 In non-interactive runs, apply the workflow's documented recommended defaults and disclose the assumed format and depth in the delivery message or accompanying summary rather than as visible hero-artifact metadata.
 
-Stay chat-only when the user selects or explicitly asks for a quick read,
-short answer, summary, no file, no dashboard, or one narrow event/section.
+Stay chat-only only when the user selects or explicitly asks for a quick read,
+short answer, summary, no file, no dashboard, or one named event/section as a lightweight response. Do not infer chat-only intent from direct question wording or the absence of a requested file.
 
 ## Full-depth default
 

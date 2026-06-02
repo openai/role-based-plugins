@@ -592,6 +592,23 @@ test("encoded grouped scatter rows preserve size and label fields", () => {
   assert.match(groupedSeriesBlock, /\{ \.\.\.row, \[seriesField\]: row\[yField\] \}/);
 });
 
+test("encoded grouped scatter renders each bubble from the encoded y field", () => {
+  const renderer = readFileSync(
+    new URL("../src/analytics-app/charting/ChartRenderer.tsx", import.meta.url),
+    "utf8",
+  );
+  const scatterBlock = renderer
+    .split(') : chart.type === "scatter" ? (', 2)[1]
+    .split(') : chart.type === "area" || chart.type === "stackedArea" ?', 1)[0];
+
+  assert.match(renderer, /const scatterYField = chart\.type === "scatter" \? chartEncodingField\(chart, "y"\) : undefined;/);
+  assert.match(scatterBlock, /renderYAxis\(scatterYField \?\? firstSeries\.field\)/);
+  assert.match(scatterBlock, /const seriesRows = rows\.filter\(\(row\) => asNumber\(row\[series\.field\]\) != null\);/);
+  assert.match(scatterBlock, /const scatterDataKey = scatterYField && seriesRows\.some\(\(row\) => asNumber\(row\[scatterYField\]\) != null\)/);
+  assert.match(scatterBlock, /data=\{seriesRows\}/);
+  assert.match(scatterBlock, /dataKey=\{scatterDataKey\}/);
+});
+
 test("legend buttons stay transparent at rest while exposing hover and focus states", () => {
   const chartTokens = readFileSync(
     new URL("../src/analytics-app/charting/chart-tokens.css", import.meta.url),

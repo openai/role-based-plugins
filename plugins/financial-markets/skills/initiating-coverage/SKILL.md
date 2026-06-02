@@ -23,13 +23,15 @@ When this workflow needs rendering, evidence/data preparation, style, or sector 
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML initiation report. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Purpose
 
 Build a full public-equity-investing initiation report that is thesis-led, model-backed, valuation-aware, source-disciplined, and explicit about what is proven versus assumed.
 
-This skill owns initiation-style research architecture. It can produce a report outline, full initiation report, structured internal handoff, source request list, model/valuation workplan, or deck-ready storyboard. For a substantial reusable initiation package, default to a polished standalone HTML initiation report following `../../shared/html-artifact-standard.md`, unless the user requests another surface, a quick/no-file answer, or a model/workbook-first deliverable. Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable validated template, or structured payload-driven render. Structured JSON is support/audit material, not the final user-facing artifact. This skill does not own live trade expression, generic memo writing, earnings notes, model-only work, or one-page issuer profiles.
+This skill owns initiation-style research architecture. It can produce a report outline, full initiation report, structured internal handoff, source request list, model/valuation workplan, or deck-ready storyboard. For a new standalone reader-facing initiation package, default to a polished standalone HTML initiation report following `../../shared/html-artifact-standard.md`, unless the user requests another surface, a quick/no-file answer, or a model/workbook-first deliverable. Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable validated template, or structured payload-driven render. Structured JSON is support/audit material, not the final user-facing artifact. This skill does not own live trade expression, generic memo writing, earnings notes, model-only work, or one-page issuer profiles.
 
 ## Do Not Use
 

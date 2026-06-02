@@ -9,19 +9,27 @@ Route broad Data Analytics requests to the right focused workflow. Treat invocat
 
 ## Skill Configuration
 
-### Source Access Guardrail
-
-Before starting the workflow, determine whether it depends on a specific required source of truth.
-
-If that source is blocked, stop that workflow path. Tell the user what source is needed, ask them to make it available or provide a reviewed fallback, and do not try to recreate the answer from substitutes.
-
-Continue only when the required source is available or the user explicitly approves an acceptable fallback.
-
-Optional enrichment is different: if it is missing, continue with the strongest available evidence and note the gap when it materially affects the answer.
-
 ### User Context
 
-Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as authoritative for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as the source of truth for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance; use saved context and semantic layers as source-selection inputs, not as substitutes for workflow-time reads from connected or provided sources. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+
+### Source Discovery And Verification
+
+Use the relevant semantic layer first when one exists. Treat it as the starting map for candidate metrics, tables, joins, filters, caveats, source precedence, and known conflicts.
+
+Do not stop at the semantic layer or the first plausible source. Search across the relevant available company source lanes, including structured data or data warehouses, dashboards, company docs, team communication, notebooks, code repositories, and other connected company knowledge or data that could change the answer.
+
+For source-backed analytical work, always verify through live source reads. When the answer depends on data, run fresh data queries against the available structured-data sources before drawing conclusions, even when the semantic layer already names likely tables or definitions.
+
+Use the combined evidence to determine which source controls the answer, note meaningful disagreements, and state why the selected source is authoritative.
+
+### Source Access Guardrail
+
+Before querying sources, building artifacts, or drawing conclusions, determine whether the answer requires a specific source of truth.
+
+If a required source is unavailable, stop that path. Tell the user what source is needed, ask them to make it available or provide a reviewed fallback, and do not treat weaker substitutes as equivalent.
+
+If the missing source is only optional enrichment, continue with the strongest available evidence and label the gap when it materially affects the answer.
 
 ### Audience And Language
 
@@ -40,13 +48,14 @@ When referencing sources inline, prefer clickable Markdown links over plain brac
 Every Data Analytics plugin run follows this order:
 
 1. Run user-context preflight.
-2. If the user explicitly asks to onboard, set up, customize, remember, save, inspect saved context, reset setup, ask what Data Analytics remembers, or create, add, refresh, inspect, or maintain a semantic layer, route primarily to `user-context`.
+2. If the user explicitly asks to onboard, set up, customize, remember, save, inspect saved context, reset setup, ask what Data Analytics remembers, asks what Data Analytics can do or how to use it while onboarding is missing or active, or create, add, refresh, inspect, or maintain a semantic layer, route primarily to `user-context`.
 3. Apply semantic-layer lookup from the preflight envelope when the request names or implies a product area, metric, table, dashboard, query, or recurring business question.
-4. Apply the Source Access Guardrail before source queries, document search, notebook work, report building, dashboard wiring, or conclusions.
-5. Choose the response mode: `inline` for bounded lookups and `report` for explanations, decompositions, recommendations, or larger analytical answers.
-6. Select the minimal primary/supporting skills, then do one companion-skill pass across installed skills for clearer non-analytics surfaces, semantic layers, or methods.
-7. Read and follow the selected skill bodies before source queries, report building, supporting-skill execution, or final drafting.
-8. Before final response, apply the focused workflow's completion gates plus any preflight `final_obligations`.
+4. Apply Source Discovery And Verification before source queries, document search, notebook work, report building, dashboard wiring, or conclusions.
+5. Apply the Source Access Guardrail before source queries, document search, notebook work, report building, dashboard wiring, or conclusions.
+6. Choose the response mode: `inline` for bounded lookups and `report` for explanations, decompositions, recommendations, or larger analytical answers.
+7. Select the minimal primary/supporting skills, then do one companion-skill pass across installed skills for clearer non-analytics surfaces, semantic layers, or methods.
+8. Read and follow the selected skill bodies before source queries, report building, supporting-skill execution, or final drafting.
+9. Before final response, apply the focused workflow's completion gates plus any preflight `final_obligations`.
 
 #### Response Mode
 
@@ -88,12 +97,14 @@ For broad orientation and help requests:
 
 - Handle open-ended Data Analytics asks from this index before choosing a focused workflow.
 - Route requests such as `what can you do?`, `help`, `orient me`, `what should I try first?`, `how do I use Data Analytics?`, setup-adjacent capability questions, and similar plugin-level requests here when the user needs orientation more than a specific artifact.
+- Before using this index-level help answer, check the preflight onboarding status. If onboarding is missing or active and the user asks `what can you do?`, `orient me`, `what should I try first?`, `how do I use Data Analytics?`, or another setup-adjacent capability question, route to `user-context` and render the current onboarding step from `../user-context/references/onboarding.md` instead of this default skill-map answer.
+- Use this index-level help answer when onboarding is complete or quiet, or when the user explicitly asks for a compact capability summary without resuming setup.
 - Answer from the skill map in this file using the default shape below.
 - Include concrete low-friction next prompts that start with `@Data Analytics`, name the analytics job, and use a realistic anchor.
-- Include a short setup context section from the `data_analytics_preflight.context.connector_setup_summary` envelope when any source category is not active, needs a user choice, was skipped, or is otherwise unresolved.
-- Keep setup context analyst-facing: name the practical source category, use model judgment to explain the likely user-experience impact from the category label, configured preferred source routes, setup action, and suggested next prompts, then give the smallest next action or fallback.
+- Include a short setup context section from the `data_analytics_preflight.context.connector_setup_summary` envelope when any source is not active, needs a user choice, was skipped, or is otherwise unresolved.
+- Keep setup context analyst-facing: name the practical source, use model judgment to explain the likely user-experience impact from the source label, configured preferred routes, setup action, and suggested next prompts, then give the smallest next action or fallback.
 - Show at most three highest-impact gaps by default, and never more than five setup-context bullets total. Prioritize gaps in the order most relevant to the examples you are suggesting rather than following a hard-coded impact catalog.
-- If all categories are active, keep setup context to one sentence such as `Your core Data Analytics sources look ready; I'll still try each source only when a workflow needs it.`
+- If all sources are active, keep setup context to one sentence such as `Your core Data Analytics sources look ready; I'll still try each source only when a workflow needs it.`
 - When the current context or available sources identify a real metric, product area, dashboard, table, SQL query, semantic layer, experiment, funnel, cohort, or decision question, use the relevant focused skill's inline first-run and next-step guidance to make the suggested prompt contextual.
 - For setup context wording, be direct and practical, for example: `You won't be able to properly validate a metric from live tables until a warehouse or SQL source is available, but you can paste SQL, schema details, or exported query results for now.`
 - Use static examples only when no suitable context is available.
@@ -111,7 +122,7 @@ Data Analytics can help with:
 - Market sizing, opportunity sizing, and decision-ready recommendations
 
 Setup context:
-- {Only include when useful: source category readiness or gap plus practical impact}
+- {Only include when useful: source readiness or gap plus practical impact}
 
 Good first prompts:
 - `@Data Analytics diagnose why subscription ARR moved last week.`
@@ -125,15 +136,15 @@ Data Analytics turns connected or provided business data, source-of-truth contex
 
 ## Semantic Layers
 
-Semantic layers are source-backed local skills for product or business areas. They encode canonical metrics, tables, grains, joins, filters, query patterns, caveats, source precedence, and validation gaps.
+Semantic layers are source-backed local skills for product, business, metric, source, or reporting areas. They encode canonical metrics, tables, grains, joins, filters, query patterns, caveats, source precedence, and validation gaps.
 
-Before answering questions about a named product area, metric, table, dashboard, SQL query, source choice, join, caveat, or recurring business question, inspect the `semantic_layers` registry returned by user-context preflight and installed skills whose name or description matches `<area>-semantic-layer`, `<area>-data-semantics`, or equivalent semantic-layer wording. If a relevant semantic-layer skill exists, read it before selecting tables, writing SQL, reconciling dashboards, or giving metric definitions. Treat it as the domain-specific semantic map, then verify high-stakes claims against its cited sources.
+Before answering questions about a named product area, metric, table, dashboard, SQL query, source choice, join, caveat, or recurring business question, inspect the `semantic_layers` registry returned by user-context preflight and installed skills whose name or description matches `<area>-semantic-layer`, `<area>-data-semantics`, or equivalent semantic-layer wording. If a relevant semantic-layer skill exists, read it before selecting tables, writing SQL, reconciling dashboards, or giving metric definitions. Treat it as the domain-specific semantic map, then consult the connected or provided apps and verify high-stakes claims against the layer's cited sources.
 
 When no relevant semantic layer exists and the user is asking a repeatable domain question, offer semantic-layer setup through `user-context`. Users can create multiple semantic layers for multiple product or business areas. Do not merge unrelated product areas into one broad layer unless the user explicitly asks for a cross-product semantic layer.
 
 ## Evidence And Handoff
 
-Data Analytics plugin files use lane placeholders such as `~~structured_data` for whatever tool, connector, MCP server, plugin skill, pasted result, uploaded file, or schema description is available in that category. See [DEPENDENCIES.MD](../../DEPENDENCIES.MD) and [CONNECTORS.md](../../CONNECTORS.md) for provider options and declared app-backed connector IDs. When a required connector, plugin, MCP server, or source-of-truth lane is unavailable, follow the Source Access Guardrail. When an optional lane is unavailable, continue from pasted query results, uploaded files, SQL snippets, screenshots, schema descriptions, or other reviewed evidence and label the gap when it materially affects the answer.
+Data Analytics plugin files use lane placeholders such as `~~structured_data` for whatever tool, connector, MCP server, plugin skill, pasted result, uploaded file, or schema description is available in that category. See [DEPENDENCIES.MD](../../DEPENDENCIES.MD) for provider options. When a required connector, plugin, MCP server, or source-of-truth lane is unavailable, follow the Source Access Guardrail. When an optional lane is unavailable, continue from pasted query results, uploaded files, SQL snippets, screenshots, schema descriptions, or other reviewed evidence and label the gap when it materially affects the answer.
 
 Source rules:
 
@@ -144,7 +155,7 @@ Source rules:
 Delivery surface boundary:
 
 - Startup must work when the user does not want MCP widget or MCP artifact rendering. In that case, continue through the selected chat, notebook, SQL, HTML, BI, Streamlit, spreadsheet, slide, or other non-MCP surface and keep source notes in that surface's normal supporting artifacts.
-- Use MCP inline widgets or the unified MCP artifact app only when that delivery surface has been selected, is safe, and has not been waived by the user. Before shaping widget/app-specific artifacts, read `../../_shared/analytics-app-core.md`; keep MCP mechanics out of this startup router.
+- Use MCP inline widgets or the unified MCP artifact app only when that delivery surface has been selected, is safe, and has not been waived by the user. Before shaping widget/app-specific artifacts, read `../../src/analytics-app-core.md`; keep MCP mechanics out of this startup router.
 - Do not expose hidden reasoning, credentials, secrets, direct personal contact/payment identifiers, or unvalidated calculations in any user-facing surface. Reviewed customer, account, or company names may be included when they are needed for the analysis.
 - Once the analysis commits to a source table in an inline or dashboard route, expose a small deterministic preview when safe through the selected surface's normal preview mechanism.
 - If a preview is unsafe, unavailable, or blocked by access limits, record that briefly and continue from schema, documentation, or other reviewed evidence.

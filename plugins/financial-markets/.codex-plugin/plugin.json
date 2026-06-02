@@ -1,6 +1,6 @@
 {
   "name": "financial-markets",
-  "version": "0.1.24",
+  "version": "0.1.27",
   "description": "Public equity investing workflows for listed-company research, earnings analysis, valuation, model updates, long/short pitches, catalysts, thesis tracking, ETF/index and constituent diligence, sell-side research notes, risk sizing, hedging, dashboards, and investment memos.",
   "author": {
     "name": "OpenAI"
@@ -44,9 +44,9 @@
     "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
     "defaultPrompt": [
-      "Use only for explicit or unmistakable listed-equity investor work; apply shared/invocation-policy.md before routing.",
-      "Before source gathering or analysis, apply shared/deliverable-intake-policy.md; use request_user_input when choices remain.",
-      "Reuse resolved choices downstream and verify time-sensitive market data before investment use."
+      "Help me get started",
+      "Analyze Apple's latest earnings: what changed, what is priced in, and what should an investor watch next",
+      "Screen listed-equity beneficiaries of AI data-center power demand and rank the best ideas, risks, and false positives"
     ],
     "brandColor": "#04B84C",
     "composerIcon": "./assets/composerIcon.svg",

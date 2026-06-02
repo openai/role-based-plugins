@@ -12,7 +12,8 @@ from pathlib import Path
 MANDATORY_GATE_PHRASES = (
     "Mandatory pre-answer gate:",
     "Invoke `data-analytics:user-context` in preflight mode",
-    "Use the returned `data_analytics_preflight` envelope as authoritative",
+    "Use the returned `data_analytics_preflight` envelope as the source of truth",
+    "not as substitutes for workflow-time reads from connected or provided sources",
 )
 USER_CONTEXT_MANDATORY_GATE_PHRASES = (
     "set the tool's `max_output_tokens` to at least `25000`",
@@ -144,12 +145,12 @@ def main() -> int:
         encoding="utf-8"
     )
     for phrase in (
-        "## Step 2: Confirm Active/Missing Sources",
+        "## Step 2: Check Main Analytics Sources",
         "### Step 2A: Resolve Source Questions",
         "Do not preflight-read installed or active sources just to prove they work.",
         "transition without a proof read",
-        "Source setup confirmation has covered each core source category as `active`",
-        "Core setup still needs your choice",
+        "Source setup has covered each required source type as `active`",
+        "Before Data Analytics sets up data context",
         "resolution: user_deferred",
         "### Step 4A: Offer First Hero Prompt",
         "Do not: show three hero prompts initially",
@@ -198,6 +199,78 @@ def main() -> int:
         if phrase not in automation_text:
             failures.append(
                 f"skills/user-context/references/automation.md missing required phrase: {phrase}"
+            )
+
+    semantic_layer_setup_text = (
+        skills_root / "user-context/references/semantic-layer/setup.md"
+    ).read_text(encoding="utf-8")
+    for phrase in (
+        "source-use checkpoint",
+        "Infer expected source lanes",
+        "nearby but not exact",
+        "rejected or lower-confidence candidates",
+        "authoritative data documentation",
+        "source-backed semantic-layer skills",
+        "user-trusted canonical data skills",
+        "treat that as authoritative data documentation",
+    ):
+        if phrase not in semantic_layer_setup_text:
+            failures.append(
+                "skills/user-context/references/semantic-layer/setup.md "
+                f"missing required phrase: {phrase}"
+            )
+
+    semantic_layer_weekly_polling_text = (
+        skills_root / "user-context/references/semantic-layer/weekly-polling-automation.md"
+    ).read_text(encoding="utf-8")
+    for phrase in (
+        "authoritative data documentation",
+        "source-backed semantic-layer skills",
+        "user-trusted canonical data skills",
+        "generic-local-skill-only evidence",
+    ):
+        if phrase not in semantic_layer_weekly_polling_text:
+            failures.append(
+                "skills/user-context/references/semantic-layer/weekly-polling-automation.md "
+                f"missing required phrase: {phrase}"
+            )
+
+    semantic_layer_source_intake_text = (
+        skills_root / "user-context/references/semantic-layer/source-intake.md"
+    ).read_text(encoding="utf-8")
+    for phrase in (
+        "Infer useful source families",
+        "do not treat ambient app availability as user approval",
+    ):
+        if phrase not in semantic_layer_source_intake_text:
+            failures.append(
+                "skills/user-context/references/semantic-layer/source-intake.md "
+                f"missing required phrase: {phrase}"
+            )
+
+    semantic_layer_template_text = (
+        skills_root / "user-context/references/semantic-layer/skill-template.md"
+    ).read_text(encoding="utf-8")
+    for phrase in (
+        "## Start Here",
+        "## References",
+        "## Answering Rules",
+        "## Quick Reference",
+        "## Entity Clarification",
+        "## Standard Filters And Dimensions",
+        "only when the layer needs separate evidence tracking",
+        "Do not put setup-time policy or full evidence procedures",
+    ):
+        if phrase not in semantic_layer_template_text:
+            failures.append(
+                "skills/user-context/references/semantic-layer/skill-template.md "
+                f"missing required phrase: {phrase}"
+            )
+    for phrase in ("### Source Order", "### Evidence Standard"):
+        if phrase in semantic_layer_template_text:
+            failures.append(
+                "skills/user-context/references/semantic-layer/skill-template.md "
+                f"retains heavy generated-skill phrase: {phrase}"
             )
 
     app_manifest_path = plugin_root / ".app.json"

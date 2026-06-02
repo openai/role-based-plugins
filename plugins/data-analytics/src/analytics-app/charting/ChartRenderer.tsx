@@ -1468,6 +1468,7 @@ export function ChartRenderer({
   const pieRows = chart.type === "pie"
     ? buildPieRows(chart, rows).filter((row) => chart.series.length <= 1 || visibleIds.has(String(row.__pieField ?? "")))
     : [];
+  const scatterYField = chart.type === "scatter" ? chartEncodingField(chart, "y") : undefined;
   const scatterLabelField = chart.type === "scatter" ? chartEncodingField(chart, "label") : undefined;
   const scatterSizeField = chart.type === "scatter" ? chartEncodingField(chart, "size") : undefined;
   const scatterLabelCount = scatterLabelField
@@ -1578,16 +1579,20 @@ export function ChartRenderer({
       <ScatterChart {...chartProps}>
         <CartesianGrid vertical={false} />
         <XAxis axisLine={false} dataKey={chart.xField} label={xAxisLabel} name={chart.xAxisTitle ?? chart.xField} tickLine={false} tickMargin={RECHARTS_AXIS_TICK_MARGIN} tickSize={RECHARTS_AXIS_TICK_SIZE} type="number" />
-        {renderYAxis(firstSeries.field)}
+        {renderYAxis(scatterYField ?? firstSeries.field)}
         {scatterSizeField ? <ZAxis dataKey={scatterSizeField} range={[72, 420]} type="number" /> : null}
         {referenceLines(chart)}
         <Tooltip {...fastTooltipProps} content={<ChartTooltip chart={tooltipChart} getItemColor={resolveTooltipColor} />} cursor={subtleTooltipCursor} />
         {activeSeries.map((series, index) => {
           const originalIndex = chart.series.findIndex((item) => item.field === series.field);
+          const seriesRows = rows.filter((row) => asNumber(row[series.field]) != null);
+          const scatterDataKey = scatterYField && seriesRows.some((row) => asNumber(row[scatterYField]) != null)
+            ? scatterYField
+            : series.field;
           return (
             <Scatter
-              data={rows.filter((row) => asNumber(row[series.field]) != null)}
-              dataKey={series.field}
+              data={seriesRows}
+              dataKey={scatterDataKey}
               fill={getSeriesColor(chart, series, originalIndex < 0 ? index : originalIndex)}
               isAnimationActive={false}
               key={`${chart.id}-${series.field}`}

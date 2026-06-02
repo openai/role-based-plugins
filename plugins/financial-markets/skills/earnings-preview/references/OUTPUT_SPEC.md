@@ -6,7 +6,7 @@ Use this only after `SKILL.md` routes the request.
 
 ### Full preview report
 
-Target: default full deliverable for pre-earnings preview requests. For an explicit pre-earnings preview, full preview report, or reusable/source-heavy pre-print package, render a polished standalone HTML report following `../../../shared/html-artifact-standard.md` and the owning skill's HTML guidance. Use `dashboard-builder` only when the standardized dashboard path is explicitly selected. Chat can remain the surface for narrow or explicitly no-file asks. Missing data should create labeled gaps and data requests rather than unsupported conclusions or decorative empty modules.
+Target: default full deliverable for pre-earnings preview requests. For an explicit pre-earnings preview, full preview report, or reusable/source-heavy pre-print package, render a polished standalone HTML report following `../../../shared/html-artifact-standard.md` and the owning skill's HTML guidance. Use `dashboard-builder` only when the standardized dashboard path is explicitly selected. Chat can remain the surface only when the user explicitly requests a lightweight response. Missing data should create labeled gaps and data requests rather than unsupported conclusions or decorative empty modules.
 
 Required analytical objects:
 

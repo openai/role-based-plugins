@@ -1107,7 +1107,7 @@ class SalesStateHelperTests(unittest.TestCase):
         self.assertEqual(
             confirmation["data_enrichment"]["it_admin_options"],
             [
-                "Ask IT or a workspace admin whether Codex access can be enabled for one of: ZoomInfo, Clay, HG Insights, Rox, Apollo, Meticulate."
+                "Ask IT or a workspace admin whether Codex access can be enabled for one of: ZoomInfo, Clay, HG Insights, Rox, Apollo, Actively, Meticulate."
             ],
         )
 
@@ -2637,36 +2637,6 @@ Translate implementation work into practical Sales impact: what Sales is checkin
         self.assertIn("direct app/connector setup", onboarding)
         self.assertIn("without a proof read", onboarding)
         self.assertNotIn("verified source", onboarding.casefold())
-
-    def test_prioritize_accounts_has_input_parameter_confirmation(self) -> None:
-        skill_text = (PLUGIN_ROOT / "skills/prioritize-accounts/SKILL.md").read_text(
-            encoding="utf-8"
-        )
-        self.assertIn("### Input Parameter Confirmation", skill_text)
-        self.assertIn("ask at most three high-impact, high-uncertainty questions", skill_text)
-        self.assertIn(
-            "before searching connectors, reading sources, or drafting an answer", skill_text
-        )
-        self.assertIn("Do not treat connector/source availability", skill_text)
-        self.assertIn("If the default or assumed source returns no owned open pipeline", skill_text)
-        self.assertIn("state assumptions in `Scope` instead of blocking", skill_text)
-        self.assertIn("### Input Parameter Confirmation", skill_text)
-        self.assertIn("Hard gate: if the request uses broad ranking language", skill_text)
-        self.assertIn(
-            'Before I dig in, a couple of quick questions so I find the right "best" for you.',
-            skill_text,
-        )
-        self.assertIn("What kind of accounts should I surface?", skill_text)
-        self.assertIn("What signals should weigh most heavily?", skill_text)
-        self.assertIn("Where should I pull data from?", skill_text)
-        self.assertIn("1. **What kind of accounts should I surface?**", skill_text)
-        self.assertIn("2. **What signals should weigh most heavily?**", skill_text)
-        self.assertIn("3. **Where should I pull data from?**", skill_text)
-        self.assertIn("Default: Salesforce/CRM", skill_text)
-        self.assertIn("If the default or assumed source returns no owned open pipeline", skill_text)
-        self.assertIn("Do not silently pivot", skill_text)
-        self.assertIn("label the result as assumption-based", skill_text)
-
 
 if __name__ == "__main__":
     unittest.main()

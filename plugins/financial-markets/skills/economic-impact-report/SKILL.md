@@ -23,13 +23,15 @@ When this workflow needs rendering, evidence/data preparation, style, or sector 
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive reusable economic-impact report or explicit HTML public-equity shock analysis, the default resolves the presentation surface to a polished standalone HTML economic-impact report unless the user requests an alternate surface, a quick/no-file answer, or a standardized dashboard. In interactive runs, ask only remaining material choices such as depth, audience/use, or focus; in non-interactive runs, default to the HTML economic-impact report and `Full working analysis` while disclosing those assumptions outside the artifact. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML economic-impact report. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive reusable economic-impact report or explicit HTML public-equity shock analysis, the default resolves the presentation surface to a polished standalone HTML economic-impact report unless the user requests an alternate surface, a quick/no-file answer, or a standardized dashboard. In interactive runs, ask only remaining material choices such as depth, audience/use, or focus; in non-interactive runs, default to the HTML economic-impact report and `Full working analysis` while disclosing those assumptions outside the artifact. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Goal
 
 Produce a decision-grade public-equity economic impact report. This is not a news summary and not a generic cross-asset macro note; it should tell a senior public-equity investor what changed, why it matters for listed equities, what reprices first, what is still uncertain, and which issuers, sectors, estimates, valuation debates, positioning risks, and portfolio actions matter most.
 
-Default to a full decision-grade economic impact report unless the user explicitly asks for a summary, quick read, one-pager, brief, TL;DR, or another compressed format. For a substantial reusable report or explicit HTML public-equity shock analysis, produce a polished standalone HTML economic-impact report following `../../shared/html-artifact-standard.md`; chat-only is appropriate for narrow or explicitly quick reads.
+Default to a full decision-grade economic impact report unless the user explicitly asks for a summary, quick read, one-pager, brief, TL;DR, or another compressed format. For a new standalone reader-facing report, produce a polished standalone HTML economic-impact report following `../../shared/html-artifact-standard.md`; chat-only is appropriate only when the user explicitly requests a lightweight response.
 
 ## Use When
 

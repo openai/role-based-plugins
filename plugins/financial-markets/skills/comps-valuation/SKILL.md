@@ -19,7 +19,9 @@ Load `../../shared/workflow-source-resolution.md`. Use `source_category_plan` la
 
 ## Deliverable Intake And Judgment Standard
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences downstream. For substantive investment judgment, apply `../../shared/final-deliverable-framework.md`.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML valuation report for report mode or an XLSX workbook when reusable comps calculations and tables are central. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences downstream. For substantive investment judgment, apply `../../shared/final-deliverable-framework.md`.
 
 ## Equity Valuation PM Standard
 

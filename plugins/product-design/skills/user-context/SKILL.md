@@ -20,7 +20,7 @@ Use this skill when the user asks to:
 
 ## Critical Overrides
 
-- Refer to the Plugin [index] before proceeding [$index](../index/SKILL.md).
+- Refer to the Plugin router [$index](../index/SKILL.md) before proceeding.
 - Follow [$critical-overrides](../../references/critical-overrides.md).
 
 ## Saved User Context

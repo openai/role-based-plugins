@@ -1,7 +1,7 @@
 {
   "name": "product-design",
-  "version": "0.1.36",
-  "description": "The Product Design plugin is built for turning early ideas into prototypes teams can review. Teams can explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive, with work that can be carried forward in tools like Figma and Canva.",
+  "version": "0.1.41",
+  "description": "The Product Design plugin is built for turning early ideas into prototypes teams can review. It starts design and build work by confirming the brief, then helps teams explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive.",
   "author": {
     "name": "OpenAI",
     "url": "https://openai.com/"
@@ -22,10 +22,11 @@
     "prototype"
   ],
   "skills": "./skills/",
+  "apps": "./.app.json",
   "interface": {
     "displayName": "Product Design",
-    "shortDescription": "Audit flows, ideate, research, build and share prototypes.",
-    "longDescription": "The Product Design plugin is built for turning early ideas into prototypes teams can review. Teams can explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive, with work that can be carried forward in tools like Figma and Canva.",
+    "shortDescription": "Explore and prototype ideas",
+    "longDescription": "Turn early ideas into prototypes teams can review. Explore product directions, audit user flows, research user friction, prototype from a live URL, and make static screenshots interactive. Start with a written brief, URL, screenshot, or existing design, then compare visual directions before building.\n\nUse available browser, Figma, Canva, image generation, and hosting tools to gather references, create concepts, review the result, and carry the work forward with your team.",
     "developerName": "OpenAI",
     "category": "Design",
     "capabilities": [
@@ -37,9 +38,9 @@
     "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
     "defaultPrompt": [
-      "Help me design an app",
-      "Build a prototype of my app from a URL",
-      "What can you do?"
+      "Help me get started",
+      "Turn this product idea into three visual directions",
+      "Clone this URL into an editable prototype"
     ],
     "composerIcon": "./assets/composerIcon.svg",
     "logo": "./assets/logo.png",

@@ -32,16 +32,17 @@ Use `context.sources` from the `sales_preflight` envelope to resolve each attemp
 
 ### Required Inputs
 
-This skill needs enough user-provided, connector-visible, or explicitly inferable context to identify the account universe and the ranking basis.
+This skill is CRM-anchored. It needs CRM data, a CRM export, or user-provided CRM-equivalent account truth to identify and populate the account universe before producing the account action view.
 
-The skill can still produce a limited ranking from pasted account lists, CRM exports, uploaded enrichment tables, saved book-of-business context, or user-provided ICP notes when that context is sufficient. Connectors add significant value and reduce manual work, but do not stop solely because connectors are unavailable.
+Do not produce a standard account action view from enrichment, calendar, documents, messages, or public context alone. Those sources can enrich and re-rank after CRM anchors the account set, but they must not replace CRM truth.
 
 **Inputs:**
 
 Require:
 
-- [required] `account_set`: candidate accounts, owner scope, territory, ICP, segment, pipeline view, or other account universe to prioritize
-- [required] `ranking_basis`: what "best" means for this run, such as deal value, likelihood to close soon, product or usage signal, expansion potential, named-account priority, or mixed rep actionability
+- [required] `crm_account_truth`: live CRM data, CRM export, or user-provided CRM-equivalent account truth that includes candidate accounts, owner scope, pipeline view, customer status, or opportunity/account records
+- [defaulted] `account_set`: candidate accounts, owner scope, territory, ICP, segment, pipeline view, or other account universe to prioritize; default `open pipeline deals` when the user does not specify
+- [defaulted] `ranking_basis`: what "best" means for this run, such as deal value, likelihood to close soon, product or usage signal, expansion potential, named-account priority, or mixed rep actionability; default `deal value / ACV`
 
 Accept when provided:
 
@@ -55,56 +56,28 @@ Accept when provided:
 
 **Context Rules:**
 
-- If a required input is missing or ambiguous, use Fast Candidate Resolution: make at most 3 total tool calls before asking the user to choose, including mandatory Sales preflight. Search only to produce useful concrete defaults, then ask the user to confirm or supply that required input before drafting.
-- Treat ambiguous company-like proper nouns, partner names, and account shorthands as possible account-set or account-list anchors unless the request clearly asks for external discovery only. When `crm` is available, include a bounded CRM lookup to resolve account identity, ownership, customer status, or candidate-list scope; this does not replace confirmation of `account_set` and `ranking_basis` for broad "best accounts" prompts.
-- Before asking the user to paste an account list, CRM export, ICP, or ranking basis, first try the source categories that can resolve the missing account universe or source-scope default: `crm` for account truth, owner scope, open opportunities, and CRM-backed lists; `document_store` for territory, ICP, named-account, and prioritization guidance; and `calendar`, `meeting_notes`, `external_messaging`, or `internal_messaging` only when they can cheaply produce concrete suppression or active-motion candidates. Manual/exported lists are the fallback after those categories are unavailable, empty, or insufficient.
-- User confirmation is required for any required input inferred from sources rather than provided by the user.
-- When asking, present up to 5 concrete candidates with one-line rationale. Make lettered options usable as reply targets, but omit a separate reply-with-letter footer when the choices are already clear.
+- For broad requests such as "prioritize accounts", assume `account_set=open pipeline deals`, `ranking_basis=deal value / ACV`, `motion_goal=mixed`, and the user's saved CRM preference as source of truth.
+- Always attempt CRM first for account truth, owner scope, open opportunities, stage, amount, forecast posture, close date, account status, recent activity, and CRM next step fields.
+- If live CRM is unavailable, inaccessible, not installed, or not authorized, offer to connect/install the CRM source when that capability is available. If installation/connection is not available in the current context, ask the user for a CRM export, account list with CRM fields, owner scope, territory, or enough CRM-equivalent context to proceed.
+- If CRM is available but the assumed account set returns no candidates, stop before broadening. Briefly report the empty result and ask whether to broaden to recent account activity, expansion customers, net-new targets, a different owner scope, or a user-provided CRM export/list.
+- Treat ambiguous company-like proper nouns, partner names, and account shorthands as possible account-set or account-list anchors. Use a bounded CRM lookup to resolve account identity, ownership, customer status, or candidate-list scope before asking.
+- Ask a clarification question only when CRM and prompt context cannot determine the account universe, when multiple CRM scopes would produce materially different results, or when the user's requested ranking basis conflicts with available CRM truth.
+- When asking, present up to 5 concrete CRM-backed candidates or next-step choices with one-line rationale. Make lettered options usable as reply targets, but omit a separate reply-with-letter footer when the choices are already clear.
 
-When a required anchor is ambiguous, do the minimum source lookup needed to produce concrete choices within the Fast Candidate Resolution budget, then ask immediately. Do not gather enrichment evidence before the user selects the anchor.
+When a required CRM anchor is ambiguous, do the minimum CRM lookup needed to produce concrete choices, then ask immediately. Do not gather enrichment evidence before the user selects the anchor.
 
-Proceed with assumptions only when the prompt or saved Sales context clearly resolves account set, ranking basis, and source scope. In that case, state assumptions in `Scope` instead of blocking.
+Proceed with default assumptions when CRM resolves the account universe. State assumptions in `Scope` instead of blocking.
 
-### Input Parameter Confirmation
+### Default Intake Behavior
 
-Use when the user's request is ambiguous or underspecified enough that materially different prioritize-account runs are plausible.
+Default broad prioritization requests to:
 
-Hard gate: if the request uses broad ranking language such as "best accounts", "top accounts", "go after", "prioritize", "who should I work", or "next accounts" and the prompt or saved Sales context does not resolve both account set and ranking basis, ask confirmation questions before searching connectors, reading sources, or drafting an answer.
+- account set: open pipeline deals from CRM
+- ranking basis: deal value / ACV, adjusted by timing, momentum, risk, and actionability
+- source of truth: saved CRM preference when available, otherwise the available CRM connector/source
+- enrichment: pull any available and potentially relevant Calendar, meeting notes, internal messaging, external messaging, document-store, and enrichment context after CRM anchors the account universe
 
-Do not treat connector/source availability, including Salesforce availability, as enough to skip confirmation. Source availability may set the default for the source-scope question, but it does not answer what "best" means or which account universe the user wants.
-
-When clarification is needed, ask at most three high-impact, high-uncertainty questions. Prefer defaults from saved Sales context and explicit prompt clues. Use connected-source availability only for the source-scope default.
-
-When asking, use this lead-in:
-
-```md
-Before I dig in, a couple of quick questions so I find the right "best" for you.
-```
-
-Parameters to confirm:
-
-| Parameter | Ask When | Question | Default | Options | Affects |
-| --- | --- | --- | --- | --- | --- |
-| Account set | User asks for "best accounts", "top accounts", "who should I work", or "go after" without a candidate list, territory, ICP, owner scope, or pipeline scope | What kind of accounts should I surface? | Open pipeline deals | Open pipeline deals; Existing customers for expansion; Net-new target accounts | Candidate sourcing, branch selection, and suppression |
-| Ranking basis | User says "best", "top", "right", or similar without defining the success criterion | What signals should weigh most heavily? | Deal value / ACV | Deal value / ACV; Likelihood to close soon; Product or usage signal | Ranking posture and why-now evidence |
-| Source of truth | Multiple plausible source paths exist and no saved or prompt-explicit source is clear | Where should I pull data from? | Saved CRM preference if available; otherwise Salesforce/CRM when available; otherwise uploaded/exported list or manual context | Salesforce/CRM; Uploaded or exported list; CRM plus recent meetings and notes | Source selection, confidence, and evidence gaps |
-
-Render questions as concise Markdown:
-
-```md
-Before I dig in, a couple of quick questions so I find the right "best" for you.
-
-1. **What kind of accounts should I surface?**
-   Default: Open pipeline deals
-
-2. **What signals should weigh most heavily?**
-   Default: Deal value / ACV
-
-3. **Where should I pull data from?**
-   Default: Salesforce/CRM
-```
-
-If the compact first-run intro is rendered, show input parameter confirmation immediately after the intro. Suppress any extra skill-owned final continuation when the clarification questions are already the next step.
+Only ask the user for more context when CRM cannot be accessed, CRM returns no usable account truth, the owner/account scope cannot be resolved, or the user asks for a ranking basis that cannot be inferred from CRM and available enrichment.
 
 ### Workflow Sources
 
@@ -116,16 +89,16 @@ Source categories:
 - `calendar`: recent or upcoming external meetings that suppress, down-rank, or explain active motion.
 - `meeting_notes`: recent customer-call context, objections, decision process, urgency, stakeholder coverage, and continuity signals that materially change ranking or next action.
 - `document_store`: account plans, territory docs, named-account lists, ICP guidance, sales plays, saved team priorities, or source-of-truth ranking/suppression conventions.
-- `data_enrichment`: account fit, contact availability, tech stack, funding, hiring, and other account trigger context when CRM or user-provided truth is thin.
+- `data_enrichment`: account fit, contact availability, tech stack, funding, hiring, and other account trigger context when CRM or user-provided CRM-equivalent truth is thin.
 - `external_messaging`: recent customer engagement, timing, objections, stakeholder continuity, or duplicate-motion signals.
 - `internal_messaging`: active seller/team motion, internal blockers, owner ambiguity, deal-desk or account-team signals, and suppression evidence when the user wants internal context.
 - user-provided context: pasted account lists, CRM exports, enrichment tables, ICP notes, named-account lists, prior Sales outputs, examples, and explicit ranking criteria.
 
 Source obligations by intent:
 
-- `crm` or sufficient user-provided/exported account truth is required for the candidate account universe. If neither exists, stop and ask for a CRM scope, exported list, territory, ICP, or account list.
-- Use `data_enrichment` only after the account universe or ICP is anchored. It can improve fit, contactability, and why-now context, but it must not create the candidate universe by itself or overwrite CRM/user-provided account truth.
-- Use `calendar`, `meeting_notes`, `external_messaging`, or `internal_messaging` only when they materially affect suppression, active-motion detection, timing, contact choice, or sequence angle. If checked and no relevant suppression or why-now evidence appears, note the no-match only when it affects confidence.
+- `crm` is required as the source of account truth for the standard account action view. If live CRM is unavailable, use a CRM export or user-provided CRM-equivalent account truth only after making clear that live CRM was unavailable. If neither live CRM nor CRM-equivalent truth exists, stop and offer to connect/install CRM when possible, or ask for a CRM export, account list with CRM fields, owner scope, territory, or account context.
+- Use `data_enrichment` only after the CRM account universe or CRM-equivalent export is anchored. It can improve fit, contactability, and why-now context, but it must not create the candidate universe by itself or overwrite CRM/user-provided CRM truth.
+- Use `calendar`, `meeting_notes`, `external_messaging`, `internal_messaging`, and `document_store` whenever they are available and plausibly relevant to suppression, active-motion detection, timing, risk, contact choice, deal context, or next action. If checked and no relevant evidence appears, note the no-match only when it affects confidence.
 - For "best/top N accounts" prompts, return the requested number of Suggested Focus rows whenever the confirmed candidate universe contains enough viable accounts. Use `Low` confidence or `partial` status for weaker but still actionable rows; return fewer than N only when fewer viable candidates remain after suppression/blocking, and say why.
 
 Authority and gaps:
@@ -134,16 +107,16 @@ Authority and gaps:
 - Prefer known account context before generic web-style personalization.
 - Treat `calendar`, `meeting_notes`, `external_messaging`, and `internal_messaging` as timing, suppression, and why-now signals; do not use them to create the candidate account universe or overwrite CRM/user-provided account truth.
 - Do not let public research, enrichment exports, docs, messages, or inferred personalization override CRM-owned account truth.
-- Use public research, enrichment exports, or user-provided market intelligence only to fill account coverage gaps when CRM or user-provided account truth is thin.
+- Use public research, enrichment exports, or user-provided market intelligence only to fill account coverage gaps when CRM or user-provided CRM truth is thin.
 - Do not use lower-confidence lanes to overwrite stronger `crm` or user-provided truth.
-- If no account truth is available from `crm`, user-provided inputs, or `document_store`, stop and explain the blocker briefly.
+- If no account truth is available from `crm`, CRM export, or user-provided CRM-equivalent inputs, stop and explain the blocker briefly.
 
 ### Context Gathering Principles
 
 Optimize for marginal value, not absolute speed.
 
-- Start with the canonical source and narrowest scope.
-- Gather evidence that materially improves the answer.
+- Start with CRM and the narrowest owner/account scope.
+- After CRM anchors the candidate set, gather available Calendar, meeting-note, messaging, document-store, and enrichment evidence that materially improves prioritization, suppression, confidence, or next action.
 - Take the 80/20 path when it gives a useful, grounded result.
 - Broaden only when the first pass is empty, thin, or misleading.
 - Answer once the core artifact is supported; name limitations and offer expansion options.
@@ -312,12 +285,13 @@ The account action view intentionally mirrors the action-package components: `Su
 - Set an execution cap from `capacity_window` or `batch_size`.
 - Preserve any explicitly supplied candidate accounts as the top evaluation set.
 - Use `references/request-schema.yaml` only when structured input validation, YAML normalization, or machine-readable field shape matters.
-- If required inputs are missing or ambiguous, follow `Input Parameter Confirmation` instead of running a broad ranking.
+- If the user request is broad, proceed with the default CRM-backed assumptions from `Default Intake Behavior`.
+- If CRM is unavailable or cannot resolve the account universe, offer to connect/install CRM when possible or ask for CRM-equivalent account context.
 
 ### 2. Build the candidate account set
 
-- Prefer user-supplied or owner-scoped account lists before discovery.
-- Use `crm` as the default account truth source when available.
+- Use `crm` as the required account truth source for the standard run.
+- Prefer user-supplied CRM scopes, owner scopes, or CRM-backed account lists before broad discovery.
 - If the default or assumed source returns no owned open pipeline, no matching account list, or no candidate set for the stated scope, stop before broadening the request. Briefly report the empty result and ask whether to broaden to recent account activity, expansion customers, net-new targets, or a user-provided account list or territory.
 - Do not silently pivot from "best accounts to go after" to "accounts where the user can help or coordinate" unless the user chooses that broader action model.
 - Fetch enough candidates before suppression to satisfy the requested cap when possible, but do not widen beyond the confirmed account set unless the first pass is empty, thin, or misleading.
@@ -365,7 +339,8 @@ Favor fewer, higher-confidence executable rows over broad list generation.
 
 ### 7. Gather why-now and message-angle evidence
 
-- Use `crm`, user-provided account context, and `document_store` first.
+- Use `crm` first for account and opportunity truth.
+- After CRM anchors the account set, pull in any available and potentially relevant `calendar`, `meeting_notes`, `external_messaging`, `internal_messaging`, `document_store`, and `data_enrichment` context that could improve prioritization, suppression, timing, confidence, or next action.
 - Prefer known account context over generic personalization tactics.
 - Use `calendar` to suppress or down-rank accounts with meetings already in flight.
 - Use `external_messaging`, `internal_messaging`, and `meeting_notes` only when they materially change timing, urgency, contact choice, or the sequence angle.

@@ -77,7 +77,7 @@ Adjusted EBITDA,FY2026Q2,MISSING,USDm,Non-GAAP,Total,Y,3,"Earnings PR (Exhibit 9
 ### quotes.csv
 ```csv
 Section,Speaker,Questioner,TopicTag,QuoteText,SourceTag
-Q&A,CFO,"Analyst (Firm)",Guidance,"MISSING",MISSING
+Q&A,CFO,"Analyst (Firm)",Guidance,"MISSING",MISSING 
 ```
 
 ## Example tear sheet

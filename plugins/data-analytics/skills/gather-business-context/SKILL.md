@@ -11,7 +11,7 @@ Use this skill to collect the business context needed to understand an analytica
 
 ### User Context
 
-Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as authoritative for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as the source of truth for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance; use saved context and semantic layers as source-selection inputs, not as substitutes for workflow-time reads from connected or provided sources. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
 
 ## Workflow
 
@@ -27,7 +27,7 @@ Start broad enough to avoid missing relevant context. If too much comes back and
 
 ### 3. Search From Discovery Points Toward Authoritative Artifacts
 
-Before searching deeply, identify the enabled or provided source families likely to contain useful context for the task. Make a focused pass across the relevant ones when more than one could add useful context or help verify what was found. Do not search every connector by default, but do not stop after one good source when another likely source could add useful detail.
+Before searching deeply, identify the enabled or provided source families likely to contain useful context for the task. Start from saved user-context and semantic-layer anchors when they exist, then make a focused pass across the relevant connected or provided apps when they can establish current definitions, decisions, source-of-truth context, or useful verification. Do not search every connector by default, but do not stop after one good source when another likely source could add useful detail.
 
 Within those source families, start where the task is most likely to reveal useful context or links, such as a source named by the user, a report or dashboard, a planning document, a work tracker, or an owner discussion. Follow linked artifacts instead of stopping at the first mention, and use discovery sources to move toward artifacts closer to what was decided, defined, put into practice, or measured.
 

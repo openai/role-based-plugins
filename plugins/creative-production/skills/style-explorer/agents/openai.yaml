@@ -1,7 +1,0 @@
-interface:
-  display_name: "Style Explorer"
-  short_description: "Explore reusable style systems"
-  brand_color: "#2F7D64"
-  default_prompt: "Use $style-explorer to explore reusable visual style routes for this business brief."
-policy:
-  allow_implicit_invocation: true

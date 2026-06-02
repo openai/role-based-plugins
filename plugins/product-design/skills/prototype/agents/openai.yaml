@@ -1,6 +1,6 @@
 interface:
   display_name: "Prototype"
-  short_description: "Route Product Design prototype, redesign, clone, and UI build requests"
-  default_prompt: "Build a Product Design prototype."
+  short_description: "Route prototype, redesign, clone, and UI build requests after brief confirmation"
+  default_prompt: "Confirm the design brief, then build a Product Design prototype."
 policy:
   allow_implicit_invocation: false

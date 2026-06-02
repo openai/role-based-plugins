@@ -11,7 +11,7 @@ Focus on current, evidence-backed user problems. Prioritize logged-in product ex
 
 ## Critical Overrides
 
-- Refer to the Plugin [index] before proceeding [$index](../index/SKILL.md).
+- Refer to the Plugin router [$index](../index/SKILL.md) before proceeding.
 - Follow [$critical-overrides](../../references/critical-overrides.md).
 
 ## User Context
@@ -35,30 +35,39 @@ Do not inspect every saved reference. Inspect only what the current task needs.
 ## Workflow
 
 1. Restate the research scope.
+
 2. Search public sources:
-   - Reddit
-   - X/Twitter
-   - Hacker News
-   - Stack Overflow
-   - GitHub issues/discussions
-   - forums, blogs, reviews, YouTube comments, and developer communities where relevant
+
+- Reddit
+- X/Twitter
+- Hacker News
+- Stack Overflow
+- GitHub issues/discussions
+- forums, blogs, reviews, YouTube comments, and developer communities where relevant
+
 3. Search internal sources when available:
-   - Slack
-   - Gong
-   - Notion
-   - Google Drive/docs
-   - Linear/Jira/GitHub
-   - support or CRM notes if available
+
+- Slack
+- Gong
+- Notion
+- Google Drive/docs
+- Linear/Jira/GitHub
+- support or CRM notes if available
+
 4. Cluster evidence into the highest-signal UX problems.
+
 5. Separate:
-   - product UI/workflow friction
-   - docs/help friction
-   - onboarding friction
-   - account, billing, permissions, or setup friction
-   - developer/API/SDK friction
-   - reliability/performance issues
-   - feature requests
+
+- product UI/workflow friction
+- docs/help friction
+- onboarding friction
+- account, billing, permissions, or setup friction
+- developer/API/SDK friction
+- reliability/performance issues
+- feature requests
+
 6. Rank problems by severity, frequency, confidence, and product leverage.
+
 7. Tell a clear product story.
 
 ## Output

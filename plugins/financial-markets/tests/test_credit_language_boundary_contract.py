@@ -20,7 +20,6 @@ AMBIGUOUS_PHRASES = [
     "debt underwriting " + "or credit work",
 ]
 CORE_BOUNDARY_FILES = [
-    "README.md",
     "shared/credit-markets-handoff.md",
     "shared/equity-research-support-standard.md",
     "shared/equity-valuation-pm-standard.md",

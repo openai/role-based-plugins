@@ -176,6 +176,10 @@ const maxSplitFraction = 0.78;
 let splitFraction = defaultSplitFraction;
 let resizeFrame = 0;
 
+function isDetailDisplayMode(mode = displayMode) {
+return mode === "fullscreen" || mode === "modal";
+}
+
 function decodePayload(raw) {
 if (typeof raw !== "string") return raw;
 try {
@@ -217,6 +221,7 @@ hashParams.get("preview") ||
 ""
 ).toLowerCase();
 if (raw === "fullscreen" || raw === "full" || raw === "expanded") return "fullscreen";
+if (raw === "modal" || raw === "dialog") return "modal";
 if (raw === "inline" || raw === "compact") return "inline";
 return "";
 } catch {
@@ -376,7 +381,7 @@ next.display_mode ||
 (next.view && next.view.displayMode) ||
 (next.hostContext && next.hostContext.displayMode) ||
 (next.globals && (next.globals.displayMode || (next.globals.view && next.globals.view.displayMode)));
-if (mode === "inline" || mode === "fullscreen") {
+if (mode === "inline" || mode === "fullscreen" || mode === "modal") {
 setDisplayMode(mode);
 }
 }
@@ -390,7 +395,7 @@ return { mode };
 
 try {
 const result = await hostApi.requestDisplayMode({ mode });
-if (result && (result.mode === "inline" || result.mode === "fullscreen")) {
+if (result && (result.mode === "inline" || result.mode === "fullscreen" || result.mode === "modal")) {
 setDisplayMode(result.mode);
 return result;
 }
@@ -401,7 +406,7 @@ return { mode: displayMode };
 }
 
 function setDisplayMode(mode) {
-if (mode !== "inline" && mode !== "fullscreen") return;
+if (mode !== "inline" && mode !== "fullscreen" && mode !== "modal") return;
 const changed = displayMode !== mode;
 displayMode = mode;
 const widget = document.querySelector(".widget");
@@ -416,17 +421,19 @@ applySplitLayout();
 const button = document.getElementById("display-mode-button");
 if (!button) return;
 button.hidden = !hostSupportsDisplayMode();
-const label = mode === "fullscreen" ? "Done" : "Edit";
-button.title = mode === "fullscreen" ? "Return chart inline" : "Edit chart";
-button.setAttribute("aria-label", mode === "fullscreen" ? "Return chart inline" : "Edit chart");
+const label = isDetailDisplayMode(mode) ? "Done" : "Edit";
+button.title = isDetailDisplayMode(mode) ? "Return chart inline" : "Edit chart";
+button.setAttribute("aria-label", isDetailDisplayMode(mode) ? "Return chart inline" : "Edit chart");
 const labelElement = document.createElement("span");
 labelElement.className = "display-mode-button-label";
 labelElement.textContent = label;
-if (mode === "fullscreen") {
+if (isDetailDisplayMode(mode)) {
 button.replaceChildren(labelElement);
 } else {
 button.replaceChildren(labelElement, exploreIcon());
 }
+const modalCloseButton = document.getElementById("modal-title-close-button");
+if (modalCloseButton) modalCloseButton.hidden = mode !== "modal";
 if (changed) render();
 }
 
@@ -640,10 +647,11 @@ setDataMode(dataMode);
 function setupDisplayModeControls() {
 const button = document.getElementById("display-mode-button");
 const backButton = document.getElementById("detail-back-button");
+const modalCloseButton = document.getElementById("modal-title-close-button");
 const toggleDisplayMode = () => {
 if (!button) return;
 button.disabled = true;
-const nextMode = displayMode === "fullscreen" ? "inline" : "fullscreen";
+const nextMode = isDetailDisplayMode() ? "inline" : "fullscreen";
 requestDisplayMode(nextMode).finally(() => {
 button.disabled = false;
 });
@@ -651,6 +659,11 @@ button.disabled = false;
 if (button) button.addEventListener("click", toggleDisplayMode);
 if (backButton) {
 backButton.addEventListener("click", () => {
+requestDisplayMode("inline");
+});
+}
+if (modalCloseButton) {
+modalCloseButton.addEventListener("click", () => {
 requestDisplayMode("inline");
 });
 }
@@ -1027,7 +1040,7 @@ show_points: sourceSettings.show_points ?? sourceSettings.showPoints,
 },
 surface: {
 ...(existing.surface || {}),
-surface: displayMode === "fullscreen" ? "explorer" : "compact",
+surface: isDetailDisplayMode() ? "explorer" : "compact",
 showControls: Boolean(specValue(dataset, "show_controls", payload.show_controls)),
 },
 };
@@ -1040,6 +1053,17 @@ window.parent.postMessage(
 type: "datascience-chart-widget-spec-change",
 widgetInstanceId: currentWidgetInstanceId(),
 visualization_spec: currentWidgetSpec(),
+},
+"*",
+);
+}
+
+function notifyChartSpecReset() {
+if (typeof window.parent?.postMessage !== "function" || window.parent === window) return;
+window.parent.postMessage(
+{
+type: "datascience-chart-widget-spec-reset",
+widgetInstanceId: currentWidgetInstanceId(),
 },
 "*",
 );
@@ -1962,7 +1986,7 @@ renderDataTable(root, {
 columns: tableColumns(dataset, rows),
 emptyLabel: "No rows match the selected filters.",
 maxRows: 80,
-pageSize: displayMode === "fullscreen" ? 12 : 8,
+pageSize: isDetailDisplayMode() ? 12 : 8,
 rows,
 });
 }
@@ -2316,7 +2340,7 @@ try {
 renderRechartsChart(chartRoot, dataset, type, {
 colors: chartPalette(),
 borderColors: chartBorderPalette(),
-height: displayMode === "fullscreen" ? "100%" : undefined,
+height: isDetailDisplayMode() ? "100%" : undefined,
 onVisibleSeriesChange(nextVisibleSeries) {
 visibleSeries = orderedVisibleSeries(legendNames, nextVisibleSeries);
 renderChart();
@@ -2329,7 +2353,7 @@ settings: {
 orientation: chartSettings.barOrientation,
 group_mode: chartSettings.barGroupMode,
 },
-surface: displayMode === "fullscreen" ? "explorer" : "compact",
+surface: isDetailDisplayMode() ? "explorer" : "compact",
 title: text(valueFor(dataset, "title", payload.title || "Data Analytics chart")),
 });
 hideExternalLegend();
@@ -2368,7 +2392,7 @@ renderDataTable(chartRoot, {
 columns,
 emptyLabel: "No table rows to render.",
 maxRows,
-pageSize: displayMode === "fullscreen" ? 12 : 8,
+pageSize: isDetailDisplayMode() ? 12 : 8,
 rows,
 });
 }
@@ -2379,7 +2403,7 @@ const legendShell = document.getElementById("legend-shell");
 root.innerHTML = "";
 if (legendShell) {
 const empty = groupNames.length <= 1;
-legendShell.hidden = empty && displayMode !== "fullscreen";
+legendShell.hidden = empty && !isDetailDisplayMode();
 legendShell.classList.toggle("is-empty", empty);
 legendShell.setAttribute("aria-hidden", String(empty));
 }
@@ -2765,8 +2789,8 @@ button.setAttribute("aria-expanded", "false");
 button.setAttribute("aria-label", `Chart type ${chartTypeLabel(activeVisualizationType)}`);
 const buttonLabel = document.createElement("span");
 buttonLabel.textContent =
-displayMode === "fullscreen"
-? `Chart type: ${chartTypeLabel(activeVisualizationType)}`
+isDetailDisplayMode()
+? "Chart type"
 : chartTypeLabel(activeVisualizationType);
 button.append(buttonLabel, caretIcon());
 
@@ -2830,8 +2854,8 @@ picker.append(button, popover);
 root.appendChild(picker);
 }
 
-function closeFieldMenus() {
-document.querySelectorAll(".field-menu").forEach((menu) => menu.remove());
+function closeFieldMenus(options = {}) {
+document.querySelectorAll(".field-menu").forEach((menu) => removeMenuSurface(menu, options));
 document.querySelectorAll(".field-pill[aria-expanded='true']").forEach((button) => button.setAttribute("aria-expanded", "false"));
 }
 
@@ -2927,7 +2951,7 @@ if (selectedValue !== "all") {
 label.textContent = `${spec.label}:`;
 value.textContent = filterOptionLabel(selectedValue);
 button.dataset.hasFilter = "true";
-button.append(label, value, caretIcon());
+button.append(label, caretIcon());
 } else {
 button.append(label, caretIcon());
 }
@@ -3008,7 +3032,7 @@ button.setAttribute("aria-haspopup", "menu");
 button.setAttribute("aria-expanded", "false");
 const label = document.createElement("span");
 label.className = "filter-menu-label";
-label.textContent = "Filters:";
+label.textContent = "Filters";
 const count = activeDataFilterCount(activeDataset());
 const value = document.createElement("span");
 value.className = "filter-menu-value";
@@ -3016,7 +3040,7 @@ value.textContent = activeDataFilterSummary(activeDataset());
 value.title = value.textContent;
 button.setAttribute("aria-label", `Filters ${value.textContent}`);
 if (count) button.dataset.hasFilter = "true";
-button.append(label, value, caretIcon());
+button.append(label, caretIcon());
 button.addEventListener("click", (event) => {
 event.stopPropagation();
 openFiltersMenu(button, specs);
@@ -3142,11 +3166,13 @@ selectedDataFilters = {};
 chartConfig = { xField: "x", yField: "y", colorField: "series", lineStyleField: "", labelField: "", sizeField: "", timeUnit: "none", yAggregation: "sum" };
 resetChartSettings(activeDataset());
 resetChartConfig(activeDataset());
+visibleSeries = {};
 resetVisibleSeries();
 closeFieldMenus();
 closeDataFilterMenus();
+closeChartPicker();
 render();
-notifyChartSpecChange();
+notifyChartSpecReset();
 }
 
 function fieldIconName(dataset, field) {
@@ -3324,7 +3350,7 @@ positionFieldMenu(anchor, menu);
 function fieldPill(spec) {
 const role = spec.role;
 const dataset = activeDataset();
-const detailChrome = displayMode === "fullscreen";
+const detailChrome = isDetailDisplayMode();
 const well = document.createElement("div");
 well.className = "field-well";
 const button = document.createElement("button");
@@ -3334,7 +3360,7 @@ button.setAttribute("aria-haspopup", "menu");
 button.setAttribute("aria-expanded", "false");
 const roleEl = document.createElement("span");
 roleEl.className = "field-pill-role";
-roleEl.textContent = detailChrome ? `${detailControlLabel(spec)}:` : spec.label;
+roleEl.textContent = detailChrome ? detailControlLabel(spec) : spec.label;
 button.appendChild(roleEl);
 const field = document.createElement("span");
 field.className = "field-pill-field";
@@ -3345,15 +3371,15 @@ role === "size" ? chartConfig.sizeField ? fieldLabel(dataset, chartConfig.sizeFi
 role === "label" ? chartConfig.labelField ? fieldLabel(dataset, chartConfig.labelField, spec.fallback) : spec.fallback :
 role === "time" ? timeUnitLabel(chartConfig.timeUnit) :
 chartConfig.colorField ? fieldLabel(dataset, chartConfig.colorField, spec.fallback) : spec.fallback;
-button.setAttribute("aria-label", `${roleEl.textContent} ${field.textContent}`);
-button.appendChild(field);
+button.setAttribute("aria-label", `${roleEl.textContent}: ${field.textContent}`);
+if (!detailChrome) button.appendChild(field);
 const modifier = document.createElement("span");
 modifier.className = "field-pill-modifier";
 if (role === "x" && spec.time !== false && fieldLooksDateLike(dataset, chartConfig.xField)) {
 modifier.textContent = timeUnitLabel(chartConfig.timeUnit === "none" ? "" : chartConfig.timeUnit);
 }
 if (role === "y" && spec.aggregate !== false) modifier.textContent = aggregationLabel(chartConfig.yAggregation);
-if (modifier.textContent) button.appendChild(modifier);
+if (modifier.textContent && !detailChrome) button.appendChild(modifier);
 button.appendChild(caretIcon("field-pill-caret"));
 button.addEventListener("click", (event) => {
 event.stopPropagation();
@@ -3368,41 +3394,70 @@ if (!chartConfig.colorField) return false;
 return projectedSeriesCount(projectedDataForType(dataset, "bar")) > 1;
 }
 
-function segmentedSettingControl(label, value, options, onChange) {
-const group = document.createElement("section");
-group.className = "chart-setting-control";
-group.setAttribute("aria-label", label);
-const labelEl = document.createElement("span");
-labelEl.className = "chart-setting-label";
-labelEl.textContent = label;
-const segmented = document.createElement("div");
-segmented.className = "segmented chart-setting-segmented";
-segmented.setAttribute("role", "group");
-segmented.setAttribute("aria-label", label);
+function openSettingMenu(anchor, label, value, options, onChange) {
+const existing = anchor.parentElement.querySelector(".field-menu");
+closeFieldMenus();
+closeChartPicker();
+closeDataFilterMenus();
+closeShareMenu();
+if (existing) return;
+anchor.setAttribute("aria-expanded", "true");
+const menu = document.createElement("div");
+menu.className = "field-menu menu-surface opening";
+menu.addEventListener("click", (event) => {
+event.stopPropagation();
+});
+const panel = document.createElement("div");
+panel.className = "field-menu-panel";
 for (const option of options) {
-const button = document.createElement("button");
-button.type = "button";
-button.className = "toggle-button chart-setting-option";
-button.textContent = option.label;
-button.setAttribute("aria-pressed", String(option.value === value));
-button.addEventListener("click", () => {
+const selected = option.value === value;
+const row = menuRow(option.label, selected ? lucideIcon("check", { width: "14", height: "14" }) : "", () => {
 onChange(option.value);
 render();
+closeFieldMenus({ immediate: true });
 notifyChartSpecChange();
-});
-segmented.appendChild(button);
+}, { active: selected });
+row.setAttribute("role", "menuitemradio");
+row.setAttribute("aria-checked", String(selected));
+panel.appendChild(row);
 }
-group.append(labelEl, segmented);
-return group;
+menu.appendChild(panel);
+anchor.parentElement.appendChild(menu);
+positionFieldMenu(anchor, menu);
+}
+
+function settingDropdownChip(label, value, options, onChange) {
+const selected = options.find((option) => option.value === value) || options[0];
+const well = document.createElement("div");
+well.className = "field-well chart-setting-control";
+const button = document.createElement("button");
+button.type = "button";
+button.className = "field-pill chart-setting-option";
+button.setAttribute("aria-haspopup", "menu");
+button.setAttribute("aria-expanded", "false");
+const labelEl = document.createElement("span");
+labelEl.className = "field-pill-role";
+labelEl.textContent = label;
+const valueEl = document.createElement("span");
+valueEl.className = "field-pill-field";
+valueEl.textContent = selected?.label || "";
+button.setAttribute("aria-label", `${label}: ${valueEl.textContent}`);
+button.append(labelEl, caretIcon("field-pill-caret"));
+button.addEventListener("click", (event) => {
+event.stopPropagation();
+openSettingMenu(button, label, value, options, onChange);
+});
+well.appendChild(button);
+return well;
 }
 
 function renderExpandedSettingsControls(root) {
-if (displayMode !== "fullscreen") return;
+if (!isDetailDisplayMode()) return;
 const wells = document.createElement("div");
 wells.className = "chart-settings-wells";
 if (activeVisualizationType === "bar") {
 wells.appendChild(
-segmentedSettingControl(
+settingDropdownChip(
 "Orientation",
 chartSettings.barOrientation,
 [
@@ -3417,7 +3472,7 @@ chartSettings.barOrientation = canonicalBarOrientation(value);
 if (barSettingsHaveSeries()) {
 const selectedMode = chartSettings.barGroupMode === "single" ? "grouped" : chartSettings.barGroupMode;
 wells.appendChild(
-segmentedSettingControl(
+settingDropdownChip(
 "Mode",
 selectedMode,
 [
@@ -3438,7 +3493,7 @@ root.appendChild(wells);
 function renderControls() {
 const root = document.getElementById("controls");
 const showControls = Boolean(specValue(activeDataset(), "show_controls", payload.show_controls));
-const appMode = displayMode === "fullscreen";
+const appMode = isDetailDisplayMode();
 pruneDataFilters(activeDataset());
 root.innerHTML = "";
 root.hidden = !appMode && !showControls;

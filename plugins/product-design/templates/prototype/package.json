@@ -10,9 +10,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "5.0.4",
-    "motion": "12.38.0",
     "vite": "6.4.2",
-    "typescript": "5.9.3",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },

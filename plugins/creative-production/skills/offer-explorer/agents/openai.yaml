@@ -1,7 +1,0 @@
-interface:
-  display_name: "Offer Explorer"
-  short_description: "Explore offer-led and hero/web visual options"
-  brand_color: "#7A4B16"
-  default_prompt: "Create a structured offer visual exploration, or a 20-variation landing-page hero/web-module exploration when the brief asks for hero options."
-policy:
-  allow_implicit_invocation: true

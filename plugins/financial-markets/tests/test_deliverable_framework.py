@@ -77,6 +77,31 @@ INTAKE_SUPPORT_SKILLS = [
     "financials-normalizer",
     "style-guide-adapter",
 ]
+
+ARTIFACT_OWNING_SKILLS = {
+    "catalyst-calendar",
+    "company-tearsheet",
+    "comps-valuation",
+    "dcf-model-builder",
+    "deck-report-qc",
+    "earnings-deep-dive",
+    "earnings-preview",
+    "economic-impact-report",
+    "equity-model-update",
+    "event-driven-analyzer",
+    "financials-normalizer",
+    "idea-generation",
+    "initiating-coverage",
+    "long-short-pitch",
+    "meeting-prep",
+    "memo-builder",
+    "model-audit-tieout",
+    "portfolio-risk-management",
+    "scenario-sensitivity-generator",
+    "thesis-tracker",
+    "three-statement-model-builder",
+}
+
 INTERNAL_SUPPORT_PLAYBOOKS = {
     "daloopa-provider-guide",
     "dashboard-builder",
@@ -189,19 +214,58 @@ class DeliverableFrameworkTests(unittest.TestCase):
             "do not require a mode change",
             "substantive 60/90-day catalyst calendar",
             "polished standalone HTML artifact",
+            "Presentation-Surface Precedence",
+            "Apply a saved reader-facing output preference as the default",
+            "Otherwise, resolve any new standalone reader-facing output to polished standalone HTML",
+            "Use chat-only output only when the user explicitly requests",
+            "A direct analytical question, a detail-page hero prompt",
+            "Do not choose chat-only output because a concise answer seems sufficient or more useful",
+            "Once the presentation surface resolves to HTML, treat that as a committed deliverable decision",
+            "do not later reconsider whether the analysis belongs in chat",
         ]:
             self.assertIn(phrase, policy)
+        self.assertNotIn("as a bias only", policy)
 
-    def test_intake_policy_is_wired_to_framework_readme_and_default_prompt(self) -> None:
         framework = read("shared/final-deliverable-framework.md")
-        readme = read("README.md")
-        manifest = load_json(".codex-plugin/plugin.json")
-        default_prompt = "\n".join(manifest["interface"]["defaultPrompt"])
+        self.assertIn("Do not infer chat-only intent from direct question wording", framework)
+        self.assertIn("Do not reopen the presentation decision after source gathering or analysis", framework)
+        self.assertNotIn("or one narrow event/section", framework)
+
+    def test_artifact_owning_skills_declare_natural_artifact_and_shared_precedence(self) -> None:
+        visible_skills = {path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md")}
+        self.assertEqual(
+            ARTIFACT_OWNING_SKILLS,
+            visible_skills - {"public-equity-investing", "user-context"},
+        )
+
+        for skill in ARTIFACT_OWNING_SKILLS:
+            with self.subTest(skill=skill):
+                text = read(f"skills/{skill}/SKILL.md")
+                self.assertIn("Apply the presentation-surface precedence", text)
+                self.assertIn("../../shared/deliverable-intake-policy.md", text)
+                self.assertIn("This workflow's natural artifact is", text)
+                self.assertIn(
+                    "Do not choose chat-only output unless the user explicitly requests a lightweight response.",
+                    text,
+                )
+
+    def test_intake_policy_is_wired_to_framework(self) -> None:
+        framework = read("shared/final-deliverable-framework.md")
 
         self.assertIn("shared/deliverable-intake-policy.md", framework)
-        self.assertIn("shared/deliverable-intake-policy.md", readme)
-        self.assertIn("shared/deliverable-intake-policy.md", default_prompt)
-        self.assertIn("request_user_input", default_prompt)
+
+    def test_default_prompts_showcase_onboarding_earnings_and_theme_screening(self) -> None:
+        default_prompts = load_json(".codex-plugin/plugin.json")["interface"]["defaultPrompt"]
+
+        self.assertTrue(all(len(prompt) <= 128 for prompt in default_prompts))
+        self.assertEqual(
+            default_prompts,
+            [
+                "Help me get started",
+                "Analyze Apple's latest earnings: what changed, what is priced in, and what should an investor watch next",
+                "Screen listed-equity beneficiaries of AI data-center power demand and rank the best ideas, risks, and false positives",
+            ],
+        )
 
     def test_artifact_owners_use_preflight_and_support_skills_inherit_preferences(self) -> None:
         for skill in INTAKE_OWNER_SKILLS:
@@ -242,16 +306,13 @@ class DeliverableFrameworkTests(unittest.TestCase):
     def test_new_research_and_model_work_start_with_intake(self) -> None:
         framework = read("shared/final-deliverable-framework.md")
         policy = read("shared/deliverable-intake-policy.md")
-        prompt = "\n".join(load_json(".codex-plugin/plugin.json")["interface"]["defaultPrompt"])
 
         self.assertIn("Before source gathering", policy)
         self.assertIn("begins source gathering or analysis", framework)
-        self.assertIn("Before source gathering or analysis", prompt)
 
     def test_implicit_invocation_is_limited_to_the_guarded_router(self) -> None:
         policy = read("shared/invocation-policy.md")
         framework = read("shared/final-deliverable-framework.md")
-        readme = read("README.md")
         router = read("skills/public-equity-investing/SKILL.md")
 
         for phrase in [
@@ -262,8 +323,7 @@ class DeliverableFrameworkTests(unittest.TestCase):
         ]:
             self.assertIn(phrase, policy)
         self.assertIn("shared/invocation-policy.md", framework)
-        self.assertIn("shared/invocation-policy.md", readme)
-        self.assertIn("../../shared/invocation-policy.md", router)
+        self.assertIn("shared/invocation-policy.md", router)
 
         skill_names = {path.parent.name for path in (ROOT / "skills").glob("*/SKILL.md")}
         yaml_paths = sorted((ROOT / "skills").glob("*/agents/openai.yaml"))
@@ -276,6 +336,42 @@ class DeliverableFrameworkTests(unittest.TestCase):
                     f"allow_implicit_invocation: {str(expected).lower()}",
                     read(path),
                 )
+
+    def test_router_resolves_bundled_paths_from_the_plugin_root(self) -> None:
+        router_path = ROOT / "skills" / "public-equity-investing" / "SKILL.md"
+        router = router_path.read_text(encoding="utf-8")
+
+        self.assertIn("Derive the plugin root once", router)
+        self.assertIn("Set the shell working directory to that plugin root", router)
+        self.assertIn("Do not apply `../..` to an already resolved plugin root", router)
+        for relative_path in [
+            "shared/invocation-policy.md",
+            "shared/final-deliverable-framework.md",
+            "shared/deliverable-intake-policy.md",
+            "skills/user-context/SKILL.md",
+            "skills/public-equity-investing/internal-support/policy.md",
+        ]:
+            with self.subTest(relative_path=relative_path):
+                self.assertIn(relative_path, router)
+                self.assertTrue((ROOT / relative_path).resolve().exists())
+
+    def test_router_selects_lead_skill_without_resolving_presentation(self) -> None:
+        router = read("skills/public-equity-investing/SKILL.md")
+        invocation_policy = read("shared/invocation-policy.md")
+
+        for phrase in [
+            "Pass relevant entries from `saved_context` to the selected lead skill as handoff context",
+            "must not interpret saved output preferences",
+            "The router owns admission and lead-skill selection only",
+            "load `skills/<lead-skill>/SKILL.md` from the plugin root before source gathering",
+            "must not continue substantive work as a substitute for the selected owner",
+            "without choosing or announcing format, depth, artifact architecture",
+            "The selected owner applies `shared/final-deliverable-framework.md`",
+            "reads `shared/deliverable-intake-policy.md`",
+        ]:
+            self.assertIn(phrase, router)
+        self.assertIn("The selected lead workflow, not the router", invocation_policy)
+        self.assertNotIn("must not be downgraded to chat-only output", router)
 
     def test_internal_support_playbooks_are_packaged_but_not_visible_skills(self) -> None:
         policy = read(f"{INTERNAL_SUPPORT_PATH}/policy.md")
@@ -326,7 +422,6 @@ class DeliverableFrameworkTests(unittest.TestCase):
 
     def test_no_legacy_markdown_or_chat_default_wording(self) -> None:
         docs = [
-            ROOT / "README.md",
             ROOT / "shared/final-deliverable-framework.md",
             *ROOT.glob("skills/*/SKILL.md"),
             *ROOT.glob(f"{INTERNAL_SUPPORT_PATH}/*/INTERNAL.md"),
@@ -642,6 +737,8 @@ class DeliverableFrameworkTests(unittest.TestCase):
 
         self.assertIn("../../shared/html-artifact-standard.md", skill_doc)
         self.assertIn("polished standalone HTML idea-triage report", skill_doc)
+        self.assertIn("For a new standalone reader-facing idea screen", skill_doc)
+        self.assertNotIn("Treat a thematic screen that asks to rank", skill_doc)
         self.assertIn("explicitly asks for a standardized dashboard", skill_doc)
         self.assertIn("candidate funnel", skill_doc)
         self.assertIn("expectations-heavy", skill_doc)

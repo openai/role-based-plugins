@@ -38,10 +38,8 @@ class StalePublicMarketsLanguageTests(unittest.TestCase):
                     break
         self.assertEqual([], failures)
 
-    def test_replacement_branding_is_public_equity_investing(self) -> None:
-        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    def test_plugin_manifest_uses_replacement_branding(self) -> None:
         plugin_json = (ROOT / ".codex-plugin/plugin.json").read_text(encoding="utf-8")
-        self.assertIn("Public Equity Investing", readme)
         self.assertIn("public-equity-investing", plugin_json)
 
 

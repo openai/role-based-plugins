@@ -19,7 +19,9 @@ Load `../../shared/workflow-source-resolution.md`. Use `source_category_plan` la
 
 ## Deliverable Intake
 
-When invoked as support for an owning workflow, inherit its resolved deliverable preferences and do not re-prompt. Only when this skill independently owns a new substantive standalone normalization deliverable should it, before source gathering, analysis, or rendering, load `../../shared/deliverable-intake-policy.md` and perform its adaptive `request_user_input` preflight for materially unresolved preferences.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is an XLSX normalization workbook. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+When invoked as support for an owning workflow, inherit its resolved deliverable preferences and do not re-prompt. Only when this skill independently owns a new standalone reader-facing normalization deliverable should it, before source gathering, analysis, or rendering, load `../../shared/deliverable-intake-policy.md` and perform its adaptive `request_user_input` preflight for materially unresolved preferences.
 
 ## Purpose
 

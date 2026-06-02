@@ -23,42 +23,31 @@ For multiple product or business areas, create one folder per area. Keep shared 
 ```markdown
 ---
 name: <area>-semantic-layer
-description: Use when answering data questions for <area>, including metric definitions, table choice, dimensions, joins, dashboard reconciliation, and common query patterns.
+description: Use when answering data questions for <area>, including metric definitions, table choice, joins, dashboard reconciliation, freshness, and known caveats.
 ---
 
 # <Area> Semantic Layer
 
-## Purpose
+Use this skill to answer <area> data questions with the source-backed context in `references/semantic-layer.md`.
 
-Use this skill to answer <area> data questions with the canonical metrics, tables, grains, joins, caveats, and validation steps captured in `references/semantic-layer.md`.
+## Start Here
 
-## Skill Configuration
+1. Read `references/semantic-layer.md`.
+2. Use the listed canonical metrics, tables, grains, joins, filters, and caveats.
+3. Check freshness before answering time-sensitive questions.
+4. When sources disagree or coverage is weak, say so and verify against the cited source.
 
-### Source Order
+## References
 
-1. Transformation code and authoritative data docs.
-2. Verified dashboards and reviewed SQL.
-3. Table metadata, lineage, and owner notes.
-4. Query history as observed usage evidence.
-5. Team communication context and existing local skills as supporting context.
+- `references/semantic-layer.md`: metrics, tables, filters, query patterns, gotchas, freshness, and open questions.
+- `references/source-inventory.md`: sources checked, coverage level, permissions, rejected candidates, and update boundaries.
+- `references/evidence.md`: detailed provenance, only when the layer needs separate evidence tracking.
 
-When sources disagree, state the conflict and verify before giving a high-confidence answer.
+## Answering Rules
 
-### Evidence Standard
-
-Use source-backed facts from the semantic-layer references. Label any answer that depends on stale, inferred, query-history-only, or team-communication-only evidence.
-
-## Workflow
-
-1. Classify the user's question: metric definition, table choice, query drafting, dashboard reconciliation, trend diagnosis, or data-quality concern.
-2. Read `references/semantic-layer.md` and any linked metric, table, or query-pattern reference relevant to the question.
-3. Use the canonical metric and table guidance first; use observed query patterns only when canonical docs are missing or compatible.
-4. For queries, preserve table grain, time zone, date column, filters, joins, and inclusion or exclusion rules.
-5. Validate against the source order before finalizing answers that could affect business decisions.
-
-## Output
-
-Return the direct answer first, then the source-backed caveats, tables or metrics used, and validation gaps. Include SQL only when the user asks for a query or when SQL is the clearest answer.
+- Treat this skill as source-selection guidance, not as a substitute for live reads.
+- Preserve metric grain, time zone, date columns, filters, and join keys.
+- Label stale, inferred, partial, or conflicted evidence.
 ```
 
 ## semantic-layer.md Shape
@@ -66,30 +55,34 @@ Return the direct answer first, then the source-backed caveats, tables or metric
 ```markdown
 # <Area> Semantic Layer
 
-## Scope
+## Quick Reference
 
 - Area:
 - Intended users:
-- Current source coverage:
+- Coverage level:
 - Source inventory: `references/source-inventory.md`
 - Last synthesized:
+- Freshness expectations:
+- Default date and time zone rules:
 
-## Core Entities
+## Entity Clarification
 
-| Entity | Description | Primary IDs | Important Grain Notes | Sources |
-| --- | --- | --- | --- | --- |
+Use this section to disambiguate names that future agents may confuse.
 
-## Metrics
+| Entity | Means | Does Not Mean | Primary IDs | Grain Notes | Sources |
+| --- | --- | --- | --- | --- | --- |
+
+## Key Metrics
 
 | Metric | Definition | Numerator | Denominator | Time Grain | Canonical Source | Caveats |
 | --- | --- | --- | --- | --- | --- | --- |
 
-## Dimensions And Filters
+## Standard Filters And Dimensions
 
-| Dimension Or Filter | Meaning | Allowed Values Or Logic | Applies To | Sources |
+| Filter Or Dimension | Default Logic | Override When | Applies To | Sources |
 | --- | --- | --- | --- | --- |
 
-## Tables
+## Key Tables
 
 | Table | When To Use | Grain | Join Keys | Freshness | Caveats | Sources |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -110,6 +103,11 @@ Return the direct answer first, then the source-backed caveats, tables or metric
   - How to avoid:
   - Source:
 
+## Related Dashboards And Docs
+
+| Source | Use It For | Caveats |
+| --- | --- | --- |
+
 ## Open Questions
 
 - Question:
@@ -118,6 +116,8 @@ Return the direct answer first, then the source-backed caveats, tables or metric
 ```
 
 ## evidence.md Shape
+
+Create `references/evidence.md` only when separate evidence tracking is useful, such as conflicting sources, multiple high-stakes metrics, or a large crawl. Small layers may keep source pointers directly in `references/semantic-layer.md`.
 
 ```markdown
 # Evidence Register
@@ -133,16 +133,26 @@ Create `references/source-inventory.md` whenever the workflow creates or drafts 
 ```markdown
 # Source Inventory
 
-| Source | Type | Locator | Connector Or Tool | Permission Status | Last Checked | Automation Eligible | Update Boundary | Notes |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+## Coverage
+
+- Coverage level:
+- Sources checked:
+- Missing high-value lanes:
+- Rejected or lower-confidence candidates:
+
+## Sources
+
+| Source | Type | Locator | Connector Or Tool | Permission Status | Last Checked | Supports | Gaps Or Caveats | Automation Eligible | Update Boundary |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ```
 
-Use `Automation Eligible` to distinguish sources the weekly automation can poll directly from sources that require manual export, one-off permission, or user review. Use `Update Boundary` to say whether the automation may update semantic-layer references automatically, must draft a proposed update, or must only report changes.
+Use `Sources checked`, `Missing high-value lanes`, and `Rejected or lower-confidence candidates` as the pre-save source-use checkpoint. Use `Automation Eligible` to distinguish sources the weekly automation can poll directly from sources that require manual export, one-off permission, or user review. Use `Update Boundary` to say whether the automation may update semantic-layer references automatically, must draft a proposed update, or must only report changes.
 
 ## Drafting Rules
 
 - Put durable semantic facts in the generated skill's references, not in chat-only prose.
 - Keep `SKILL.md` operational and short; move table catalogs, metric dictionaries, query examples, and evidence into references.
+- Do not put setup-time policy or full evidence procedures into generated `SKILL.md` files; keep those guardrails in the setup flow and validators.
 - Keep the source inventory current enough that a weekly polling automation can determine what to check and what update boundary applies.
 - Use source links, file paths, dashboard IDs, table names, and repo paths as provenance.
 - Label stale, inferred, query-history-only, or team-communication-only facts.

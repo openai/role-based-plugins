@@ -1,6 +1,6 @@
 {
   "name": "sales",
-  "version": "0.2.11",
+  "version": "0.2.16",
   "description": "Practical sales workflows that help sellers prepare meetings, follow up after calls, plan deals, review pipeline, find internal answers, and reuse saved preferences.",
   "author": {
     "name": "OpenAI"
@@ -23,8 +23,8 @@
   "apps": "./.app.json",
   "interface": {
     "displayName": "Sales",
-    "shortDescription": "Turn sales notes, account context, and connected tools into practical seller-ready work",
-    "longDescription": "The sales plugin helps sales teams bring customer context into the work that moves deals forward. Sales teams can find high-priority accounts and signals, prepare for customer meetings, complete follow-ups, update customer records, build close plans, and review deals at risk using tools like Salesforce, HubSpot, Slack, Outreach, Clay, Rox, and Actively.",
+    "shortDescription": "Prepare sales work faster",
+    "longDescription": "Bring customer context into the work that moves deals forward. Find high-priority accounts and signals, prepare for customer meetings, complete follow-ups, propose customer-record updates, build close plans, and review deals at risk.\n\nStart with CRM details, call notes, docs, messages, calendar events, uploaded files, or pasted context. Connect tools like Salesforce, HubSpot, Slack, Outreach, Clay, Rox, and Actively to bring scattered account context together and turn the available evidence into practical next steps.",
     "developerName": "OpenAI",
     "category": "Business",
     "capabilities": [
@@ -36,9 +36,9 @@
     "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
     "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
     "defaultPrompt": [
-      "Let's onboard",
-      "Prep me for my next customer meeting.",
-      "Follow up from my latest customer call."
+      "Let's get started",
+      "Prep me for my next customer meeting",
+      "Help me prioritize my accounts"
     ],
     "brandColor": "#FB6A22",
     "composerIcon": "./assets/codex-sales-plugin-composer-icon.svg",

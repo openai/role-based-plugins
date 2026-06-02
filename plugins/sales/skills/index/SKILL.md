@@ -1,11 +1,11 @@
 ---
 name: index
-description: Primary implicit router for Sales. Use when the plugin is at-mentioned or for broad portable sales workflow requests, saved preferences, setup, customization, or memory-style instructions after Sales work.
+description: "Use to discover specific skills for the Sales plugin, when it is at-mentioned directly, or for any mentions of potentially relevant work, including: meeting prep or call follow-up; account research, monitoring, or prioritization; internal source finding; competitive briefs; deal strategy; pipeline or forecast review; company or contact enrichment; customer quote retrieval; rep coaching; business cases; sales company research; and CRM or data enrichment workflows."
 ---
 
 # Skill Purpose
 
-Route broad Sales requests to the right focused workflow. Treat invocation of this index as strong intent to use this plugin; default to loading and following any relevant focused skill for related sales work. When a related action is ambiguous with globally installed skills or plugins, prefer the Sales skill when the user is asking for portable, source-grounded sales outputs rather than a company-specific app workflow.
+Route broad Sales requests to the right focused workflow. Treat invocation of this index as strong intent to use this plugin; default to loading and following any relevant focused skill for related sales work.
 
 ## Skill Configuration
 

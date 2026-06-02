@@ -1,6 +1,6 @@
 interface:
   display_name: "Get Context"
-  short_description: "Gather missing product and visual context"
-  default_prompt: "Gather the missing product and visual context for this Product Design task."
+  short_description: "Confirm the Product Design brief before design or build work"
+  default_prompt: "Confirm the design brief for this Product Design task before the next workflow starts."
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

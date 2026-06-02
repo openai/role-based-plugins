@@ -108,12 +108,11 @@ class DashboardKindContractTests(unittest.TestCase):
 
     def test_hero_deliverable_policy_remains_html_xlsx_first(self) -> None:
         framework = read("shared/final-deliverable-framework.md")
-        readme = read("README.md")
         packager = read("shared/artifact_packager.py")
         dashboard_builder = read(
             "skills/public-equity-investing/internal-support/dashboard-builder/INTERNAL.md"
         )
-        combined = "\n".join([framework, readme, packager, dashboard_builder])
+        combined = "\n".join([framework, packager, dashboard_builder])
 
         for phrase in [
             "HTML dashboard or report",

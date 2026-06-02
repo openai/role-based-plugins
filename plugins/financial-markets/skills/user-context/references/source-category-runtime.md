@@ -26,9 +26,15 @@ During one setup pass:
 4. Ask before installing or authorizing anything. Ask the user to choose only when multiple plausible routes tie, an installable plugin needs approval, no suitable source is exposed, or IT/admin help may be required.
 5. Write the selected operational route under `onboarding-state.json` `connector_confirmation`. Do not write source setup state to `user-context.md`.
 
+A candidate is related when its `name` or `display_name` matches a preferred plugin or app, its `id` clearly names the preferred plugin or app, its `app_connector_ids` intersects the `.app.json` ids for a category preferred app, or its `description` clearly names the same provider or category and no better preferred match exists.
+
+If setup finds an installed app or connector and also finds a related plugin candidate, prefer the plugin because plugin-owned skills and tools can add workflow support. Keep the app or connector route as fallback if the user defers plugin installation or install visibility is pending.
+
 Use `status: active` only when the selected plugin, app, or connector surface is exposed clearly enough to attempt later. This is setup-only evidence, not a readiness claim. Use `needs_confirmation`, `missing`, `deferred`, `skipped`, or `unavailable` when the route is not active. Include `source_kind` and compact plugin, app, connector, or manual route details when known. Do not guess connector ids or infer active status from `.app.json`.
 
-Do not perform connector reads merely to prove setup. If the user approves an installable candidate returned by `functions.list_available_plugins_to_install`, call `functions.request_plugin_install` with that exact candidate id and tool type. Do not call `request_plugin_install` in parallel with other tools.
+Do not mark a newly installed plugin route as active until its plugin-owned skill or tool surface is visible. If installation succeeds but skills or tools are not visible until the next turn or session refresh, write `needs_confirmation` or `deferred`, not `active`, and ask the user to continue after refresh.
+
+Do not perform connector reads merely to prove setup. Install confirmed candidates one at a time. If the user approves an installable plugin or connector candidate returned by `functions.list_available_plugins_to_install`, call `functions.request_plugin_install` with `action_type: "install"`, `tool_type: <exact returned candidate tool_type>`, `tool_id: <exact returned candidate id>`, and `suggest_reason: <concise one-line reason>`. Do not guess `tool_id` values or call `request_plugin_install` without an exact returned candidate. Do not call `request_plugin_install` in parallel with other tools.
 
 ## Workflow Use
 

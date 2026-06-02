@@ -1,8 +1,8 @@
 # {TICKER} — {FISCAL_PERIOD} Earnings Tear Sheet
 
-**Event:** {EVENT_DATETIME} ({TIMEZONE})
-**Estimate set (as-of):** {ESTIMATE_ASOF}
-**Sources:** {ARTIFACT_OR_SOURCE_SUMMARY}
+**Event:** {EVENT_DATETIME} ({TIMEZONE})  
+**Estimate set (as-of):** {ESTIMATE_ASOF}  
+**Sources:** {ARTIFACT_OR_SOURCE_SUMMARY}  
 
 ## Bottom line
 {State whether the quarter changes the thesis, estimate revision path, or stock-reaction setup.}
@@ -33,7 +33,7 @@
 - {Driver 3}
 
 ## Key quotes (4–8 complete quotes)
-> **[{TopicTag}] {Speaker} ({Section})**: “{Quote}”
+> **[{TopicTag}] {Speaker} ({Section})**: “{Quote}”  
 > Why it matters: {Model/thesis implication}. Source: {SourceTag}
 
 ## Model impact

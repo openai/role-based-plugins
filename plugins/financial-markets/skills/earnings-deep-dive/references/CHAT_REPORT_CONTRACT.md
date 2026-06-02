@@ -1,6 +1,6 @@
 # Chat Report Contract
 
-Use this reference after `earnings-deep-dive` is selected for the analysis and evidence contract of a chat-native response or polished standalone HTML report. For explicit standardized dashboards, additionally use `DASHBOARD_PACK.md` and `dashboard-builder`; do not make Markdown the final deliverable for substantive reusable artifacts.
+Use this reference after `earnings-deep-dive` is selected for the analysis and evidence contract in the already resolved presentation surface. A chat-native response is permitted only when the user explicitly selected a lightweight chat response; otherwise create the polished standalone HTML report before responding and use chat only as its concise cover note. For explicit standardized dashboards, additionally use `DASHBOARD_PACK.md` and `dashboard-builder`; do not make Markdown the final deliverable for substantive reusable artifacts.
 
 ## Non-Negotiables
 

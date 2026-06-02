@@ -23,7 +23,9 @@ When this workflow needs rendering, evidence/data preparation, style, or sector 
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved choices. For a substantive single-company 60/90-day catalyst calendar, the workflow default resolves the presentation surface to a polished HTML catalyst calendar unless the user asks for another format, a quick/no-file answer, or a workbook/tracker. In that case, do not block on a format question; ask only for unresolved depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML catalyst calendar. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved choices. For a substantive single-company 60/90-day catalyst calendar, the workflow default resolves the presentation surface to a polished HTML catalyst calendar unless the user asks for another format, a quick/no-file answer, or a workbook/tracker. In that case, do not block on a format question; ask only for unresolved depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Purpose
 Build or refresh source-backed Public Equity Investing catalyst calendars. The output should show timing, confidence, thesis relevance, prep work, owner/status, and likely PM decision, not just dates.

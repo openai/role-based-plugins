@@ -23,11 +23,13 @@ When this workflow needs rendering, evidence/data preparation, style, or sector 
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For an explicit `deep dive`, `full report`, or reusable/source-heavy post-print package, resolve presentation to a polished standalone HTML post-earnings report unless the user requests another format, a quick/no-file answer, or workbook/model-update output. In interactive runs, ask only remaining material questions such as depth, audience/use, or focus; narrower post-result questions continue to use normal intake. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML post-earnings report. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For an explicit `deep dive`, `full report`, or reusable/source-heavy post-print package, resolve presentation to a polished standalone HTML post-earnings report unless the user requests another format, an explicitly quick/no-file answer, or workbook/model-update output. In interactive runs, ask only remaining material questions such as depth, audience/use, or focus. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 Produce a decision-grade, audit-ready post-print package after results are available.
 
-Default to the full post-print package. Chat can be the surface for narrow or explicitly no-file asks, but an explicit deep dive, full report, or source-heavy reusable post-print package should be a polished standalone HTML post-earnings report following `../../shared/html-artifact-standard.md`. Use `dashboard-builder` only for the optional standardized-dashboard route below. Use deterministic file mode only when the user supplies `plan.json`, normalized CSVs, model-update inputs, or explicitly asks for files.
+Default to the full post-print package. A new standalone reader-facing post-print output should be a polished standalone HTML post-earnings report following `../../shared/html-artifact-standard.md`; use chat only when the user explicitly requests a lightweight response. Use `dashboard-builder` only for the optional standardized-dashboard route below. Use deterministic file mode only when the user supplies `plan.json`, normalized CSVs, model-update inputs, or explicitly asks for files.
 
 ## Route
 

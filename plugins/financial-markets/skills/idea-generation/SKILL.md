@@ -23,7 +23,9 @@ When this workflow needs rendering, evidence/data preparation, style, or sector 
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive idea screen, market map, watchlist review, or reusable/source-heavy candidate set, the default resolves the presentation surface to a polished standalone HTML idea-triage report unless the user requests another surface, a quick/no-file answer, or workbook/tracker output. In interactive runs, ask only remaining material choices such as depth, audience/use, or focus; in non-interactive runs, default to the HTML idea-triage report and `Full working analysis` and disclose those assumptions outside the artifact. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML idea-triage report. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive idea screen, market map, watchlist review, or reusable/source-heavy candidate set, the default resolves the presentation surface to a polished standalone HTML idea-triage report unless the user requests another surface, a quick/no-file answer, or workbook/tracker output. In interactive runs, ask only remaining material choices such as depth, audience/use, or focus; in non-interactive runs, default to the HTML idea-triage report and `Full working analysis` and disclose those assumptions outside the artifact. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Purpose
 
@@ -31,7 +33,7 @@ Triage public-equity idea candidates and screen outputs into research-worthy lon
 
 A strong output explains why a security surfaced now, possible variant perception, what is priced in, what would make it investable, first rejection risk, and the next workflow.
 
-Use chat for quick triage. For a substantial reusable screen, market map, watchlist review, or source-heavy candidate set, produce a polished standalone HTML idea-triage report following `../../shared/html-artifact-standard.md`; let the mandate and screening question determine the structure. Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable dashboard template, or structured payload-driven render.
+For a new standalone reader-facing idea screen, market map, watchlist review, or candidate set, produce a polished standalone HTML idea-triage report following `../../shared/html-artifact-standard.md`; let the mandate and screening question determine the structure. Use chat only when the user explicitly requests a lightweight response. Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable dashboard template, or structured payload-driven render.
 
 ## Operating Rules
 

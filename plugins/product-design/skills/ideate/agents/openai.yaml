@@ -1,6 +1,6 @@
 interface:
   display_name: "Ideate"
-  short_description: "Generate visual directions with ImageGen"
-  default_prompt: "Create visual design directions for this product idea."
+  short_description: "Generate visual directions after brief confirmation"
+  default_prompt: "Confirm the design brief, then create visual design directions for this product idea."
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true

@@ -13,7 +13,7 @@ Prefer a BI platform dashboard for broadly shared production dashboards, third-p
 ## Build Shape
 
 - Build a dashboard manifest with `version: 1`, `surface: "dashboard"`, a reader-facing `title`, and top-level `blocks`. `cards`, `charts`, and `tables` define reusable renderable assets; `blocks` establish the dashboard reading and layout order. Do not emit a shorthand dashboard that declares cards/charts/tables without blocks.
-- Read `../../../_shared/analytics-app-core.md` for shared MCP payload safety, source provenance, manifest/snapshot, rendering, and chart encoding rules. In particular, do not bind color, series, grouped, or stacked behavior to the same category already used for an axis just to color bars.
+- Read `../../../src/analytics-app-core.md` for shared MCP payload safety, source provenance, manifest/snapshot, rendering, and chart encoding rules. In particular, do not bind color, series, grouped, or stacked behavior to the same category already used for an axis just to color bars.
 - Follow the current `render_artifact` and `validate_artifact` MCP chart schema instead of duplicating chart-field rules here. Validate the manifest before rendering.
 - Validate the complete manifest and snapshot first with `validate_artifact`, fix validator errors there, and make only one visible `render_artifact` call after validation succeeds. If visible render fails after validation, record the blocker instead of repeated visible retries.
 - Default to built-in artifact blocks for dashboards: `metric-strip`, `chart`, `table`, and `markdown`. Use these native blocks for ordinary KPI strips, trends, bars, rankings, tables, caveats, source notes, and dashboard structure even when custom HTML would be faster to hand-author.

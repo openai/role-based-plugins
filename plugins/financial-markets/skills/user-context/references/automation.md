@@ -4,7 +4,7 @@ Use this reference only when the user explicitly asks to create, inspect, update
 
 ## Default Catalog
 
-Read `skills/user-context/plugin-author-config/automation-config.md` from the plugin root for the configured automation id, name, frequency, and launcher. The catalog is an author-owned menu, not evidence that an automation exists.
+Read `skills/user-context/plugin-author-config/automation-config.md` from the plugin root for the configured automation id, name, frequency, launcher, and canonical automation prompt. The catalog is an author-owned menu, not evidence that an automation exists.
 
 ## Setup Rules
 
@@ -17,14 +17,16 @@ Read `skills/user-context/plugin-author-config/automation-config.md` from the pl
 
 ## Prompt Requirements
 
-Build a self-contained automation prompt that:
+Use the configured canonical automation prompt substantially verbatim. Do not replace it with a generic reminder. Preserve these requirements:
 
 - invokes the Public Equity Investing router and applies user-context preflight before substantive work;
-- reviews saved watchlist, thesis-tracker, catalyst-calendar, model, and source preferences when present;
-- surfaces material catalyst, thesis, monitoring, model-refresh, and source-gap items for user review;
-- verifies time-sensitive market facts before investment use and distinguishes facts, inference, and missing evidence;
+- reviews only saved watchlist pointers already present;
+- produces only `Upcoming Catalysts`, `Stale Sources`, and `Missing Inputs`;
+- includes the ticker or watchlist pointer, dated item or gap, source pointer, and as-of date when known;
+- returns an honest missing-context or no-material-changes result instead of inventing a portfolio or watchlist;
+- does not perform broad research or draft investment analysis;
 - does not trade, send messages, edit source systems, or save new durable preferences without an explicit user request;
-- ends with a concise summary even when no action is needed.
+- remains concise and scan-friendly.
 
 ## State Metadata
 

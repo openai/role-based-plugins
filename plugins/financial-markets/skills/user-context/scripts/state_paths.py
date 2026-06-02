@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 MARKETPLACE_ID = "role-based-plugins"
-PLUGIN_ID = "public-equity-investing"
+PLUGIN_ID = "financial-markets"
 PLUGIN_LABEL = "Public Equity Investing"
 STATE_FILENAMES = (
     "user-context.md",

@@ -1,7 +1,0 @@
-interface:
-  display_name: "Variation Lab"
-  short_description: "Remix outputs through slots and locks"
-  brand_color: "#245F4C"
-  default_prompt: "Use $variation-lab to make this selected Creative Production output remixable by subject, character, scene, style, copy, format, camera, palette, layout, or proof/data."
-policy:
-  allow_implicit_invocation: true

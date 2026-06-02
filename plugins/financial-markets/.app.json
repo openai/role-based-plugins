@@ -31,19 +31,19 @@
       "id": "REPLACE_WITH_ALPACA_APP_OR_CONNECTOR_ID"
     },
     "google_drive": {
-      "id": "REPLACE_WITH_GOOGLE_DRIVE_APP_OR_CONNECTOR_ID"
+      "id": "connector_5f3c8c41a1e54ad7a76272c89e2554fa"
     },
     "gmail_connector": {
-      "id": "REPLACE_WITH_GMAIL_APP_OR_CONNECTOR_ID"
+      "id": "connector_2128aebfecb84f64a069897515042a44"
     },
     "outlook_email_connector": {
-      "id": "REPLACE_WITH_OUTLOOK_EMAIL_APP_OR_CONNECTOR_ID"
+      "id": "connector_4aaab2856305417b993eca9a216aaf6e"
     },
     "sharepoint_connector": {
-      "id": "REPLACE_WITH_MICROSOFT_SHAREPOINT_APP_OR_CONNECTOR_ID"
+      "id": "connector_1e4f6a44acf14e3ca1d96672f8c945bc"
     },
     "teams_connector": {
-      "id": "REPLACE_WITH_MICROSOFT_TEAMS_APP_OR_CONNECTOR_ID"
+      "id": "connector_246af0940da3457da0e751171dc1ce60"
     }
   }
 }

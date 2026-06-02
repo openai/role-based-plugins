@@ -50,7 +50,7 @@ LIVE_INSTALLABLE_PLUGIN_CANDIDATES = [
         "name": "bigquery",
         "tool_type": "plugin",
         "has_skills": True,
-        "app_connector_ids": ["REPLACE_WITH_BIGQUERY_APP_OR_CONNECTOR_ID"],
+        "app_connector_ids": ["connector_7c3f2c8cdbf64bb0b183ff52f527a06e"],
     },
     {
         "id": "snowflake@openai-curated",
@@ -64,21 +64,21 @@ LIVE_INSTALLABLE_PLUGIN_CANDIDATES = [
         "name": "outlook-calendar",
         "tool_type": "plugin",
         "has_skills": True,
-        "app_connector_ids": ["REPLACE_WITH_OUTLOOK_CALENDAR_APP_OR_CONNECTOR_ID"],
+        "app_connector_ids": ["connector_e6a7394682e24467ac68c60696f275a4"],
     },
     {
         "id": "outlook-email@openai-curated",
         "name": "outlook-email",
         "tool_type": "plugin",
         "has_skills": True,
-        "app_connector_ids": ["REPLACE_WITH_OUTLOOK_EMAIL_APP_OR_CONNECTOR_ID"],
+        "app_connector_ids": ["connector_4aaab2856305417b993eca9a216aaf6e"],
     },
     {
         "id": "sharepoint@openai-curated",
         "name": "sharepoint",
         "tool_type": "plugin",
         "has_skills": True,
-        "app_connector_ids": ["REPLACE_WITH_MICROSOFT_SHAREPOINT_APP_OR_CONNECTOR_ID"],
+        "app_connector_ids": ["connector_1e4f6a44acf14e3ca1d96672f8c945bc"],
     },
     {
         "id": "slack@openai-curated",
@@ -92,7 +92,7 @@ LIVE_INSTALLABLE_PLUGIN_CANDIDATES = [
         "name": "teams",
         "tool_type": "plugin",
         "has_skills": True,
-        "app_connector_ids": ["REPLACE_WITH_MICROSOFT_TEAMS_APP_OR_CONNECTOR_ID"],
+        "app_connector_ids": ["connector_246af0940da3457da0e751171dc1ce60"],
     },
     {
         "id": "thoughtspot@openai-curated",
@@ -278,11 +278,11 @@ class DataAnalyticsStateHelperTests(unittest.TestCase):
         app_manifest = json.loads(APP_MANIFEST.read_text(encoding="utf-8"))
         self.assertEqual(
             app_manifest["apps"]["google_calendar"]["id"],
-            "REPLACE_WITH_GOOGLE_CALENDAR_APP_OR_CONNECTOR_ID",
+            "connector_947e0d954944416db111db556030eea6",
         )
         self.assertEqual(
             PREFLIGHT_MODULE.load_app_connector_ids()["googlecalendar"],
-            "REPLACE_WITH_GOOGLE_CALENDAR_APP_OR_CONNECTOR_ID",
+            "connector_947e0d954944416db111db556030eea6",
         )
 
     def test_live_install_listing_fixture_matches_every_installable_data_analytics_plugin(

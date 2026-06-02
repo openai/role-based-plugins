@@ -5,8 +5,8 @@ packages skills, connector bindings, and supporting assets for a specific type
 of work.
 
 The plugins are intended to be customized before use. Connector-backed plugins
-include placeholder app and connector ids that must be replaced with ids from
-the target workspace.
+may include placeholder app and connector ids that must be replaced with ids
+available to the target workspace.
 
 ## Included Plugins
 
@@ -43,7 +43,7 @@ plugins/plugin-name/
 
 ## Configure Connectors
 
-Connector-backed plugins declare app bindings in `.app.json`. The template uses
+Connector-backed plugins declare app bindings in `.app.json`. Some bindings use
 placeholder ids:
 
 ```json
@@ -56,18 +56,18 @@ placeholder ids:
 }
 ```
 
-Before installing a connector-backed plugin, replace each placeholder with the
-matching app or connector id from your workspace.
+Before installing a connector-backed plugin, replace each placeholder with a
+matching app or connector id available to your workspace.
 
 | Placeholder | Replace with |
 | --- | --- |
 | `REPLACE_WITH_SALESFORCE_APP_OR_CONNECTOR_ID` | Salesforce or Agentforce Sales |
-| `REPLACE_WITH_GOOGLE_DRIVE_APP_OR_CONNECTOR_ID` | Google Drive |
 | `REPLACE_WITH_SITES_APP_OR_CONNECTOR_ID` | Sites |
 
-Do not copy app or connector ids from another workspace. Existing
-`templated_apps_*` values are template registry ids and should be left unchanged
-unless the target workspace uses a different template id.
+Canonical shared platform connector ids and existing `templated_apps_*` template
+registry ids are portable bindings and should be left unchanged. Do not copy
+other app or connector ids from another workspace unless their availability
+across workspaces is documented.
 
 If a plugin lists an optional app that your workspace does not use, remove that
 app binding before installing the plugin.

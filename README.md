@@ -14,9 +14,8 @@ the target workspace.
 | --- | --- | --- |
 | [Sales](./plugins/sales) | Prepare for meetings, follow up after calls, review pipeline, find account context, and build deal plans. | Salesforce, HubSpot, Slack, Google Drive, Gmail, Outlook, Outreach, Clay, ZoomInfo, and other sales tools |
 | [Data Analytics](./plugins/data-analytics) | Query, visualize, explain, and validate datasets; build dashboards; and investigate metrics. | Databricks, Snowflake, BigQuery, Hex, Amplitude, Mixpanel, Statsig, Metabase, ThoughtSpot, Google Drive, Slack, Microsoft 365, and more |
-| [Product Design](./plugins/product-design) | Create product specs, prototypes, UI critiques, and product design artifacts. | None by default |
+| [Product Design](./plugins/product-design) | Create product specs, prototypes, UI critiques, and product design artifacts. | Sites |
 | [Financial Markets](./plugins/financial-markets) | Build public-equity research, earnings analysis, valuation work, model updates, long/short pitches, risk reviews, dashboards, and investment memos. | FactSet, LSEG, Morningstar, Daloopa, Quartr, S&P, PitchBook, Slack, Google Drive, Gmail, SharePoint, Teams, and more |
-| [Creative Production](./plugins/creative-production) | Create creative briefs, moodboards, shot lists, ad concepts, prompt packs, asset reviews, and production artifacts. | Canva, Figma, and OpenAI Platform image-generation tooling |
 
 ## Repository Layout
 
@@ -27,8 +26,7 @@ the target workspace.
     |-- sales/
     |-- data-analytics/
     |-- product-design/
-    |-- financial-markets/
-    `-- creative-production/
+    `-- financial-markets/
 ```
 
 Each plugin generally follows this structure:
@@ -65,7 +63,7 @@ matching app or connector id from your workspace.
 | --- | --- |
 | `REPLACE_WITH_SALESFORCE_APP_OR_CONNECTOR_ID` | Salesforce or Agentforce Sales |
 | `REPLACE_WITH_GOOGLE_DRIVE_APP_OR_CONNECTOR_ID` | Google Drive |
-| `REPLACE_WITH_OPENAI_PLATFORM_APP_OR_CONNECTOR_ID` | OpenAI Platform |
+| `REPLACE_WITH_SITES_APP_OR_CONNECTOR_ID` | Sites |
 
 Do not copy app or connector ids from another workspace. Existing
 `templated_apps_*` values are template registry ids and should be left unchanged
@@ -83,13 +81,8 @@ Plugins with Node.js dependencies require `npm ci` before local MCP-backed
 development:
 
 ```sh
-cd plugins/creative-production && npm ci
-cd ../data-analytics && npm ci
+cd plugins/data-analytics && npm ci
 ```
-
-Creative Production can prepare briefs, prompts, specs, and review pages without
-an OpenAI Platform connector. Local image generation requires an OpenAI Platform
-app or connector id.
 
 Financial Markets is packaged as `financial-markets`, but some skill names and
 bundled support playbook paths still use `public-equity-investing`.

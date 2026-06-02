@@ -38,7 +38,7 @@ def require_docx() -> None:
     if DOCX_IMPORT_ERROR is not None:
         raise SystemExit(
             "DOCX upload mode requires python-docx. Install it in the active Python "
-            "environment or install python-docx in a temporary environment."
+            "environment before running this helper."
         ) from DOCX_IMPORT_ERROR
 
 

@@ -6,7 +6,7 @@ This plugin contains a complex fullscreen analytics artifact workspace plus comp
 
 ## Visual Style
 
-Follow the local Codex style contract in `_shared/codex-style-contract.md`.
+Follow the local Codex style contract in `src/codex-style-contract.md`.
 `src/styles/codex-theme.css` is the copied Codex fallback baseline and must load before `src/analytics-app/tokens.css`. Shared surfaces, controls, typography, spacing, borders, radii, shadows, focus, and motion should resolve through the Codex tokens. Analytics CSS may extend the baseline for charts, KPI states, tables, report widths, and dashboard layouts.
 
 ## Fullscreen Behavior

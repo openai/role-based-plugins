@@ -17,6 +17,12 @@ SOURCE_RUNTIME_REFERENCE = SKILL_ROOT / "references/source-category-runtime.md"
 AUTOMATION_REFERENCE = SKILL_ROOT / "references/automation.md"
 SOURCE_CATEGORY_CONFIG = SKILL_ROOT / "plugin-author-config/source-category-config.json"
 APP_MANIFEST = PLUGIN_ROOT / ".app.json"
+SEMANTIC_LAYER_SETUP_REFERENCE = SKILL_ROOT / "references/semantic-layer/setup.md"
+SEMANTIC_LAYER_SOURCE_INTAKE_REFERENCE = SKILL_ROOT / "references/semantic-layer/source-intake.md"
+SEMANTIC_LAYER_SKILL_TEMPLATE_REFERENCE = SKILL_ROOT / "references/semantic-layer/skill-template.md"
+SEMANTIC_LAYER_WEEKLY_POLLING_REFERENCE = (
+    SKILL_ROOT / "references/semantic-layer/weekly-polling-automation.md"
+)
 HERO_SKILLS = (
     PLUGIN_ROOT / "skills/metric-diagnostics/SKILL.md",
     PLUGIN_ROOT / "skills/product-business-analysis/SKILL.md",
@@ -700,6 +706,25 @@ status: not provided
         self.assertEqual(task_statuses["semantic_layer_setup"], "completed")
         self.assertEqual(task_statuses["hero_prompt"], "in_progress")
 
+    def test_core_onboarding_complete_allows_semantic_layer_skip_without_refresh(self) -> None:
+        self.write_state(
+            onboarding_state={
+                "status": "active",
+                "orientation": {"status": "shown"},
+                "connector_confirmation": {
+                    "status": "completed",
+                    **self.active_core_categories(),
+                },
+                "semantic_layer_setup": {"status": "skipped"},
+            }
+        )
+        payload = self.preflight("--request-mode", "direct_onboarding_status")
+        progress = payload["control"]["onboarding_progress"]
+        task_statuses = {item["id"]: item["status"] for item in progress["task_list"]}
+        self.assertTrue(progress["core_onboarding"]["complete"])
+        self.assertEqual(task_statuses["semantic_layer_setup"], "completed")
+        self.assertEqual(task_statuses["hero_prompt"], "in_progress")
+
     def test_active_core_incomplete_returns_single_reminder_with_next_action(self) -> None:
         self.write_state(
             user_context="""# Data Analytics Source Routing Preferences
@@ -721,6 +746,8 @@ status: not provided
         obligation = payload["control"]["final_obligations"][0]
         self.assertEqual(obligation["id"], "complete_data_analytics_core_onboarding")
         self.assertEqual(obligation["next_action"]["id"], "confirm_analytics_sources")
+        self.assertIn("**Next Step**", obligation["template"])
+        self.assertIn("Reply `continue onboarding`", obligation["template"])
         self.assertEqual(len(payload["control"]["final_obligations"]), 1)
 
     def test_complete_and_quiet_onboarding_suppress_auto_obligations(self) -> None:
@@ -888,9 +915,17 @@ Store durable Data Analytics source-routing choices explicitly selected for futu
         onboarding_text = ONBOARDING_REFERENCE.read_text(encoding="utf-8")
         source_runtime_text = SOURCE_RUNTIME_REFERENCE.read_text(encoding="utf-8")
         automation_text = AUTOMATION_REFERENCE.read_text(encoding="utf-8")
-        self.assertIn("Confirm Active/Missing Sources", onboarding_text)
+        self.assertIn("Check Main Analytics Sources", onboarding_text)
         self.assertIn("Resolve Source Questions", onboarding_text)
         self.assertIn("transition without a proof read", onboarding_text)
+        self.assertIn("Set Up Data Context", onboarding_text)
+        self.assertIn("Codex gets better at data work", onboarding_text)
+        self.assertIn("Send anything you would point a new analyst to", onboarding_text)
+        self.assertIn("Reply with any starting points, or say `skip for now`", onboarding_text)
+        self.assertIn("Do not: require the user to name a product or business area up front", onboarding_text)
+        self.assertNotIn("smallest useful seed", onboarding_text)
+        self.assertNotIn("first semantic layer", onboarding_text)
+        self.assertNotIn("main source categories", onboarding_text)
         self.assertIn("Show one strong prompt first", onboarding_text)
         self.assertIn("Do not: show three hero prompts initially", onboarding_text)
         self.assertIn("write the prompt you would rather try instead", onboarding_text)
@@ -902,6 +937,41 @@ Store durable Data Analytics source-routing choices explicitly selected for futu
         for hero_skill in HERO_SKILLS:
             text = hero_skill.read_text(encoding="utf-8")
             self.assertIn("data-analytics:user-context", text)
+
+    def test_semantic_layer_setup_uses_lightweight_generated_skills_and_source_checkpoint(
+        self,
+    ) -> None:
+        setup_text = SEMANTIC_LAYER_SETUP_REFERENCE.read_text(encoding="utf-8")
+        source_intake_text = SEMANTIC_LAYER_SOURCE_INTAKE_REFERENCE.read_text(encoding="utf-8")
+        template_text = SEMANTIC_LAYER_SKILL_TEMPLATE_REFERENCE.read_text(encoding="utf-8")
+        weekly_polling_text = SEMANTIC_LAYER_WEEKLY_POLLING_REFERENCE.read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("source-use checkpoint", setup_text)
+        self.assertIn("rejected or lower-confidence candidates", setup_text)
+        self.assertIn("Infer expected source lanes", setup_text)
+        self.assertIn("nearby but not exact", setup_text)
+        self.assertIn("authoritative data documentation", setup_text)
+        self.assertIn("source-backed semantic-layer skills", setup_text)
+        self.assertIn("user-trusted canonical data skills", setup_text)
+        self.assertIn("treat that as authoritative data documentation", setup_text)
+        self.assertIn("authoritative data documentation", weekly_polling_text)
+        self.assertIn("source-backed semantic-layer skills", weekly_polling_text)
+        self.assertIn("user-trusted canonical data skills", weekly_polling_text)
+        self.assertIn("Infer useful source families", source_intake_text)
+        self.assertIn("do not treat ambient app availability as user approval", source_intake_text)
+        self.assertIn("Send anything you would point a new analyst to", source_intake_text)
+        self.assertIn("Reply with any starting points, or say `skip for now`", source_intake_text)
+        self.assertIn("## Start Here", template_text)
+        self.assertIn("## References", template_text)
+        self.assertIn("Answering Rules", template_text)
+        self.assertIn("## Quick Reference", template_text)
+        self.assertIn("## Entity Clarification", template_text)
+        self.assertIn("## Standard Filters And Dimensions", template_text)
+        self.assertIn("evidence.md`: detailed provenance, only when the layer needs separate evidence tracking", template_text)
+        self.assertIn("Do not put setup-time policy or full evidence procedures", template_text)
+        self.assertNotIn("### Source Order", template_text)
+        self.assertNotIn("### Evidence Standard", template_text)
 
 
 if __name__ == "__main__":

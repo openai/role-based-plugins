@@ -48,6 +48,9 @@
     "apollo": {
       "id": "REPLACE_WITH_APOLLO_APP_OR_CONNECTOR_ID"
     },
+    "actively": {
+      "id": "REPLACE_WITH_ACTIVELY_APP_OR_CONNECTOR_ID"
+    },
     "meticulate": {
       "id": "REPLACE_WITH_METICULATE_APP_OR_CONNECTOR_ID"
     },

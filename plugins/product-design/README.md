@@ -1,33 +1,48 @@
 # Product Design
 
-The Product Design plugin helps designers and other non-coders close the gap between product ideas and working software.
+Turn early product ideas, live URLs, and static screenshots into prototypes teams can review, refine, and carry forward.
 
-The Product Design plugin equips you with a set of skills to:
+## When to use this plugin
 
-- Research ideas and pain points related to your product.
-- Conduct product-flow audits.
-- Generate distinctly new ideas for your product with ImageGen.
-- Clone existing product apps into lightweight prototypes.
-- Build lightweight or interactive prototypes to share with your team.
+Use Product Design when you want to understand an existing experience, explore a new direction, or create a prototype that people can interact with and review. You can start from a written brief, screenshots, a design image, a live URL, an existing prototype, or product references you have saved for future work, such as product URLs, Figma files, screenshots, codebase paths, or design tokens.
 
-## Plugin structure
+## Get started
 
-- `skills/`: Product Design skills and reference files.
-- `skills/user-context/plugin-author-config/`: author-editable user-context knowledge.
+Ask Codex:
 
-## Skills
+`@Product Design Help me get started`
 
-- `$index`: Routes Product Design requests to the right workflow.
-- `$research`: Gathers internal conversations and context, then searches the web for additional information at the start of a project.
-- `$user-context`: Saves and reads product URLs, Figma files, screenshots, reference images, codebase paths, Storybook, tokens, design systems, brand assets, preferred tools, and Product Design preferences so future work starts from the right sources.
-- `$audit`: Captures screenshots of a product flow, puts them in Figma or a local folder, and reports UX, design, and accessibility findings tied to those screenshots. Use this for user-facing audits, critiques, and reviews.
-- `$ideate`: Generates screenshot-style images to help designers quickly explore new ideas.
-- `$prototype`: Routes Product Design prototype, redesign, clone, and UI build requests to the right workflow.
-- `$get-context`: Gathers the missing product and visual context needed before ideation or prototyping can proceed.
-- `$url-to-code`: Generates a 1:1 copy of a URL to kick off a prototype in a safe sandbox. No messing with production code and unnecessary scaffolding.
-- `$image-to-code`: Generate interactive prototypes from your favorite or AI generated mocks.
-- `$share`: Deploys a runnable prototype and returns a shareable URL.
+The plugin will walk you through how to save useful product context such as product URLs, relevant Figma files, screenshots, codebase paths, Storybook links, tokens, and brand assets.
 
-## Helper skills
+Already have a task in mind? Skip setup and ask for the workflow you need directly.
 
-- `$design-qa`: Internal prototype QA helper that compares a coded prototype against its visual source before handoff. Use `$audit` for user-facing UX/design critiques, audits, and reviews.
+## Example workflows
+
+| Workflow | Try this | Skill | Result |
+| --- | --- | --- | --- |
+| Prototype a new idea | `Build a clickable prototype for this product idea` | `prototype` | Three visual directions to choose from, followed by a runnable prototype based on your selection |
+| Recreate a live surface | `Clone this URL into an editable prototype` | `url-to-code` | An editable local prototype grounded in the visible source |
+| Implement a selected design | `Turn this selected mockup into a responsive prototype` | `image-to-code` | A faithful, interactive implementation of the design you selected |
+| Explore visual directions | `Turn this product idea into three visual directions` | `ideate` | Distinct concepts you can compare before choosing what to build |
+| Redesign an existing screen | `Redesign this settings screen and show me three directions before building` | `prototype` | Three grounded redesign options, followed by a prototype only after you choose a direction |
+| Audit a product flow | `Audit this onboarding flow and identify the highest-impact UX and accessibility issues` | `audit` | Screenshot-backed findings tied to the steps in the experience |
+| Research user friction | `Research the biggest UX problems users are reporting for this product` | `research` | A source-grounded view of user pain, severity, confidence, and product opportunities |
+| Critique a prototype | `Critique this prototype and identify the highest-impact design issues` | `audit` | An evidence-grounded UX, design, and accessibility review |
+| Share a prototype | `Share this prototype with the team` | `share` | A working shareable URL after you choose a hosting target |
+
+### Tip: Refine a prototype with Annotations
+
+When editing a prototype in the in-app browser, you can use the Annotations tool to point at the exact elements you want to change. Add comments on the UI or adjust CSS values directly, then send the annotations back to Codex for fast, focused edits.
+
+## Integrations
+
+Product Design can use available tools when they are connected:
+
+| Tool | What it unlocks |
+| --- | --- |
+| Browser, Chrome, or Playwright | Capturing and inspecting live product surfaces for audits, cloning, and prototype QA |
+| Figma or Canva | Carrying prototype work into a reviewable design workspace and using existing design context |
+| Image generation | Exploring visual alternatives and producing assets for selected directions |
+| Sites, Vercel, or another available hosting tool | Publishing runnable prototypes after you choose a deployment target |
+
+You can still begin with a written brief, screenshots, image files, URLs, local prototypes, or saved design context when a connected tool is not needed.

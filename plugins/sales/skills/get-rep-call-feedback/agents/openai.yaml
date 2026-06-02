@@ -1,4 +1,3 @@
-version: 1
 interface:
   display_name: "Get Rep Call Feedback"
   short_description: "Evidence-backed coaching from peer call examples"

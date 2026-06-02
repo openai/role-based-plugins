@@ -223,7 +223,7 @@ select:focus-visible {
   margin: 0;
   color: var(--ds-text-primary);
   font-family: var(--ds-font);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.13px;
@@ -236,7 +236,7 @@ select:focus-visible {
   padding: 4px 6px;
   color: var(--ds-text-primary);
   font-family: var(--ds-font);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.13px;
@@ -1501,12 +1501,12 @@ select:focus-visible {
   align-items: center;
   justify-content: center;
   aspect-ratio: 1 / 1;
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
   padding: 0;
   border: 1px solid var(--ds-menu-button-border);
-  border-radius: 16px;
+  border-radius: 50%;
   background: var(--ds-surface);
   color: var(--ds-text-secondary);
   line-height: 0;
@@ -1902,10 +1902,10 @@ select:focus-visible {
 }
 
 .native-modal.chart-explore-modal {
-  width: calc(100vw - 24px);
-  max-width: none;
-  height: calc(100vh - 24px);
-  max-height: calc(100vh - 24px);
+  width: min(1180px, calc(100vw - 96px));
+  max-width: calc(100vw - 96px);
+  height: min(760px, calc(100vh - 96px));
+  max-height: calc(100vh - 96px);
 }
 
 .chart-explore-panel {
@@ -2640,6 +2640,10 @@ button.leaderboard-caption:focus-visible {
   top: 0;
   right: 0;
   z-index: 10;
+}
+
+.report-metric-strip-block .viz-card-menu-button {
+  margin: 4px;
 }
 
 .report-stack-item {
@@ -3433,6 +3437,13 @@ td:first-child {
 
   .native-modal {
     width: calc(100vw - 24px);
+    max-height: calc(100vh - 24px);
+  }
+
+  .native-modal.chart-explore-modal {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    height: calc(100vh - 24px);
     max-height: calc(100vh - 24px);
   }
 

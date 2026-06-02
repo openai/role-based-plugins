@@ -19,13 +19,15 @@ Load `../../shared/workflow-source-resolution.md`. Use `source_category_plan` la
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive reusable trade pitch or explicit HTML pitch, the default resolves the presentation surface to a polished standalone HTML trade-pitch report unless the user requests another surface, a quick/no-file answer, or a standardized dashboard. In interactive runs, ask only remaining material choices such as depth, audience/use, or focus; in non-interactive runs, default to the HTML trade-pitch report and `Full working analysis` while disclosing those assumptions outside the artifact. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML trade-pitch report. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive reusable trade pitch or explicit HTML pitch, the default resolves the presentation surface to a polished standalone HTML trade-pitch report unless the user requests another surface, a quick/no-file answer, or a standardized dashboard. In interactive runs, ask only remaining material choices such as depth, audience/use, or focus; in non-interactive runs, default to the HTML trade-pitch report and `Full working analysis` while disclosing those assumptions outside the artifact. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Goal
 
 Turn a public-equity-investing idea into an investable trade pitch. This is the buy-side pitch muscle: what is mispriced, how to express it, why now, how much can be made or lost, what proves us wrong, and what action discipline governs add, trim, cover, hedge, or exit decisions.
 
-Default deliverable: full PM-facing trade pitch. Chat is fine for conversational or narrow pitch work, but a substantial reusable pitch or explicit HTML pitch should become a polished standalone HTML trade-pitch report following `../../shared/html-artifact-standard.md`. Let the trade decision, expression, and implementation gates determine the hierarchy. The output should sound like a seasoned portfolio manager forming a research posture, not an analyst filling a template. Do not compress to a quick pitch unless the user explicitly asks for `quick`, `short`, `summary`, `one-pager`, `TL;DR`, red-team-only review, or one specific section.
+Default deliverable: full PM-facing trade pitch. A new standalone reader-facing pitch should become a polished standalone HTML trade-pitch report following `../../shared/html-artifact-standard.md`; use chat only when the user explicitly requests a lightweight response. Let the trade decision, expression, and implementation gates determine the hierarchy. The output should sound like a seasoned portfolio manager forming a research posture, not an analyst filling a template. Do not compress to a quick pitch unless the user explicitly asks for `quick`, `short`, `summary`, `one-pager`, `TL;DR`, red-team-only review, or one specific section.
 
 ## Use When
 
@@ -55,7 +57,7 @@ Hand off to `memo-builder` when the pitch needs to become an IC memo, investment
 
 ## Operating Defaults
 
-- Do not create files for narrow pitch work unless the user explicitly asks. For substantial reusable or explicitly requested HTML pitches, produce one polished standalone HTML trade-pitch report; do not force it through a fixed dashboard module inventory.
+- Produce one polished standalone HTML trade-pitch report for new standalone reader-facing pitch work unless another format takes precedence; do not force it through a fixed dashboard module inventory.
 - Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable dashboard template, PM cockpit, or structured payload-driven render. For that optional path, use `references/DASHBOARD_PACK.md`: `long-short-pitch` owns trade construction, variant perception, expression, risk/reward, and monitoring rules; `dashboard-builder` owns the standardized shell/rendering/QA. Build a `public_equity_investing_dashboard.v1` payload as an internal renderer input, and keep JSON/Markdown/CSV support files behind the HTML dashboard unless explicitly requested.
 - Keep the pitch PM-usable; expand mechanics, not background.
 - Never invent real-world facts. Unknowns must be labeled `TBD`, `not provided`, or explicit assumptions.

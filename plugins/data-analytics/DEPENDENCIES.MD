@@ -10,14 +10,14 @@ The plugin is tool-agnostic. It describes workflows in terms of analysis lanes r
 
 | Category | Placeholder | Providers | Purpose |
 | --- | --- | --- | --- |
-| Structured data | `~~structured_data` | Databricks, BigQuery, Snowflake, Redshift, PostgreSQL, MySQL | Query tables, explore schemas, and produce result sets. Databricks, BigQuery, and Snowflake are declared in `.app.json` as app-backed connector choices. |
+| Data warehouse | `~~structured_data` | Databricks, BigQuery, Snowflake, Redshift, PostgreSQL, MySQL | Query tables, explore schemas, and produce result sets. Databricks, BigQuery, and Snowflake are declared in `.app.json` as app-backed connector choices. |
 | Notebook lab | `~~notebook_lab` | Hex, Deepnote, Jupyter | Iterate, preserve reusable code, and support richer exploratory work. Hex and Deepnote are declared in `.app.json` as app-backed connector choices. |
 | Behavior signals | `~~behavior_signals` | Amplitude, Mixpanel, Mixpanel Headless | Analyze product event trends and funnels. Amplitude and Mixpanel are declared in `.app.json`; Mixpanel Headless is a companion plugin/skill path when installed. |
-| Dashboards or BI | `~~dashboards_or_bi` | ThoughtSpot, Omni Analytics, Metabase, dashboard/BI app | Inspect dashboard metadata, metric definitions, widget SQL, and BI answers. ThoughtSpot, Omni Analytics, and Metabase are declared in `.app.json` as app-backed connector choices. |
+| Dashboards and BI | `~~dashboards_or_bi` | ThoughtSpot, Omni Analytics, Metabase, dashboard/BI app | Inspect dashboard metadata, metric definitions, widget SQL, and BI answers. ThoughtSpot, Omni Analytics, and Metabase are declared in `.app.json` as app-backed connector choices. |
 | Team communication | `~~team_communication` | Slack, Microsoft Teams | Search recent decisions, blockers, owner confirmations, and links to durable artifacts |
 | Email context | `~~email_context` | Gmail, Outlook Email | Inspect relevant message threads, stakeholder context, and follow-up history |
 | Calendar context | `~~calendar_context` | Outlook Calendar | Check meeting timing, attendees, and operating cadence context |
-| Productivity suite or company docs | `~~company_docs` | Google Drive, SharePoint, Google Docs, Google Slides, Notion | Read workspace knowledge, PRDs, metric docs, strategy docs, and source caveats |
+| Company docs | `~~company_docs` | Google Drive, SharePoint, Google Docs, Google Slides, Notion | Read workspace knowledge, PRDs, metric docs, strategy docs, and source caveats |
 | Sheet workspace | `~~spreadsheet_workspace` | Google Drive, SharePoint, Google Sheets | Review small exports, manual QA, and stakeholder-friendly tables |
 | Presentation surface | `~~presentation_surface` | Google Drive, SharePoint, Google Docs, Google Slides | Create final charts, dashboards, and share-ready narratives |
 | Code repository | `~~code_repository` | GitHub, local checkout | Inspect source logic, model SQL, lineage, tests, and repo context |

@@ -1,18 +1,18 @@
 ---
 name: user-context
-description: Initialize, inspect, save, update, forget, export, or explicitly reset the Public Equity Investing plugin's local user context, source setup, or optional automation setup. Use only when the user explicitly asks to manage Public Equity Investing saved preferences, source pointers, context storage, or recurring automation.
+description: Start onboarding, initialize, inspect, save, update, forget, export, or explicitly reset the Public Equity Investing plugin's local user context, source setup, or optional automation setup. Use when the user explicitly asks to get started, orient, or manage Public Equity Investing saved preferences, source pointers, context storage, or recurring automation.
 ---
 
 # Public Equity Investing User Context
 
-This skill owns the Public Equity Investing plugin's local user-context storage foundation and explicit-only onboarding contract. It is intentionally narrow: it can initialize, inspect, save, update, forget, export, or explicitly reset local context, interpret the next onboarding action, guide user-approved source setup, and configure user-approved automations. Its read-only preflight does not inspect connectors, route sources, or create automations.
+This skill owns the Public Equity Investing plugin's local user-context storage foundation and explicit-only onboarding contract. It is intentionally narrow: it can initialize, inspect, save, update, forget, export, or explicitly reset local context, interpret the next onboarding action, guide the four-step intro/defaults -> connectors/plugins -> automation -> hero-workflow flow, and configure user-approved automations. Its read-only preflight does not inspect connectors, route sources, or create automations.
 
 ## State Files
 
 Store Public Equity Investing state under:
 
 ```text
-$CODEX_HOME/state/plugins/role-based-plugins/public-equity-investing/
+$CODEX_HOME/state/plugins/role-based-plugins/financial-markets/
 ```
 
 The storage foundation owns only:
@@ -34,7 +34,7 @@ The initializer creates missing state files from bundled templates and preserves
 
 When the user explicitly asks to inspect saved Public Equity Investing context, run `python3 skills/user-context/scripts/user_context_preflight.py` with the shell working directory set to this plugin's root. Set the working directory before the first attempt; do not probe alternate relative paths.
 
-Use the returned read-only JSON envelope to summarize initialization status, onboarding status, the deterministic `next_action`, and empty memory categories. Treat `user-context.md` as user-editable durable context and `onboarding-state.json` as operational scaffolding.
+Use the returned read-only JSON envelope to summarize initialization status, onboarding status, the deterministic `next_action`, the lightweight `onboarding_progress`, and empty memory categories. Treat `user-context.md` as user-editable durable context and `onboarding-state.json` as operational scaffolding.
 
 ## Save Update Or Forget
 
@@ -42,7 +42,7 @@ When the user explicitly asks to remember, save, update, forget, export, or appl
 
 ## Onboarding
 
-When the user explicitly asks to set up, resume, defer, quiet, or complete Public Equity Investing saved-context onboarding, follow `skills/user-context/references/onboarding.md` from the plugin root. Use the inspection helper's `next_action` as the current step and render its `copy_ref` template substantially verbatim.
+When the user explicitly asks to get started, orient, set up, resume, defer, quiet, or complete Public Equity Investing onboarding, follow `skills/user-context/references/onboarding.md` from the plugin root. Use the inspection helper's `next_action` as the current step and render its `copy_ref` template substantially verbatim. Keep the visible flow to four steps: intro and lightweight defaults, connectors and plugins, one optional automation, then a three-option hero-workflow chooser. Capture broader durable preferences only when the user explicitly asks or supplies them naturally.
 
 ## Source Category Vocabulary
 
@@ -66,6 +66,6 @@ The reset helper moves active state files into a timestamped sibling backup dire
 - Do not inspect apps, connectors, plugins, `.app.json`, or source readiness during preflight.
 - During user-approved explicit Source Setup, follow `skills/user-context/references/source-category-runtime.md` from the plugin root.
 - During user-approved explicit automation setup or maintenance, follow `skills/user-context/references/automation.md` from the plugin root.
-- Do not invoke onboarding unless the user explicitly asks for saved-context setup or management.
+- Do not invoke onboarding unless the user explicitly asks to get started, orient, set up, or manage saved context.
 - Do not create or modify automations unless the user explicitly asks or accepts the optional automation setup step.
 - Do not add, read, or migrate `category-state.json`. The reset helper may back up and clear an older copy during an explicit reset.

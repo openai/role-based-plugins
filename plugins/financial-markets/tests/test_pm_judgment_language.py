@@ -62,7 +62,7 @@ class PMJudgmentLanguageTests(unittest.TestCase):
 
     def test_plugin_scope_mentions_index_etf_and_sell_side(self) -> None:
         combined = (
-            (ROOT / "README.md").read_text(encoding="utf-8")
+            (ROOT / "shared" / "pm-judgment-heuristics.md").read_text(encoding="utf-8")
             + "\n"
             + (ROOT / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
         ).lower()

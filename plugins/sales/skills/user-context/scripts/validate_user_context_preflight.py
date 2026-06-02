@@ -278,7 +278,7 @@ def main() -> int:
             "Keep plugin-first setup eligible for retry in future workflows",
             "Do not call `request_plugin_install` in parallel",
             "Data enrichment adds missing company, contact, account",
-            "Preferred options are ZoomInfo, Clay, HG Insights, Rox, Apollo, or Meticulate",
+            "Preferred options are ZoomInfo, Clay, HG Insights, Rox, Apollo, Actively, or Meticulate",
             "You can skip anything now; Sales will ask again later only when a workflow would materially benefit",
             "move directly into Step 3A",
             "## Step 4: First Hero Prompt",

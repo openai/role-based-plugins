@@ -1,7 +1,0 @@
-interface:
-  display_name: "Scene Explorer"
-  short_description: "Explore realistic business scenes"
-  brand_color: "#245F4C"
-  default_prompt: "Use $scene-explorer to explore realistic customer, service, retail, or point-of-sale scenes for this product, venue, service, or offer."
-policy:
-  allow_implicit_invocation: true

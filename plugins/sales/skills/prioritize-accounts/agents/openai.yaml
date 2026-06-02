@@ -1,4 +1,3 @@
-version: 1
 interface:
   display_name: "Prioritize Accounts"
   short_description: "Rank accounts and open a local action pane"

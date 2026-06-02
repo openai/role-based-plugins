@@ -19,7 +19,9 @@ Load `../../shared/workflow-source-resolution.md`. Use `source_category_plan` la
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is an XLSX thesis tracker workbook. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 For an update to an attached or existing thesis tracker, treat a polished XLSX thesis tracker workbook as the resolved presentation surface unless the user requests another format, a quick/no-file answer, or an HTML review package. Ask only remaining material choices that change the analysis.
 

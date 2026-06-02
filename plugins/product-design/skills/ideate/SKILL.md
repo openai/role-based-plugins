@@ -1,6 +1,6 @@
 ---
 name: ideate
-description: "Generate image-based visual alternatives, remixes, or concept directions for a component, screen, feature, workflow, or product idea. Use when the user asks for design variants, visual exploration, remixes, or image-generated approaches from provided context."
+description: "Generate image-based visual alternatives, remixes, or concept directions after Product Design get-context has confirmed the design brief. Use when the user asks for design variants, visual exploration, remixes, or image-generated approaches from provided context."
 ---
 
 # Ideate
@@ -11,59 +11,79 @@ Follow the shared Product Design routing guidance in [$index](../index/SKILL.md)
 
 ## Critical Overrides
 
-Follow [critical-overrides](../../references/critical-overrides.md).
+- Refer to the Plugin router [$index](../index/SKILL.md) before proceeding.
+- Follow [$critical-overrides](../../references/critical-overrides.md).
 
 ## User Context
 
 Before starting, load [$user-context](../user-context/SKILL.md) and run its preflight script when local shell access is available.
 
-Use saved product URLs, Figma files, screenshots, reference images, codebase paths, Storybook, tokens, design systems, brand assets, component refs, browser preferences, and share targets as grounding material when relevant.
+Attach provided product URLs, Figma files, screenshots, reference images, codebase paths, Storybook, tokens, design systems, brand assets, component refs, browser preferences, and share targets to the Image Gen generations to align them to the design brief.
 
 Do not inspect every saved reference. Inspect only what the current task needs.
 
 ## Workflow
 
+Do not generate images until `$get-context` has played back and confirmed the design brief for this exact request. If this skill was invoked directly and the current thread does not already contain that confirmed brief, route to [$get-context](../get-context/SKILL.md) first.
+
 Before generating images:
 
 1. Understand the brief.
-   - Identify the target: component, screen, feature/workflow, or broad product idea.
-   - Identify the intended user, product surface, and goal.
-   - Preserve hard constraints from the user.
-   - Run the `get-context` skill if you need more information from the user.
+
+- Identify the target: component, screen, feature/workflow, or broad product idea.
+- Identify the intended user, product surface, and goal.
+- Preserve hard constraints from the user.
+- Run `get-context` if the brief has not already been played back and confirmed.
 
 2. Resolve context.
-   - Use provided files, screenshots, links, and visible references.
-   - In a local workspace, look for nearby design documentation and other local visual context.
-   - Check likely design context folders such as `storybook/`, `.storybook/`, `design-system/`, `design-systems/`, `tokens/`, `components/`, `app/`, and generated prototype roots.
-   - In an existing project, look for existing product screenshots, similar flows, Storybook captures, design tokens, and component references before generating. Ask if the user can provide example screens similar to the one they are building if the existing app isn't accessible. Ensure you add design language and tokens to the Image Gen prompt.
+
+- Use provided files, screenshots, links, and visible references.
+- In a local workspace, look for nearby design documentation and other local visual context.
+- Check likely design context folders such as `user-context`, `storybook/`, `.storybook/`, `design-system/`, `design-systems/`, `tokens/`, `components/`, `app/`, and generated prototype roots.
+- In an existing project, look for existing product screenshots, similar flows, Storybook captures, design tokens, and component references before generating. Ask if the user can provide example screens similar to the one they are building if the existing app isn't accessible. Ensure you add design language and tokens to the Image Gen prompt.
 
 3. Inspect references directly.
-   - Look at screenshots, images, Figma frames, app surfaces, or other visual references before generating.
-   - Do not infer from filenames alone.
-   - If a named local path or reference is not visible, stop and ask the user to confirm the path, upload the file, start the local app, or point to the correct workspace.
+
+- Look at screenshots, images, Figma frames, app surfaces, or other visual references before generating.
+- Do not infer from filenames alone.
+- If a named local path or reference is not visible, stop and ask the user to confirm the path, upload the file, start the local app, or point to the correct workspace.
 
 4. Decide the variation mode.
-   - If useful local design context exists and the user has not asked for a new style, stay within that existing direction.
-   - If no useful design context exists, or the user asks for broad exploration, vary both concept and visual system.
-   - For a specific component or existing surface, vary structure, interaction, hierarchy, and emphasis before varying brand style.
-   - For a broad product idea, explore three meaningfully different product directions.
 
-5. Check for access gaps.
-   - If a connector, reference, or file cannot be accessed because of auth, permissions, expired login, missing scope, suspiciously empty results, or unavailable local state, stop.
-   - Name the gap clearly and ask whether to troubleshoot access or continue without that source.
-   - Do not generate images while silently ignoring a named reference.
+- If useful local design context exists and the user has not asked for a new style, stay within that existing direction.
+- If no useful design context exists, or the user asks for broad exploration, vary both concept and visual system.
+- For a specific component or existing surface, vary structure, interaction, hierarchy, and emphasis before varying brand style.
+- For a broad product idea, explore three meaningfully different product directions.
 
-6. Ask only if context is too thin.
-   - Ask one targeted question only when available context is insufficient to generate useful directions.
-   - Prefer asking about style direction, target audience, or the reference surface.
+5. Choose target dimensions before Image Gen.
 
-7. Attach images and mocks provided by the user to the Image Gen call along with your design brief.
+- Pick the dimensions that best match the user's request and any provided visual reference.
+- Mobile app: `390 x 844`.
+- Tablet app: `834 x 1194`.
+- Desktop app, dashboard, admin, or SaaS: `1440 x 1024`.
+- Landing or marketing page: `1440` wide and scrollable.
+- Modal, panel, widget, or component: natural container size.
+- Provided screenshot, Figma frame, mockup, or reference image: match its dimensions and aspect ratio when the user wants to continue from that visual.
+- Avoid crowding. Make the design fit the chosen dimensions cleanly, with realistic spacing, readable type, and no clipped content.
+- Include the chosen dimensions in every Image Gen prompt.
 
-8. Generate 3 independent options that have distinct information hierarchy, layout strategy, interaction model, or product framing.
+6. Check for access gaps.
+
+- If a connector, reference, or file cannot be accessed because of auth, permissions, expired login, missing scope, suspiciously empty results, or unavailable local state, stop.
+- Name the gap clearly and ask whether to troubleshoot access or continue without that source.
+- Do not generate images while silently ignoring a named reference.
+
+7. Ask only if context is too thin.
+
+- Ask one targeted question only when available context is insufficient to generate useful directions.
+- Prefer asking about style direction, target audience, or the reference surface.
+
+8. Attach images and mocks provided by the user to the Image Gen call along with your design brief.
+
+9. Generate 3 independent options that have distinct information hierarchy, layout strategy, interaction model, or product framing.
 
 Rules you must follow:
 
-- Name each image clearly along with what number option it is (e.g., 1_brutalist_login_page.png).
 - Use the Image Gen prompt below.
 - Use the built-in Image Gen tool.
 - Generate exactly three independent images unless the user overrides the count.
@@ -76,18 +96,19 @@ Rules you must follow:
 - If you cannot attach the image, say that clearly and ask whether to continue with text-only direction.
 - Preserve hard constraints from the brief in every image.
 - After generating options, stop for the user's selection before any build work begins.
+- The selected option is the visual target for `$image-to-code`.
 
 ## Feedback Loop
 
 If the user gives feedback after seeing options, generate revised options with that feedback.
 
-If the user selects an option and gives feedback, do not assume build should begin. Ask one question:
+If the user selects an option and gives feedback, generate a revised option with that feedback before build.
 
-> Should I build from this direction now, or generate another round with your feedback?
+If the user likes parts of more than one option, combine those choices into a new Image Gen design and show it before build.
 
 ## Image Gen Prompt
 
-Use this prompt attaching any attachment and your design brief to Image Gen
+Adapt this prompt to the confirmed design brief, attach any available image references, and send it to Image Gen:
 
 ```text
 Create realistic, production-quality UI designs with clear hierarchy, strong typography, intentional imagery, and purposeful spacing.
@@ -95,6 +116,19 @@ Create realistic, production-quality UI designs with clear hierarchy, strong typ
 Keep the design simple. Avoid busy interfaces. Every section should have a clear purpose, and every element should earn its place.
 
 Prioritize clarity, whitespace, and usability over decorative complexity.
+
+### Target Dimensions
+
+Pick the dimensions that best match the user's request and any provided visual reference.
+
+ - Mobile app: `390 x 844`
+ - Tablet app: `834 x 1194`
+ - Desktop app, dashboard, admin, or SaaS: `1440 x 1024`
+ - Landing or marketing page: `1440` wide and scrollable
+ - Modal, panel, widget, or component: natural container size
+ - Provided screenshot, Figma frame, mockup, or reference image: match its dimensions and aspect ratio when the user wants to continue from that visual
+
+Avoid crowding. Make the design fit the chosen dimensions cleanly, with realistic spacing, readable type, and no clipped content.
 
 ### Layout
 

@@ -9,7 +9,7 @@ Deploy the user's runnable prototype so they can share it with others.
 
 ## Critical Overrides
 
-- Refer to the Plugin [index] before proceeding [$index](../index/SKILL.md).
+- Refer to the Plugin router [$index](../index/SKILL.md) before proceeding.
 - Follow [$critical-overrides](../../references/critical-overrides.md).
 
 ## User Context

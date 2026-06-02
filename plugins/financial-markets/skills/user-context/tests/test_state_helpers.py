@@ -13,8 +13,9 @@ INIT_SCRIPT = SCRIPT_DIR / "init_user_context_state.py"
 RESET_SCRIPT = SCRIPT_DIR / "reset_user_context_state.py"
 PREFLIGHT_SCRIPT = SCRIPT_DIR / "user_context_preflight.py"
 MARKETPLACE_ID = "role-based-plugins"
-PLUGIN_ID = "public-equity-investing"
-ROUTER_SKILL = SKILL_ROOT.parent / PLUGIN_ID / "SKILL.md"
+PLUGIN_ID = "financial-markets"
+ROUTER_SKILL_ID = "public-equity-investing"
+ROUTER_SKILL = SKILL_ROOT.parent / ROUTER_SKILL_ID / "SKILL.md"
 MEETING_PREP_SKILL = SKILL_ROOT.parent / "meeting-prep" / "SKILL.md"
 COMPANY_TEARSHEET_SKILL = SKILL_ROOT.parent / "company-tearsheet" / "SKILL.md"
 COMPANY_TEARSHEET_SOURCE_REFERENCE = (
@@ -215,6 +216,12 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
                 "source_setup": {},
                 "connector_confirmation": {},
                 "automations": {},
+                "hero_prompt_choice": {
+                    "status": None,
+                    "options": ["earnings-deep-dive", "long-short-pitch", "idea-generation"],
+                    "selected_skill": None,
+                    "selected_anchor": None,
+                },
             },
         )
 
@@ -357,10 +364,16 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
         self.assertIn("python3 skills/user-context/scripts/user_context_preflight.py", router_text)
         self.assertIn("shell working directory set to this plugin's root", router_text)
         self.assertIn("do not probe alternate relative paths", router_text)
-        self.assertIn("Apply relevant entries from `saved_context`", router_text)
+        self.assertIn(
+            "Pass relevant entries from `saved_context` to the selected lead skill",
+            router_text,
+        )
+        self.assertIn("must not interpret saved output preferences", router_text)
         self.assertIn("must never block the requested workflow", router_text)
         self.assertIn('next_action.id = "offer_orientation"', router_text)
         self.assertIn("completed, deferred, or quiet", router_text)
+        self.assertIn("onboarding, setup, orientation, or get-started requests", router_text)
+        self.assertIn("`Help me get started`", router_text)
         self.assertIn(
             "remember, save, update, forget, inspect, export, reset, source-setup, or automation-setup",
             router_text,
@@ -445,7 +458,7 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
         actual_specialists = {
             path.parent.name
             for path in SKILL_ROOT.parent.glob("*/SKILL.md")
-            if path.parent.name not in {PLUGIN_ID, "user-context"}
+            if path.parent.name not in {ROUTER_SKILL_ID, "user-context"}
         }
         self.assertEqual(actual_specialists, SPECIALIST_SKILLS)
 
@@ -474,7 +487,7 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
                 for category in categories:
                     self.assertIn(f"`{category}`", text)
 
-    def test_preflight_collects_memory_preferences_after_orientation(self) -> None:
+    def test_preflight_offers_source_setup_after_orientation(self) -> None:
         self.assertEqual(
             self.run_script(INIT_SCRIPT, "--codex-home", str(self.codex_home)).returncode,
             0,
@@ -488,13 +501,13 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
 
         self.assertEqual(proc.returncode, 0, msg=proc.stderr)
         payload = json.loads(proc.stdout)
-        self.assertEqual(payload["next_action"]["id"], "collect_memory_preferences")
+        self.assertEqual(payload["next_action"]["id"], "configure_sources")
         self.assertEqual(
             payload["next_action"]["copy_ref"],
-            "skills/user-context/references/onboarding.md#memory-preferences-response-template",
+            "skills/user-context/references/onboarding.md#source-setup-response-template",
         )
 
-    def test_preflight_offers_source_setup_after_memory_preferences(self) -> None:
+    def test_preflight_ignores_legacy_pending_memory_preferences(self) -> None:
         self.assertEqual(
             self.run_script(INIT_SCRIPT, "--codex-home", str(self.codex_home)).returncode,
             0,
@@ -502,7 +515,6 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
         onboarding_path = self.state_dir / "onboarding-state.json"
         onboarding_state = json.loads(onboarding_path.read_text(encoding="utf-8"))
         onboarding_state["orientation"]["status"] = "completed"
-        onboarding_state["memory_preferences"]["status"] = "completed"
         onboarding_path.write_text(json.dumps(onboarding_state), encoding="utf-8")
 
         proc = self.run_script(PREFLIGHT_SCRIPT, "--codex-home", str(self.codex_home))
@@ -553,7 +565,7 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
             "skills/user-context/references/onboarding.md#automation-setup-response-template",
         )
 
-    def test_preflight_offers_completion_after_automation_resolution(self) -> None:
+    def test_preflight_offers_hero_workflows_after_automation_resolution(self) -> None:
         self.assertEqual(
             self.run_script(INIT_SCRIPT, "--codex-home", str(self.codex_home)).returncode,
             0,
@@ -570,10 +582,50 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
 
         self.assertEqual(proc.returncode, 0, msg=proc.stderr)
         payload = json.loads(proc.stdout)
-        self.assertEqual(payload["next_action"]["id"], "complete_or_defer")
+        self.assertEqual(payload["next_action"]["id"], "choose_hero_workflow")
         self.assertEqual(
             payload["next_action"]["copy_ref"],
-            "skills/user-context/references/onboarding.md#complete-or-defer-response-template",
+            "skills/user-context/references/onboarding.md#hero-workflow-response-template",
+        )
+
+    def test_preflight_stops_after_hero_workflow_selection(self) -> None:
+        self.assertEqual(
+            self.run_script(INIT_SCRIPT, "--codex-home", str(self.codex_home)).returncode,
+            0,
+        )
+        onboarding_path = self.state_dir / "onboarding-state.json"
+        onboarding_state = json.loads(onboarding_path.read_text(encoding="utf-8"))
+        onboarding_state["orientation"]["status"] = "completed"
+        onboarding_state["source_setup"]["status"] = "completed"
+        onboarding_state["automations"]["status"] = "skipped"
+        onboarding_state["hero_prompt_choice"]["status"] = "selected"
+        onboarding_state["hero_prompt_choice"]["selected_skill"] = "earnings-deep-dive"
+        onboarding_path.write_text(json.dumps(onboarding_state), encoding="utf-8")
+
+        proc = self.run_script(PREFLIGHT_SCRIPT, "--codex-home", str(self.codex_home))
+
+        self.assertEqual(proc.returncode, 0, msg=proc.stderr)
+        payload = json.loads(proc.stdout)
+        self.assertIsNone(payload["next_action"])
+        self.assertFalse(payload["onboarding_incomplete"])
+
+    def test_preflight_exposes_four_step_progress_and_hero_options(self) -> None:
+        self.assertEqual(
+            self.run_script(INIT_SCRIPT, "--codex-home", str(self.codex_home)).returncode,
+            0,
+        )
+
+        proc = self.run_script(PREFLIGHT_SCRIPT, "--codex-home", str(self.codex_home))
+
+        self.assertEqual(proc.returncode, 0, msg=proc.stderr)
+        progress = json.loads(proc.stdout)["onboarding_progress"]
+        self.assertEqual(
+            [step["label"] for step in progress["task_list"]],
+            ["Intro and defaults", "Connectors and plugins", "Automation", "Hero workflows"],
+        )
+        self.assertEqual(
+            progress["hero_prompt_options"],
+            ["earnings-deep-dive", "long-short-pitch", "idea-generation"],
         )
 
     def test_preflight_echoes_automation_metadata_without_claiming_live_state(self) -> None:
@@ -619,6 +671,19 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
         self.assertIn("automation_update", automation_text)
         self.assertIn("tool_search", automation_text)
         self.assertIn("$CODEX_HOME/automations/*/automation.toml", automation_text)
+        self.assertIn("### Canonical Automation Prompt", config_text)
+        self.assertIn("Run a read-only weekday Public Equity Investing source check.", config_text)
+        self.assertIn(
+            "Report only: Upcoming Catalysts, Stale Sources, and Missing Inputs.", config_text
+        )
+        self.assertIn("Do not invent a portfolio or watchlist.", config_text)
+        self.assertIn(
+            "does not perform broad research or draft investment analysis;", automation_text
+        )
+        self.assertIn(
+            "Use the configured canonical automation prompt substantially verbatim.",
+            automation_text,
+        )
         self.assertIn("Do not copy automation metadata into `user-context.md`.", automation_text)
 
     def test_preflight_offers_automation_when_source_setup_is_skipped(self) -> None:
@@ -641,34 +706,36 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
             "configure_default_automation",
         )
 
-    def test_onboarding_reference_uses_canonical_preference_copy(self) -> None:
+    def test_onboarding_reference_uses_four_step_defaults_and_hero_copy(self) -> None:
         onboarding_text = ONBOARDING_REFERENCE.read_text(encoding="utf-8")
+        plugin_memory_text = PLUGIN_MEMORY_REFERENCE.read_text(encoding="utf-8")
+        intake_text = (SKILL_ROOT.parents[1] / "shared/deliverable-intake-policy.md").read_text(
+            encoding="utf-8"
+        )
 
-        for category in (
-            "Output Style",
-            "Portfolio And Watchlists",
-            "Trusted Sources",
-            "Modeling And Valuation",
-            "Thesis And Risk Tracking",
-            "Compliance And Review",
+        for step in (
+            "## Step 1: Intro And Defaults",
+            "## Step 2: Connectors And Plugins",
+            "## Step 3: Automation",
+            "## Step 4: Hero Workflows",
         ):
-            self.assertIn(f"- {category}:", onboarding_text)
-        self.assertIn(
-            "Render the canonical response template substantially verbatim", onboarding_text
-        )
-        self.assertIn(
-            "Do not add preference categories, examples, or connector claims", onboarding_text
-        )
+            self.assertIn(step, onboarding_text)
+        self.assertIn("Reader-facing output: polished HTML research report", onboarding_text)
+        self.assertIn("Word document (.docx)", onboarding_text)
+        self.assertIn("Audience: PM or investment team", onboarding_text)
+        self.assertIn("models, trackers, workbook updates, deck requests", onboarding_text)
+        self.assertIn("1. **Analyze Latest Earnings:**", onboarding_text)
+        self.assertIn("2. **Pressure-Test A Stock Idea:**", onboarding_text)
+        self.assertIn("3. **Screen A Market Theme:**", onboarding_text)
         self.assertIn(
             "Keep live company updates and one-off research requests in the active workflow.",
             onboarding_text,
         )
-        self.assertIn("continue to source setup", onboarding_text)
-        self.assertIn(
-            "set `orientation.status` to `completed` and `memory_preferences.status` to `skipped`",
-            onboarding_text,
-        )
-        self.assertIn("After the preference step is resolved, rerun preflight", onboarding_text)
+        self.assertNotIn("## Memory Preferences", onboarding_text)
+        self.assertNotIn("## Complete Or Defer", onboarding_text)
+        self.assertIn("saved reader-facing output preference as the default", plugin_memory_text)
+        self.assertIn("saved HTML preference resolves the presentation surface to HTML", intake_text)
+        self.assertIn("saved HTML preference override an obvious workbook", intake_text)
 
     def test_source_category_config_defines_static_catalog_only(self) -> None:
         config = json.loads(SOURCE_CATEGORY_CONFIG.read_text(encoding="utf-8"))
@@ -706,6 +773,17 @@ class PublicEquityInvestingStateHelpersTest(unittest.TestCase):
         self.assertIn("functions.list_available_plugins_to_install", runtime_text)
         self.assertIn("Do not perform connector reads merely to prove setup.", runtime_text)
         self.assertIn("Do not create, read, or migrate `category-state.json`.", runtime_text)
+        self.assertIn("`app_connector_ids` intersects the `.app.json` ids", runtime_text)
+        self.assertIn("Keep the app or connector route as fallback", runtime_text)
+        self.assertIn(
+            "skills or tools are not visible until the next turn or session refresh", runtime_text
+        )
+        self.assertIn("Install confirmed candidates one at a time.", runtime_text)
+        self.assertIn('`action_type: "install"`', runtime_text)
+        self.assertIn("`tool_type: <exact returned candidate tool_type>`", runtime_text)
+        self.assertIn("`tool_id: <exact returned candidate id>`", runtime_text)
+        self.assertIn("`suggest_reason: <concise one-line reason>`", runtime_text)
+        self.assertIn("Do not guess `tool_id` values", runtime_text)
         self.assertNotIn("list_available_plugins_to_install", preflight_text)
         self.assertNotIn("request_plugin_install", preflight_text)
 

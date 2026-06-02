@@ -27,4 +27,4 @@ build a model, value a business, summarize earnings, clean a workbook, or prepar
 
 ## After Activation
 
-Once this gate is met, use `final-deliverable-framework.md` to select the owning workflow and `deliverable-intake-policy.md` before a new substantive human-facing artifact begins. Support and presentation skills inherit this activation decision rather than extending the implicit scope.
+Once this gate is met, the router selects the owning workflow from user intent and focused skill descriptions. The selected lead workflow, not the router, applies `final-deliverable-framework.md` and reads `deliverable-intake-policy.md` before a new standalone reader-facing artifact begins to resolve presentation choices. Support and presentation skills inherit this activation decision rather than extending the implicit scope.

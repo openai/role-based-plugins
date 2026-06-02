@@ -19,7 +19,9 @@ Load `../../shared/workflow-source-resolution.md`. Use `source_category_plan` la
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML investment memo. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Goal
 
@@ -44,7 +46,7 @@ Do not use when the user asks to "pitch this long/short," "make this investable,
 
 - Default deliverable: produce the full decision-grade memo. For a substantive investment committee memo, buy-side investment memo, or reusable/source-heavy public-equity memo, produce a polished standalone HTML investment committee memo following `../../shared/html-artifact-standard.md` unless the user requests another surface, a quick/no-file answer, `.docx`, or a standardized dashboard.
 - For other substantial written memo modes, produce a polished standalone HTML memo or report appropriate to the requested audience, following `../../shared/html-artifact-standard.md`, unless another surface is selected.
-- Chat can be the presentation surface for narrow or conversational memo requests, but Markdown is formatting, not the deliverable contract.
+- Chat can be the presentation surface only when the user explicitly requests a lightweight response; Markdown is formatting, not the deliverable contract.
 - This local skill does not ship native `.docx` or `.xlsx` templates/scripts. Route workbook-backed outputs to the model/workbook skills.
 - Create `.docx` or `.xlsx` artifacts only when the user explicitly asks and an appropriate document/spreadsheet tool, template, or user-provided file is available.
 - If no document/template support is available, provide the memo in chat or HTML report form and keep JSON/Markdown support files out of the lead handoff unless explicitly requested.

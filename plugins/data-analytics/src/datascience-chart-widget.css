@@ -49,7 +49,7 @@
         text-rendering: optimizeLegibility;
       }
 
-      html[data-display-mode="fullscreen"] {
+      html:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) {
         min-height: 100%;
         overflow: auto;
         background: var(--ds-bg);
@@ -69,11 +69,18 @@
         text-rendering: optimizeLegibility;
       }
 
-      body[data-display-mode="fullscreen"] {
+      body:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) {
         height: auto;
         min-height: 100vh;
         overflow: auto;
         background: var(--ds-bg);
+      }
+
+      html[data-display-mode="modal"],
+      body[data-display-mode="modal"] {
+        height: 100%;
+        min-height: 100%;
+        overflow: hidden;
       }
 
       .widget {
@@ -84,7 +91,7 @@
         box-shadow: none;
       }
 
-      .widget:not([data-display-mode="fullscreen"]) {
+      .widget:not([data-display-mode="fullscreen"]):not([data-display-mode="modal"]) {
         padding: 16px;
       }
 
@@ -372,22 +379,6 @@
         flex: 0 0 auto;
         align-items: center;
         gap: 6px;
-      }
-
-      .chart-setting-label {
-        color: var(--ds-text-muted);
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 20px;
-        white-space: nowrap;
-      }
-
-      .chart-setting-segmented .toggle-button {
-        min-height: 32px;
-        padding: 0 10px;
-        color: var(--ds-chip-text);
-        font-size: 13px;
-        letter-spacing: 0;
       }
 
       .field-well {
@@ -723,7 +714,7 @@
         white-space: nowrap;
       }
 
-      .widget:not([data-display-mode="fullscreen"]) .query-status {
+      .widget:not([data-display-mode="fullscreen"]):not([data-display-mode="modal"]) .query-status {
         display: none;
       }
 
@@ -1138,11 +1129,11 @@
         display: none;
       }
 
-      .widget:not([data-display-mode="fullscreen"]) .controls {
+      .widget:not([data-display-mode="fullscreen"]):not([data-display-mode="modal"]) .controls {
         display: none !important;
       }
 
-      .widget[data-display-mode="fullscreen"] {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) {
         display: flex;
         height: auto;
         min-height: 100vh;
@@ -1159,7 +1150,7 @@
         flex-direction: column;
       }
 
-      .widget[data-display-mode="fullscreen"] header {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) header {
         flex: 0 0 auto;
         position: sticky;
         top: 0;
@@ -1171,12 +1162,12 @@
         box-shadow: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .compact-title-row,
-      .widget[data-display-mode="fullscreen"] header > .subtitle {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .compact-title-row,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) header > .subtitle {
         display: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .detail-topbar {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .detail-topbar {
         display: flex;
         position: sticky;
         top: 0;
@@ -1187,6 +1178,10 @@
         min-height: 56px;
         padding: 12px;
         background: var(--ds-bg);
+      }
+
+      .widget[data-display-mode="modal"] .detail-topbar {
+        display: none;
       }
 
       .detail-topbar-actions {
@@ -1207,7 +1202,7 @@
         white-space: nowrap;
       }
 
-      .widget[data-display-mode="fullscreen"] .app-shell {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .app-shell {
         display: block;
         flex: 1 1 auto;
         height: auto;
@@ -1217,14 +1212,27 @@
         background: var(--ds-bg);
       }
 
-      .widget[data-display-mode="fullscreen"] .app-sidebar {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .app-sidebar {
         display: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .app-main {
+      .widget[data-display-mode="modal"],
+      .widget[data-display-mode="modal"] .app-shell {
+        height: 100%;
+        min-height: 100%;
+        overflow: hidden;
+      }
+
+      .widget[data-display-mode="modal"] .app-shell {
         display: flex;
+      }
+
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .app-main {
+        display: flex;
+        flex: 1 1 auto;
         flex-direction: column;
         min-width: 0;
+        width: 100%;
         height: auto;
         min-height: calc(100vh - 57px);
         overflow: visible;
@@ -1234,7 +1242,12 @@
         box-shadow: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .detail-title-section {
+      .widget[data-display-mode="modal"] .app-main {
+        height: 100%;
+        min-height: 0;
+      }
+
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .detail-title-section {
         display: flex;
         flex: 0 0 auto;
         flex-direction: column;
@@ -1242,13 +1255,54 @@
         padding: 24px 32px 16px;
       }
 
-      .widget[data-display-mode="fullscreen"] .detail-title-section h1 {
+      .detail-title-row {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .detail-title-section h1 {
+        flex: 1 1 auto;
+        min-width: 0;
         margin: 0;
         color: var(--ds-text-primary);
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 500;
-        line-height: 38px;
+        line-height: 34px;
         letter-spacing: -0.04px;
+      }
+
+      .modal-title-close-button {
+        display: none;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        margin-left: auto;
+        margin-top: 2px;
+        border: 0;
+        border-radius: var(--ds-radius-pill);
+        background: transparent;
+        color: var(--ds-text-secondary);
+        cursor: pointer;
+      }
+
+      .widget[data-display-mode="modal"] .modal-title-close-button {
+        display: inline-flex;
+      }
+
+      .modal-title-close-button:hover {
+        background: var(--ds-menu-hover-bg);
+        color: var(--ds-text-primary);
+      }
+
+      .modal-title-close-button:focus-visible {
+        outline: 2px solid var(--ds-blue-bright);
+        outline-offset: 2px;
       }
 
       .detail-subtitle {
@@ -1259,7 +1313,7 @@
         letter-spacing: -0.14px;
       }
 
-      .widget[data-display-mode="fullscreen"] .app-toolbar {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .app-toolbar {
         display: none;
         flex: 0 0 auto;
         align-items: center;
@@ -1271,7 +1325,7 @@
         background: var(--ds-bg);
       }
 
-      .widget[data-display-mode="fullscreen"] .view-mode-tabs {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .view-mode-tabs {
         display: none;
       }
 
@@ -1485,13 +1539,19 @@
         white-space: nowrap;
       }
 
-      .widget[data-display-mode="fullscreen"] .chart-shell {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .chart-shell {
         flex: 0 0 auto;
         height: clamp(360px, 48vw, 520px);
         min-height: 360px;
         overflow: visible;
         padding: 16px 32px 24px;
         background: var(--ds-bg);
+      }
+
+      .widget[data-display-mode="modal"] .chart-shell {
+        flex: 1 1 auto;
+        height: 100%;
+        min-height: 0;
       }
 
       .chart-shell:focus,
@@ -1506,7 +1566,7 @@
         outline-color: var(--ds-blue-bright);
       }
 
-      .widget[data-display-mode="fullscreen"] .controls {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .controls {
         display: flex;
         position: sticky;
         top: 56px;
@@ -1520,13 +1580,17 @@
         background: var(--ds-bg);
       }
 
-      .widget[data-display-mode="fullscreen"] .control-label {
+      .widget[data-display-mode="modal"] .controls {
+        top: 0;
+      }
+
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .control-label {
         display: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .chart-picker-button,
-      .widget[data-display-mode="fullscreen"] .field-pill,
-      .widget[data-display-mode="fullscreen"] .clear-button {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .chart-picker-button,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .field-pill,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .clear-button {
         height: 32px;
         min-height: 32px;
         border-color: var(--ds-chip-border);
@@ -1538,18 +1602,9 @@
         letter-spacing: -0.14px;
       }
 
-      .widget[data-display-mode="fullscreen"] .chart-setting-segmented {
-        border-color: var(--ds-chip-border);
-      }
-
-      .widget[data-display-mode="fullscreen"] .chart-setting-segmented .toggle-button {
-        color: var(--ds-chip-text);
-      }
-
-      .widget[data-display-mode="fullscreen"] .clear-button {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .clear-button {
         border-color: transparent;
         color: var(--ds-text-primary);
-        margin-left: auto;
       }
 
       .chart-legend-shell {
@@ -1568,11 +1623,11 @@
         display: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .chart-legend-shell {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .chart-legend-shell {
         display: none !important;
       }
 
-      .widget[data-display-mode="fullscreen"] .split-resizer {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .split-resizer {
         display: none;
         grid-row: 3;
         align-items: center;
@@ -1592,7 +1647,7 @@
         touch-action: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .split-resizer::before {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .split-resizer::before {
         width: 32px;
         height: 3px;
         border-radius: var(--ds-radius-pill);
@@ -1605,9 +1660,9 @@
         content: "";
       }
 
-      .widget[data-display-mode="fullscreen"] .split-resizer:hover,
-      .widget[data-display-mode="fullscreen"] .split-resizer:focus-visible,
-      .widget[data-display-mode="fullscreen"].is-resizing .split-resizer {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .split-resizer:hover,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .split-resizer:focus-visible,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]).is-resizing .split-resizer {
         background:
           linear-gradient(
             to bottom,
@@ -1619,15 +1674,15 @@
           var(--ds-surface-secondary);
       }
 
-      .widget[data-display-mode="fullscreen"] .split-resizer:hover::before,
-      .widget[data-display-mode="fullscreen"] .split-resizer:focus-visible::before,
-      .widget[data-display-mode="fullscreen"].is-resizing .split-resizer::before {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .split-resizer:hover::before,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .split-resizer:focus-visible::before,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]).is-resizing .split-resizer::before {
         width: 44px;
         background: var(--ds-blue-bright);
         opacity: 0.75;
       }
 
-      .widget[data-display-mode="fullscreen"] .bottom-split {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .bottom-split {
         display: flex;
         flex: 0 0 auto;
         flex-direction: column;
@@ -1638,11 +1693,15 @@
         background: var(--ds-bg);
       }
 
-      .widget[data-display-mode="fullscreen"] .bottom-split.has-sql {
+      .widget[data-display-mode="modal"] .bottom-split {
+        display: none;
+      }
+
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .bottom-split.has-sql {
         grid-template-columns: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .data-preview {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .data-preview {
         display: block;
         flex: 0 0 auto;
         height: auto;
@@ -1652,27 +1711,27 @@
         background: var(--ds-bg);
       }
 
-      .widget[data-display-mode="fullscreen"] .data-preview .shared-table-shell,
-      .widget[data-display-mode="fullscreen"] .data-preview .table-wrap {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .data-preview .shared-table-shell,
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .data-preview .table-wrap {
         width: 100%;
         max-width: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .data-preview .table-wrap {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .data-preview .table-wrap {
         overflow-x: auto;
         overflow-y: clip;
       }
 
-      .widget[data-display-mode="fullscreen"] .data-preview .data-table {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .data-preview .data-table {
         width: 100%;
         min-width: 720px;
       }
 
-      .widget[data-display-mode="fullscreen"] .data-preview .data-table td {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .data-preview .data-table td {
         white-space: nowrap;
       }
 
-      .widget[data-display-mode="fullscreen"] .sql-preview {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .sql-preview {
         display: none;
         min-width: 0;
         flex: 0 0 auto;
@@ -1684,11 +1743,11 @@
         flex-direction: column;
       }
 
-      .widget[data-display-mode="fullscreen"] .bottom-split[data-data-mode="query"] .data-preview {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .bottom-split[data-data-mode="query"] .data-preview {
         display: none;
       }
 
-      .widget[data-display-mode="fullscreen"] .bottom-split[data-data-mode="query"] .sql-preview {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .bottom-split[data-data-mode="query"] .sql-preview {
         display: flex;
       }
 
@@ -1813,7 +1872,7 @@
         background: var(--ds-menu-hover-bg);
       }
 
-      .widget[data-display-mode="fullscreen"] :is(.table-scroll) {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) :is(.table-scroll) {
         width: 100%;
         max-width: 100%;
         height: auto;
@@ -1821,17 +1880,17 @@
         overflow-y: visible;
       }
 
-      .widget[data-display-mode="fullscreen"] tbody tr:nth-child(even) {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) tbody tr:nth-child(even) {
         background: transparent;
       }
 
       @media (max-width: 1024px) {
-        .widget[data-display-mode="fullscreen"] .app-shell {
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .app-shell {
           overflow-x: hidden;
           overflow-y: auto;
         }
 
-        .widget[data-display-mode="fullscreen"] .sql-preview {
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .sql-preview {
           border-left: 0;
         }
 
@@ -1846,17 +1905,17 @@
           --ds-panel-padding: 16px;
         }
 
-        .widget[data-display-mode="fullscreen"] .detail-title-section,
-        .widget[data-display-mode="fullscreen"] .controls,
-        .widget[data-display-mode="fullscreen"] .chart-shell,
-        .widget[data-display-mode="fullscreen"] .bottom-split {
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .detail-title-section,
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .controls,
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .chart-shell,
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .bottom-split {
           padding-right: 16px;
           padding-left: 16px;
         }
 
-        .widget[data-display-mode="fullscreen"] .detail-title-section h1 {
-          font-size: 24px;
-          line-height: 30px;
+        .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .detail-title-section h1 {
+          font-size: 22px;
+          line-height: 28px;
         }
 
         .data-section-header {
@@ -1873,7 +1932,7 @@
         overflow: visible;
       }
 
-      .widget[data-display-mode="fullscreen"] .chart-canvas-wrap {
+      .widget:is([data-display-mode="fullscreen"], [data-display-mode="modal"]) .chart-canvas-wrap {
         min-height: 0;
         height: 100%;
       }

@@ -13,26 +13,31 @@ A semantic layer is a source-backed local skill that helps future Data Analytics
 
 ## Setup Contract
 
-- Identify one coherent product or business area, intended users, destination, and whether the user wants intake-only planning, evidence crawling, a draft skill, direct local skill creation, refresh, inspection, or repair.
+- Identify or infer one coherent product, business, metric, source, or reporting area from the user's provided context or sources. Also identify intended users, destination, and whether the user wants intake-only planning, evidence crawling, a draft skill, direct local skill creation, refresh, inspection, or repair.
 - Default direct local creations to `$CODEX_HOME/skills/<area>-semantic-layer` unless the user chose another destination. Ask before placing a generated semantic-layer skill inside a plugin.
 - Create one target semantic-layer skill per coherent area by default. Keep unrelated areas separate unless the user explicitly wants one cross-product layer.
-- Require the target area plus at least one seed source before a source-backed crawl. If the user has no seed source, ask for one item from `source-intake.md`; if they want a skeleton only, label it as unseeded.
-- Build a source inventory before crawling. For direct creation or draft-file work, write it to `references/source-inventory.md`; for intake-only work, return it in chat.
+- Do not require the user to name the area up front. Require user-provided or user-approved useful context or at least one starting source before a source-backed crawl. If the user has only broad intent and no source or context, ask for one item from `source-intake.md`; if they want a skeleton only, label it as ungrounded.
+- Build a source inventory before crawling. For direct creation or draft-file work, write it to `references/source-inventory.md`; for intake-only work, return it in chat. Before saving, summarize sources checked, missing high-value source lanes, and rejected or lower-confidence candidates.
 - Resolve connectors lazily when the active source lane needs them. Prefer the most specific installed first-party connector or source tool; when unavailable, ask for the smallest useful export, pasted excerpt, local checkout, SQL text, schema description, screenshot, or alternate source. If the user selected a source during onboarding but the current semantic-layer lane has not read it yet, use the configured route from `../source-category-runtime.md` and attempt the actual read only when that lane needs the source.
+- Do not create or refresh a semantic-layer skill from ambient connector availability, saved user context, or guessed app results alone. The user must provide or approve the inputs, or explicitly choose to skip or defer setup.
 - Keep raw sensitive data, credentials, secrets, row-level customer examples, and long private messages out of generated files.
 
 ## Evidence And Synthesis
 
 Cover the available evidence lanes: tables and namespaces, verified dashboards, raw SQL, team communication, data documentation, code repositories, and existing local skills.
 
+Infer expected source lanes from the user's target metric, grain, domain, and supplied starting points. For example, a daily revenue semantic layer should look for daily-grain warehouse evidence, revenue metric docs or dashboards, and revenue-specific team communication before accepting weekly subscription or generic analytics sources as sufficient. If the best reachable sources are nearby but not exact, label the layer `Limited` or `Directional`, record the mismatch, and ask for the smallest source that would close the gap when the mismatch changes future answers.
+
 Use this source precedence unless the user provides a stronger local rule:
 
-1. Transformation code, tests, and authoritative data documentation.
+1. Transformation code, tests, and authoritative data documentation, including maintained docs, metric dictionaries, source-backed semantic-layer skills, and user-trusted canonical data skills.
 2. Verified dashboards and reviewed SQL.
 3. Table metadata, lineage, schema comments, and owners.
 4. Query history as observed usage evidence.
 5. Team communication announcements or discussion, weighted by recency, authoritativeness, and durable links.
-6. Existing local skills, treated as helpful context until corroborated.
+6. Other existing local skills, treated as helpful context until corroborated.
+
+A user can promote a local data skill by naming it as canonical or trusted for the current domain; treat that as authoritative data documentation when it has clear scope and explicit metric, table, grain, or exclusion rules. Still verify high-stakes, stale, time-sensitive, or conflicting claims against the underlying cited source or connected app when possible.
 
 Flag unresolved conflicts instead of smoothing them over. The generated skill should say which metric or table definition is canonical, which is deprecated or dashboard-specific, and what future agents should verify before high-stakes answers.
 
@@ -48,7 +53,7 @@ Flag unresolved conflicts instead of smoothing them over. The generated skill sh
 
 - Intake-only: return source inventory, missing high-value inputs, connector readiness, and crawl plan.
 - Crawl-and-synthesis: return semantic-layer summary, source coverage, unresolved conflicts, confidence notes, and target skill structure.
-- Direct create or refresh: return created or updated file paths, durable pointer written, validation results, connector gaps, activation note when relevant, and the weekly polling resolution.
+- Direct create or refresh: return created or updated file paths, durable pointer written, validation results, source-use checkpoint, connector gaps, activation note when relevant, and the weekly polling resolution.
 - Blocked: state the exact missing connector, permission, source, or destination decision and provide the best manual fallback.
 
 ## Quality Bar

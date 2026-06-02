@@ -1,6 +1,6 @@
 interface:
   display_name: "URL To Code"
-  short_description: "Clone a live URL into a runnable frontend prototype"
-  default_prompt: "Clone this URL as a runnable frontend prototype."
+  short_description: "Clone a live URL into a runnable frontend prototype after brief confirmation"
+  default_prompt: "Confirm the design brief, then clone this URL as a runnable frontend prototype."
 policy:
   allow_implicit_invocation: false

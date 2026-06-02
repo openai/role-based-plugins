@@ -23,7 +23,9 @@ When this workflow needs rendering, evidence/data preparation, style, or sector 
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive integrated position-and-hedge plan or explicit HTML risk-plan request, the default resolves the presentation surface to a polished standalone HTML risk decision report unless the user requests another surface, a quick/no-file answer, workbook output, or a standardized dashboard. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML risk decision report, with an XLSX workbook taking precedence when reusable risk calculations or trackers are central. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. For a substantive integrated position-and-hedge plan or explicit HTML risk-plan request, the default resolves the presentation surface to a polished standalone HTML risk decision report unless the user requests another surface, a quick/no-file answer, workbook output, or a standardized dashboard. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Purpose
 

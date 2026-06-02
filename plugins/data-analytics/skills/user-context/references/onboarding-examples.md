@@ -14,10 +14,10 @@ Expected behavior:
 
 - Open with a compact Data Analytics onboarding orientation that explains what the plugin does, how onboarding works, and that the user can answer `continue`, `skip`, or provide a real analytics anchor at each step.
 - Do not initialize state files, create the user-context scaffold, inspect connectors, audit conflicts, create semantic layers, create background threads, install automations, or run hero prompts before sending the first orientation message.
-- Make `Orientation` the first visible item, then `Confirm active/missing sources`; do not inspect connectors before the first orientation just to populate setup state.
+- Make `Orientation` the first visible item, then `Check main analytics sources`; do not inspect connectors before the first orientation just to populate setup state.
 - Explain that active or obvious one-app sources are informational only and will be tried only when a workflow needs them. Ask the user for help only where multiple apps are plausible, no app was found, setup/auth is needed, or manual fallback would materially change the result.
 - Include environment conflicts only when overlapping broad analytics plugins or analytics-specific skills create real or likely routing conflicts; omit that note after a clean audit.
-- Offer one concrete guided next action with real context, never placeholders such as `<metric>` or `<dashboard>`, while mirroring the canonical high-level onboarding checklist into the built-in thread task list when available: `Orientation`, `Confirm active/missing sources`, `Semantic layer setup`, and `Hero prompt`.
+- Offer one concrete guided next action with real context, never placeholders such as `<metric>` or `<dashboard>`, while mirroring the canonical high-level onboarding checklist into the built-in thread task list when available: `Orientation`, `Check main analytics sources`, `Set Up Data Context`, and `Hero prompt`.
 - Use `# Data Analytics Onboarding`, then a high-level prose paragraph that does not expose saved state paths, cache paths, or internal onboarding status.
 - Explain hero workflows only when the flow reaches the first analysis prompt or the user asks for the full plan.
 - End with one clear action close and show only the current action the user can approve now. Use a compact `**Next Step**` label only when the step needs the label; a self-contained numbered choice set can stand on its own. If the current step has open questions, make resolving them their own step and include those questions in the action close; if they are non-blocking, say what `okay` or `continue` will do by default.
@@ -70,7 +70,7 @@ Context: Data Analytics found Google Drive and Notion for company docs, but no a
 Expected behavior:
 
 - Keep the user in Step 2 or Step 2A and make the missing core choices prominent before semantic-layer setup.
-- Say that core setup still needs the user's choice, list Data warehouse or SQL with Databricks, BigQuery, and Snowflake, list Team communication with Slack and Teams, and say company docs look covered through Google Drive or Notion when that is true.
+- Say that core setup still needs the user's choice, list Data warehouse with Databricks, BigQuery, and Snowflake, list Team communication with Slack and Teams, and say company docs look covered through Google Drive or Notion when that is true.
 - Do not quietly write `deferred`, `skipped`, `declined`, `unavailable`, or `not_applicable` for a core category just to advance onboarding.
 - Do not introduce semantic-layer setup until each unresolved core source has an active or manual route, or the user explicitly chooses a known-gap fallback such as `defer core sources`.
 - When the user explicitly defers a core source, record the matching `resolution` value such as `user_deferred` or `user_continued_with_known_gap`; a core fallback without that explicit resolution should surface again as `needs_confirmation`.
@@ -88,8 +88,8 @@ Context: source setup confirmation is resolved and Data Analytics has enough sou
 Expected behavior:
 
 - Introduce semantic-layer setup briefly if it has not been introduced.
-- Ask only for the smallest missing seed if no trusted dashboard, table, SQL, doc, repo path, notebook, team thread, or recurring question is available.
-- If enough seed context exists, run the semantic-layer setup flow directly instead of asking a broad questionnaire.
+- Ask only for the smallest missing starting point if no trusted dashboard, table, SQL, doc, repo path, notebook, team thread, or recurring question is available.
+- If enough useful context exists, run the semantic-layer setup flow directly instead of asking a broad questionnaire.
 - Keep the ask grounded in one coherent product or business area; do not merge unrelated analytical areas into one layer unless the user explicitly asks.
 
 ## Case 6: Data Analytics Automations Are Automatic And Approval-Gated
@@ -161,7 +161,7 @@ Expected behavior:
 
 - Complete the requested analytics workflow.
 - Do not interrupt with full onboarding.
-- Do not include the `## Data Analytics Setup Required` start CTA when onboarding is already active. Preserve the focused skill's own final natural continuation, and optionally add a short non-final note that onboarding is still in progress.
+- Do not include the `## Data Analytics Setup Required` start CTA when onboarding is already active. Preserve the focused skill's own final natural continuation, folding `continue onboarding` into that same final CTA when useful. If no focused-skill CTA exists, use the explicit onboarding `**Next Step**` resume CTA as the sole final close.
 - If onboarding is quiet or complete, produce the requested Data Analytics artifact directly and end with one useful analytical next action, not an onboarding recap.
 - If core onboarding is incomplete, fold the setup-resume path into the same final CTA instead of adding a second final onboarding CTA.
 - If this completed one of the initial guided workflows, offer a beginner-friendly walkthrough only when the user asks for it or the active workflow owns that continuation.

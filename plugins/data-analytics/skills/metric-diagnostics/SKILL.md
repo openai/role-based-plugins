@@ -11,19 +11,27 @@ Clarify with the user when a missing input would materially change the analytica
 
 ## Skill Configuration
 
-### Source Access Guardrail
-
-Before starting the workflow, determine whether it depends on a specific required source of truth.
-
-If that source is blocked, stop that workflow path. Tell the user what source is needed, ask them to make it available or provide a reviewed fallback, and do not try to recreate the answer from substitutes.
-
-Continue only when the required source is available or the user explicitly approves an acceptable fallback.
-
-Optional enrichment is different: if it is missing, continue with the strongest available evidence and note the gap when it materially affects the answer.
-
 ### User Context
 
-Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as authoritative for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as the source of truth for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance; use saved context and semantic layers as source-selection inputs, not as substitutes for workflow-time reads from connected or provided sources. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+
+### Source Discovery And Verification
+
+Use the relevant semantic layer first when one exists. Treat it as the starting map for candidate metrics, tables, joins, filters, caveats, source precedence, and known conflicts.
+
+Do not stop at the semantic layer or the first plausible source. Search across the relevant available company source lanes, including structured data or data warehouses, dashboards, company docs, team communication, notebooks, code repositories, and other connected company knowledge or data that could change the answer.
+
+For source-backed analytical work, always verify through live source reads. When the answer depends on data, run fresh data queries against the available structured-data sources before drawing conclusions, even when the semantic layer already names likely tables or definitions.
+
+Use the combined evidence to determine which source controls the answer, note meaningful disagreements, and state why the selected source is authoritative.
+
+### Source Access Guardrail
+
+Before querying sources, building artifacts, or drawing conclusions, determine whether the answer requires a specific source of truth.
+
+If a required source is unavailable, stop that path. Tell the user what source is needed, ask them to make it available or provide a reviewed fallback, and do not treat weaker substitutes as equivalent.
+
+If the missing source is only optional enrichment, continue with the strongest available evidence and label the gap when it materially affects the answer.
 
 ## Workflow
 

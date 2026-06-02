@@ -1,6 +1,6 @@
 {
   "name": "datascience-mcp-widgets",
-  "version": "0.1.29",
+  "version": "0.1.34",
   "type": "module",
   "private": true,
   "scripts": {

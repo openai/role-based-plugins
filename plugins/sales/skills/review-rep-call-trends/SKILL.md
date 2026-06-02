@@ -256,7 +256,7 @@ Each action must include:
 List 3–8 calls with a one-line reason each.
 
 ### Citation format
-- Use compact inline numbered markdown links such as `[1](https://example.com/call/123456789)`.
+- Use compact inline numbered markdown links such as `[1](https://us-43929.app.gong.io/call?id=123456789)`.
 - Keep the human-readable context in prose, for example: `2026-03-24, Blue Yonder, Pilot & Pricing [1]`.
 - When one statement is supported by multiple calls, append multiple numbered links inline.
 - Prefer the live transcript/call URL from the connector response over raw connector ids.

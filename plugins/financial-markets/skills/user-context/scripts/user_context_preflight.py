@@ -21,8 +21,9 @@ SAVED_CONTEXT_HEADING = "## Saved Links And Context"
 SAVED_CONTEXT_PLACEHOLDER = "status: not provided"
 COMPLETE_ONBOARDING_STATUSES = {"complete", "completed", "quiet"}
 TERMINAL_ONBOARDING_STATUSES = COMPLETE_ONBOARDING_STATUSES | {"deferred"}
-RESOLVED_STEP_STATUSES = {"accepted", "complete", "completed", "skipped"}
+RESOLVED_STEP_STATUSES = {"accepted", "complete", "completed", "selected", "skipped"}
 TERMINAL_STEP_STATUSES = {"declined", "deferred", "quiet"}
+HERO_PROMPT_OPTIONS = ["earnings-deep-dive", "long-short-pitch", "idea-generation"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -162,9 +163,14 @@ def build_source_category_plan(
     }
 
 
-def onboarding_is_incomplete(status: Any, state_status: str) -> bool:
+def onboarding_is_incomplete(
+    status: Any,
+    state_status: str,
+    onboarding_state: dict[str, Any] | None,
+) -> bool:
     if state_status != "present" or not isinstance(status, str):
-        return True
+        hero_prompt_status = block_status(onboarding_state, "hero_prompt_choice")
+        return hero_prompt_status not in RESOLVED_STEP_STATUSES | TERMINAL_STEP_STATUSES
     return status.casefold() not in COMPLETE_ONBOARDING_STATUSES
 
 
@@ -193,6 +199,26 @@ def read_automation_state(
     return automations
 
 
+def onboarding_progress(onboarding_state: dict[str, Any] | None) -> dict[str, Any]:
+    steps = [
+        ("intro_defaults", "Intro and defaults", "orientation"),
+        ("connectors_plugins", "Connectors and plugins", "source_setup"),
+        ("automation", "Automation", "automations"),
+        ("hero_workflows", "Hero workflows", "hero_prompt_choice"),
+    ]
+    task_list = []
+    for step_id, label, block_name in steps:
+        status = block_status(onboarding_state, block_name)
+        if status in RESOLVED_STEP_STATUSES:
+            progress_status = "completed"
+        elif status in TERMINAL_STEP_STATUSES:
+            progress_status = status
+        else:
+            progress_status = "pending"
+        task_list.append({"id": step_id, "label": label, "status": progress_status})
+    return {"task_list": task_list, "hero_prompt_options": HERO_PROMPT_OPTIONS}
+
+
 def next_action(
     onboarding_state_status: str,
     onboarding_state: dict[str, Any] | None,
@@ -216,15 +242,6 @@ def next_action(
             "copy_ref": "skills/user-context/references/onboarding.md#orientation-response-template",
         }
 
-    memory_preferences_status = block_status(onboarding_state, "memory_preferences")
-    if memory_preferences_status in TERMINAL_STEP_STATUSES:
-        return None
-    if memory_preferences_status not in RESOLVED_STEP_STATUSES:
-        return {
-            "id": "collect_memory_preferences",
-            "copy_ref": "skills/user-context/references/onboarding.md#memory-preferences-response-template",
-        }
-
     source_setup_status = block_status(onboarding_state, "source_setup")
     if source_setup_status not in RESOLVED_STEP_STATUSES | TERMINAL_STEP_STATUSES:
         return {
@@ -237,10 +254,13 @@ def next_action(
             "id": "configure_default_automation",
             "copy_ref": "skills/user-context/references/onboarding.md#automation-setup-response-template",
         }
-    return {
-        "id": "complete_or_defer",
-        "copy_ref": "skills/user-context/references/onboarding.md#complete-or-defer-response-template",
-    }
+    hero_prompt_status = block_status(onboarding_state, "hero_prompt_choice")
+    if hero_prompt_status not in RESOLVED_STEP_STATUSES | TERMINAL_STEP_STATUSES:
+        return {
+            "id": "choose_hero_workflow",
+            "copy_ref": "skills/user-context/references/onboarding.md#hero-workflow-response-template",
+        }
+    return None
 
 
 def main() -> int:
@@ -272,6 +292,7 @@ def main() -> int:
         "onboarding_incomplete": onboarding_is_incomplete(
             onboarding_status,
             onboarding_state_status,
+            onboarding_state,
         ),
         "next_action": next_action(
             onboarding_state_status,
@@ -286,6 +307,7 @@ def main() -> int:
             errors,
         ),
         "automation_state": read_automation_state(onboarding_state, errors),
+        "onboarding_progress": onboarding_progress(onboarding_state),
         "errors": errors,
     }
     print(json.dumps(payload, indent=2))

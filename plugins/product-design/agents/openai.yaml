@@ -1,4 +1,4 @@
 interface:
   display_name: "Product Design"
-  short_description: "Product Design audits, research, context gathering, ideation, prototypes, and visual QA"
-  default_prompt: "Help with a product-flow audit, design research, context gathering, ideation, prototyping, or prototype QA."
+  short_description: "Product Design audits, research, brief confirmation, ideation, prototypes, and visual QA"
+  default_prompt: "For designing, building, or extending UI work, start by confirming the design brief. Help with product-flow audits, design research, ideation, prototyping, or prototype QA."

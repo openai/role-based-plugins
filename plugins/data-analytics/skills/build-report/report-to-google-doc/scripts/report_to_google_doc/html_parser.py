@@ -24,7 +24,7 @@ def require_bs4() -> None:
     if BS4_IMPORT_ERROR is not None:
         raise SystemExit(
             "This helper requires beautifulsoup4. Install it in the active Python "
-            "environment or install beautifulsoup4 in a temporary environment."
+            "environment before running this helper."
         ) from BS4_IMPORT_ERROR
 
 

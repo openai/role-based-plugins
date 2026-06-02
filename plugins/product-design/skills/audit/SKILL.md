@@ -18,7 +18,7 @@ The output is not a loose opinion. The output is:
 
 ## Critical Overrides
 
-- Refer to the Plugin [index] before proceeding [$index](../index/SKILL.md).
+- Refer to the Plugin router [$index](../index/SKILL.md) before proceeding.
 - Follow [$critical-overrides](../../references/critical-overrides.md).
 
 ## User Context
@@ -50,7 +50,7 @@ Capture rules:
 
 - Use the Codex in-app Browser first.
 - If Browser cannot access, control, or screenshot the target, use Chrome [Internal].
-- If Browser and Chrome cannot complete the capture, use Playwright as the fallback.
+- If Browser and Chrome cannot complete the capture, ask before using Playwright as the fallback.
 - If none of those can capture valid screenshots or control the flow, stop and report the blocker.
 
 Browser capture order:

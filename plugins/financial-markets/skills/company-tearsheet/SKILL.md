@@ -31,7 +31,9 @@ When this skill uses a source category, use it for the following information. Th
 
 ## Deliverable Intake
 
-Before source gathering or analysis for a new substantive hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. When the user explicitly requests HTML for a tearsheet, that resolves the presentation surface to a polished standalone HTML tearsheet; ask only remaining material choices and do not treat HTML as a request for a standardized dashboard. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
+Apply the presentation-surface precedence in `../../shared/deliverable-intake-policy.md`. This workflow's natural artifact is a polished standalone HTML issuer tearsheet. Do not choose chat-only output unless the user explicitly requests a lightweight response.
+
+Before source gathering or analysis for a new standalone reader-facing hero deliverable, load `../../shared/deliverable-intake-policy.md` and use its adaptive `request_user_input` preflight for materially unresolved format, depth, audience/use, or focus choices. When the user explicitly requests HTML for a tearsheet, that resolves the presentation surface to a polished standalone HTML tearsheet; ask only remaining material choices and do not treat HTML as a request for a standardized dashboard. Reuse resolved preferences in downstream steps; when acting only as input to an owning workflow, do not re-prompt.
 
 ## Purpose
 
@@ -39,7 +41,7 @@ Create a source-backed baseline profile for a public issuer so downstream Public
 
 Use this before or inside comps, DCF, 3-statement, earnings, model update, long/short pitch, memo, meeting-prep, thesis tracker, risk/sizing, hedge, event, catalyst, equity-risk credit-signal, and deck/report workflows when a fast public profile is needed.
 
-Use chat for quick issuer baselines. When the user explicitly requests HTML or selects HTML during intake, produce a compact polished standalone HTML tearsheet following `../../shared/html-artifact-standard.md`; let the issuer's business model and requested review lens determine the hierarchy. If the work expands into detailed thesis construction, scenarios, underwriting, or a full investment view, route the baseline into `initiating-coverage`, `memo-builder`, or the relevant owning workflow. Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable dashboard template, or structured payload-driven render.
+Produce a compact polished standalone HTML tearsheet following `../../shared/html-artifact-standard.md` unless another format takes precedence; let the issuer's business model and requested review lens determine the hierarchy. Use chat only when the user explicitly requests a lightweight response. If the work expands into detailed thesis construction, scenarios, underwriting, or a full investment view, route the baseline into `initiating-coverage`, `memo-builder`, or the relevant owning workflow. Use `dashboard-builder` only when the user explicitly asks for a standardized dashboard, reusable dashboard template, or structured payload-driven render.
 
 ## Do Not Use
 

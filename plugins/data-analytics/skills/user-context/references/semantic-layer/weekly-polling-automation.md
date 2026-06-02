@@ -71,7 +71,7 @@ Source inventory: <target-skill>/references/source-inventory.md
 
 Read the source inventory first. For each automation-eligible source, use the listed connector or tool to check for relevant changes since the last checked date. Focus on metric definitions, canonical dashboards, table grain, join keys, freshness, owner notes, deprecations, query patterns, and caveats. Respect the update boundary listed for each source.
 
-Apply this source precedence: transformation code and authoritative docs, then verified dashboards, then table metadata and lineage, then query history, then team communication context or existing local skills as supporting context. Do not update from team-communication-only or query-history-only evidence unless the source inventory says that is acceptable.
+Apply this source precedence: transformation code, tests, and authoritative data documentation, including maintained docs, metric dictionaries, source-backed semantic-layer skills, and user-trusted canonical data skills; then verified dashboards; then table metadata and lineage; then query history; then team communication context; then other local skills as supporting context. Do not update from team-communication-only, query-history-only, or generic-local-skill-only evidence unless the source inventory says that is acceptable.
 
 If changes are clear, source-backed, and within the allowed update boundary, update the semantic-layer references and evidence register. Keep raw sensitive data, credentials, long private messages, and row-level examples out of the files. Preserve unresolved conflicts as open questions instead of choosing silently.
 

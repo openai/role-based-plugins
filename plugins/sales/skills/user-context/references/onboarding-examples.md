@@ -7,7 +7,7 @@ Use these compact cases to audit the core onboarding experience. They are regres
 User says:
 
 ```text
-@sales let's onboard
+@sales help me get started
 ```
 
 Expected behavior:

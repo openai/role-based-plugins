@@ -1801,8 +1801,8 @@ function chartWidgetDetailHtml(html, widgetInstanceId) {
 const bridge = `<script>
 window.openai = {
 ...(window.openai || {}),
-availableDisplayModes: ["inline", "fullscreen"],
-displayMode: "fullscreen",
+availableDisplayModes: ["modal"],
+displayMode: "modal",
 widgetInstanceId: ${safeScriptJson(widgetInstanceId)},
 requestDisplayMode(request) {
 const mode = typeof request === "string" ? request : request && request.mode;
@@ -1841,14 +1841,14 @@ const source = querySourceForChart(chart, manifest?.sources ?? []);
 const hostedChartModal = shouldUseHostedChartModal(packageInfo);
 const widgetInstanceId = `report-chart-detail-${chart.id}`;
 const widgetPayload = useMemo(() => chartWidgetPayload(chart, rows, source, snapshot, sourceQueryText), [chart, rows, source, snapshot, sourceQueryText]);
-const widgetUrl = useMemo(() => `/api/inline-chart-widget?displayMode=fullscreen&widgetInstanceId=${encodeURIComponent(widgetInstanceId)}`, [widgetInstanceId]);
+const widgetUrl = useMemo(() => `/api/inline-chart-widget?displayMode=modal&widgetInstanceId=${encodeURIComponent(widgetInstanceId)}`, [widgetInstanceId]);
 const clearPendingPostTimers = useCallback(() => {
 pendingPostTimersRef.current.forEach((timer) => window.clearTimeout(timer));
 pendingPostTimersRef.current = [];
 }, []);
 const postWidgetPayload = useCallback(() => {
 iframeRef.current?.contentWindow?.postMessage({
-displayMode: "fullscreen",
+displayMode: "modal",
 payload: widgetPayload,
 targetWidgetInstanceId: widgetInstanceId
 }, "*");
@@ -1950,6 +1950,9 @@ return;
 if (data.type === "datascience-chart-widget-display-mode" && data.mode === "inline") {
 onClose();
 }
+if (data.type === "datascience-chart-widget-spec-reset" && data.widgetInstanceId === widgetInstanceId) {
+onChartSpecChange(chart.id, null);
+}
 if (data.type === "datascience-chart-widget-spec-change" && data.widgetInstanceId === widgetInstanceId) {
 onChartSpecChange(chart.id, data.visualization_spec);
 }
@@ -1966,15 +1969,6 @@ event.currentTarget.close();
 }
 }} onClose={onClose} ref={dialogRef}>
 <section className={`modal-panel chart-explore-panel ${hostedChartModal ? "chart-hosted-explore-panel" : ""}`.trim()}>
-{hostedChartModal ? (<div className="modal-header chart-hosted-explore-header">
-<div>
-<h2>Edit chart</h2>
-<p>{chart.title}</p>
-</div>
-<button onClick={() => dialogRef.current?.close()} type="button">
-Close
-</button>
-</div>) : null}
 <section aria-label={`Edit ${chart.title}`} className={`chart-detail-page unified-chart-detail-page chart-explore-body ${hostedChartModal ? "chart-hosted-explore-body" : ""}`.trim()}>
 {hostedChartModal ? (<ChartBody accessIssue={accessIssue} chart={chart} filters={filters} isFullscreen selectedFilters={selectedFilters} snapshot={snapshot}/>) : null}
 {!hostedChartModal && !widgetHtml && !widgetError ? <div className="chart-detail-loading">Loading chart detail...</div> : null}
@@ -2039,6 +2033,7 @@ const queryText = queryTextFromSourceQuery(chartSourceQuery) ||
 queryTextFromSourceQuery(sourceSpecQuery) ||
 sourceQueryText?.trim();
 const unit = chart.unit ?? chartEncoding(chart, "y").unit ?? (chart.valueFormat === "currency" ? "USD" : chart.valueFormat === "percent" ? "%" : undefined);
+const settings = chartWidgetSettings(chart);
 if (xField && yField) {
 const columns = [
 chartWidgetEncodingColumn(chart, "x", rows),
@@ -2070,7 +2065,8 @@ presentation: {
 show_controls: true,
 unit,
 view_mode: "both"
-}
+},
+settings
 }
 };
 }
@@ -2109,11 +2105,30 @@ presentation: {
 show_controls: true,
 unit,
 view_mode: "both"
-}
+},
+settings
 }
 };
 }
 return null;
+}
+function chartWidgetSettings(chart) {
+const source = chart?.settings && typeof chart.settings === "object" && !Array.isArray(chart.settings) ? chart.settings : {};
+const type = chart?.type;
+const orientation = source.orientation === "horizontal" || type === "horizontalBar" || type === "horizontalStackedBar" || type === "horizontalStackedBar100"
+? "horizontal"
+: source.orientation === "vertical"
+? "vertical"
+: undefined;
+const groupMode = source.groupMode ?? source.group_mode ?? (type === "stackedBar100" || type === "horizontalStackedBar100"
+? "stacked100"
+: type === "stackedBar" || type === "horizontalStackedBar"
+? "stacked"
+: undefined);
+return {
+...(orientation ? { orientation } : {}),
+...(["grouped", "stacked", "stacked100"].includes(groupMode) ? { group_mode: groupMode } : {})
+};
 }
 function chartWidgetPayload(chart, rows, source, snapshot, sourceQueryText) {
 const encodedPayload = chartHasEncodingSpec(chart) ? chartWidgetPayloadFromEncodings(chart, rows, source, snapshot, sourceQueryText) : null;
@@ -2791,10 +2806,11 @@ function AnalyticsTopBarFreshness({ dateLabel, onRefresh, status, statusLabel })
 const refreshTitle = dateLabel === "Unknown"
 ? "Refresh using latest available data."
 : `Refresh using latest available data. Last updated ${dateLabel}.`;
+const refreshLabel = dateLabel === "Unknown" ? "Refresh" : dateLabel;
 return (<div className="analytics-top-bar-freshness">
 <button aria-label={refreshTitle} className="top-bar-button top-bar-button-ghost top-bar-refresh-button" onClick={onRefresh} title={refreshTitle} type="button">
 <RefreshCw aria-hidden="true" size={14} strokeWidth={2}/>
-<span>Refresh</span>
+<span>{refreshLabel}</span>
 {statusLabel ? <span className={`snapshot-status ${status}`}>{statusLabel}</span> : null}
 </button>
 </div>);
@@ -3311,6 +3327,25 @@ function updateChartSpec(chartId, widgetSpec) {
 const chart = charts.find((candidate) => candidate.id === chartId);
 if (!chart)
 return;
+if (!widgetSpec) {
+setChartSpecOverrides((current) => {
+const merged = { ...current };
+delete merged[chartId];
+if (!isEditMode && chartSpecStorageKey) {
+window.localStorage.setItem(chartSpecStorageKey, JSON.stringify(merged));
+}
+return merged;
+});
+setChartTypeOverrides((current) => {
+const merged = { ...current };
+delete merged[chartId];
+if (!isEditMode && chartTypeStorageKey) {
+window.localStorage.setItem(chartTypeStorageKey, JSON.stringify(merged));
+}
+return merged;
+});
+return;
+}
 const nextOverride = chartSpecOverrideFromWidgetSpec(chart, widgetSpec);
 const nextType = sharedIsChartType(nextOverride.type) ? nextOverride.type : chart.type;
 setChartSpecOverrides((current) => {

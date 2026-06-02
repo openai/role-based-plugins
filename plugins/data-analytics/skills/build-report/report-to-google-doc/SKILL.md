@@ -14,7 +14,7 @@ The expected path is HTML -> DOCX -> Drive upload. It is acceptable for Drive to
 
 ### User Context
 
-Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as authoritative for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as the source of truth for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance; use saved context and semantic layers as source-selection inputs, not as substitutes for workflow-time reads from connected or provided sources. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
 
 ## Workflow
 
@@ -31,7 +31,7 @@ Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mod
    ```
 
    Omit `--render-workers` on the normal path. Only pass a worker count after benchmarking the same report family locally. If dependencies are missing,
-   use the active Python environment or a temporary environment with `beautifulsoup4`, `pillow`, and `python-docx`; `cairosvg` or headless Playwright are optional renderers.
+   use a local virtual environment with `beautifulsoup4`, `pillow`, and `python-docx`; `cairosvg` or headless Playwright are optional renderers.
 
 3. Inspect helper outputs.
 

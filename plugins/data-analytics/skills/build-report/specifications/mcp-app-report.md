@@ -2,7 +2,7 @@
 
 Use this when the selected report surface is a bounded manifest/snapshot rendered by the Data Analytics MCP artifact app.
 
-Before creating or revising an MCP app report artifact, read `../../../_shared/analytics-app-core.md`. It defines the shared dashboard/report artifact contract, bounded snapshot, source safety, runtime behavior, validation helpers, and MCP-specific payload/encoding rules.
+Before creating or revising an MCP app report artifact, read `../../../src/analytics-app-core.md`. It defines the shared dashboard/report artifact contract, bounded snapshot, source safety, runtime behavior, validation helpers, and MCP-specific payload/encoding rules.
 
 ## Build Shape
 

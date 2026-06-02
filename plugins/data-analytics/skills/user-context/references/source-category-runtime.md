@@ -6,7 +6,7 @@ A source category is the kind of analytical evidence a workflow may need, such a
 
 ## Ownership Map
 
-- `.app.json`, `CONNECTORS.md`, and `DEPENDENCIES.MD` declare possible app-backed routes. They are not readiness proof for the current user.
+- `.app.json` and `DEPENDENCIES.MD` declare possible app-backed routes. They are not readiness proof for the current user.
 - `../plugin-author-config/source-category-config.json` owns static source category ids, labels, preferred plugin routes, and category-level `relevant_skills`.
 - `$CODEX_HOME/state/plugins/data-analytics/user-context.md` owns durable user-approved source-routing preferences and semantic-layer registry pointers.
 - `$CODEX_HOME/state/plugins/data-analytics/onboarding-state.json` owns compact onboarding progress, connector-confirmation labels, semantic-layer setup and refresh state, hero prompt progress, and environment conflict notes. Do not persist raw discovery or inventory payloads there.
@@ -196,7 +196,7 @@ Manual input, pasted notes, and exports are valid fallbacks after a real connect
 
 Show these categories first during onboarding:
 
-- `structured_data`: Data warehouse or SQL.
+- `structured_data`: Data warehouse.
 - `team_communication`: Team communication.
 - `company_docs`: Company docs.
 
@@ -210,10 +210,10 @@ Onboarding may classify source categories so the user understands what Data Anal
 
 When showing a category, explain the analytical value instead of only naming the connector family:
 
-- `structured_data`: live warehouse or SQL access is how Data Analytics validates metric definitions, table shape, query logic, and source-backed answers from current data.
-- `team_communication`: recent discussion can explain decisions, caveats, owners, and operating context behind a metric movement or source choice.
+- `structured_data`: direct warehouse or SQL access lets Data Analytics query structured data for current, source-backed answers.
+- `team_communication`: search recent discussions for context, decisions, and owners.
 - `company_docs`: docs, specs, metric definitions, and source-of-truth pages can answer governance and business-context questions without querying live data.
-- Optional categories should be explained only when offered: dashboards or BI for report definitions and filter logic, behavior signals for product-usage evidence, notebook lab for prior analysis, email or calendar for recent operating context, and code repositories for model, query, schema, or semantic-layer ownership.
+- Optional categories should be explained only when offered: dashboards and BI for inspecting dashboards and BI reports for metric definitions, filters, and saved views, behavior signals for product-usage evidence, notebook lab for inspecting prior analyses, reusing notebook logic, and continuing exploratory work, email or calendar for recent operating context, and code repositories for model, query, schema, or semantic-layer ownership.
 
 Use exactly these user-facing statuses:
 

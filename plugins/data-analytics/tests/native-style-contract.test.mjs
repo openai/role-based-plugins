@@ -87,7 +87,7 @@ test("report top-bar title uses the compact supported text style", () => {
     .split("}", 1)[0];
 
   for (const block of [title, editor]) {
-    assert.match(block, /font-size: 13px;/);
+    assert.match(block, /font-size: 14px;/);
     assert.match(block, /font-weight: 500;/);
     assert.match(block, /line-height: 20px;/);
     assert.match(block, /letter-spacing: -0\.13px;/);
@@ -100,10 +100,65 @@ test("chart detail actions use edit language", () => {
 
   assert.match(app, /menuItem\("Edit chart"/);
   assert.doesNotMatch(app, /Switch chart type/);
-  assert.match(app, /<h2>Edit chart<\/h2>/);
+  assert.doesNotMatch(app, /<h2>Edit chart<\/h2>/);
   assert.doesNotMatch(app, /Explore chart/);
   assert.match(widget, /"Edit chart"/);
   assert.doesNotMatch(widget, /Explore chart/);
+});
+
+test("artifact top bar shows the snapshot date as the refresh label", () => {
+  const app = read("../src/analytics-app/App.tsx");
+
+  assert.match(app, /const refreshLabel = dateLabel === "Unknown" \? "Refresh" : dateLabel;/);
+  assert.match(app, /<span>\{refreshLabel\}<\/span>/);
+  assert.doesNotMatch(app, /<span>Refresh<\/span>\\n\{statusLabel/);
+});
+
+test("artifact chart edit modal uses contained modal chart chrome", () => {
+  const app = read("../src/analytics-app/App.tsx");
+  const appStyles = read("../src/analytics-app/styles.css");
+  const widget = read("../src/datascience-chart-widget.js");
+  const widgetStyles = read("../src/datascience-chart-widget.css");
+
+  assert.match(app, /inline-chart-widget\?displayMode=modal/);
+  assert.match(app, /displayMode: "modal"/);
+  assert.match(app, /function chartWidgetSettings\(chart\)/);
+  assert.match(app, /settings\s*\n\s*\}/);
+  assert.match(app, /datascience-chart-widget-spec-reset/);
+  assert.match(app, /onChartSpecChange\(chart\.id, null\)/);
+  assert.doesNotMatch(app, /chart-explore-header/);
+  assert.match(appStyles, /\.native-modal\.chart-explore-modal \{[\s\S]*width: min\(1180px, calc\(100vw - 96px\)\);/);
+  assert.match(widget, /function isDetailDisplayMode\(mode = displayMode\)/);
+  assert.match(widget, /raw === "modal" \|\| raw === "dialog"/);
+  assert.match(widget, /modal-title-close-button/);
+  assert.match(widget, /requestDisplayMode\("inline"\)/);
+  assert.match(widgetStyles, /\.widget\[data-display-mode="modal"\] \.detail-topbar \{[\s\S]*display: none;/);
+  assert.match(widgetStyles, /\.widget\[data-display-mode="modal"\] \.bottom-split \{[\s\S]*display: none;/);
+  assert.match(widgetStyles, /\.widget\[data-display-mode="modal"\] \.modal-title-close-button \{[\s\S]*display: inline-flex;/);
+  assert.match(widgetStyles, /html\[data-display-mode="modal"\],\s*body\[data-display-mode="modal"\] \{[\s\S]*overflow: hidden;/);
+  assert.match(widgetStyles, /\.widget\[data-display-mode="modal"\] \.chart-shell \{[\s\S]*height: 100%;[\s\S]*min-height: 0;/);
+  assert.match(widgetStyles, /\.widget:is\(\[data-display-mode="fullscreen"\], \[data-display-mode="modal"\]\) \.detail-title-section h1 \{[\s\S]*font-size: 28px;[\s\S]*line-height: 34px;/);
+  assert.doesNotMatch(widget, /segmented\.className = "segmented chart-setting-segmented"/);
+  assert.match(widget, /function openSettingMenu\(anchor, label, value, options, onChange\)/);
+  assert.doesNotMatch(widget, /panel\.appendChild\(menuHeader\(label\)\)/);
+  assert.match(widget, /function settingDropdownChip\(label, value, options, onChange\)/);
+  assert.match(widget, /button\.setAttribute\("aria-haspopup", "menu"\)/);
+  assert.match(widget, /button\.append\(labelEl, caretIcon\("field-pill-caret"\)\)/);
+  assert.match(widget, /\? "Chart type"\s*: chartTypeLabel\(activeVisualizationType\)/);
+  assert.match(widget, /if \(!detailChrome\) button\.appendChild\(field\)/);
+  assert.match(widget, /visibleSeries = \{\};/);
+  assert.match(widget, /function notifyChartSpecReset\(\)/);
+  assert.match(widget, /type: "datascience-chart-widget-spec-reset"/);
+  assert.match(widget, /closeFieldMenus\(\{ immediate: true \}\)/);
+  assert.match(widgetStyles, /\.detail-title-row \{[\s\S]*width: 100%;/);
+  assert.match(widgetStyles, /\.widget:is\(\[data-display-mode="fullscreen"\], \[data-display-mode="modal"\]\) \.app-main \{[\s\S]*flex: 1 1 auto;[\s\S]*width: 100%;/);
+  assert.match(widgetStyles, /\.widget:is\(\[data-display-mode="fullscreen"\], \[data-display-mode="modal"\]\) \.detail-title-section h1 \{[\s\S]*flex: 1 1 auto;/);
+  assert.match(widgetStyles, /\.modal-title-close-button \{[\s\S]*margin-left: auto;/);
+  const expandedResetRule = widgetStyles.match(
+    /\.widget:is\(\[data-display-mode="fullscreen"\], \[data-display-mode="modal"\]\) \.clear-button \{[^}]*\}/,
+  );
+  assert.ok(expandedResetRule);
+  assert.doesNotMatch(expandedResetRule[0], /margin-left: auto/);
 });
 
 test("static exports omit interactive app chrome", () => {

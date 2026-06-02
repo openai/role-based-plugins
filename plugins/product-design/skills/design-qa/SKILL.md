@@ -9,10 +9,14 @@ Use this internal helper to compare a prototype's source design against the rend
 
 Do not use this skill for broad UX critique, design critique, product audits, or flow reviews. Use [audit](../audit/SKILL.md) for those user-facing requests.
 
-Use this skill only when there is both:
+Use this skill before every Product Design build handoff.
+
+A passing QA run requires both:
 
 - a source visual target: Figma node, image, screenshot, mockup, or source capture
 - a rendered implementation: local URL, deployed URL, app screen, component, or screenshot
+
+If either artifact cannot be opened, captured, or compared, write `design-qa.md` with `final result: blocked` and name the blocker. Do not let the build skill hand off as done.
 
 ## Critical Overrides
 
@@ -43,15 +47,22 @@ Do not pretend separate image views are side-by-side comparison. Put the source 
    - Align crop, viewport size, scale, and device frame. Do not compare a framed mockup to an unframed page without noting the mismatch.
    - Prefer comparing content regions over full browser chrome or surrounding canvas.
 
-4. Review systematically.
-   - Read `references/qa-rubric.md` when the QA pass spans more than a quick visual check.
+4. Compare at the right level of detail.
+   - Use a full-view comparison to judge overall composition, hierarchy, layout, density, and responsive structure.
+   - Use focused region comparisons when important details are too small to judge in the full-view comparison.
+   - Choose focused regions from the actual source and implementation. Use them where fidelity depends on precise typography, alignment, imagery, assets, icons, logos, controls, forms, navigation, tables, dense UI, or visible interaction states.
+   - If no focused region is needed, say why in `design-qa.md`.
+   - Do not pass QA from a full-view comparison alone when important details are not clearly readable.
+
+5. Review systematically.
+   - Read [qa-rubric](./references/qa-rubric.md) when the QA pass spans more than a quick visual check.
    - Check information architecture, layout, spacing, typography/fonts, color, imagery/image quality, icons, copy, affordances, interaction states, responsiveness, accessibility, and polish.
    - Always make a specific pass over the five required fidelity surfaces: fonts/typography, spacing/layout rhythm, colors/tokens, image quality, and copy/content. Do this even if the user did not name those areas explicitly.
    - If the mock does not address some issue you're seeing (e.g. a null state), call that out as a separate finding as a shortcoming of the mock to be addressed.
    - Your other goal is to decide whether the implementation "looks as good" as the mock. If there are stylistic problems, call them out. If the user's prompt is leaking into the implementation (vs letting the app stand on its own), call that out as well.
    - Distinguish design drift from intentional product/code constraints. If a deviation may be intentional, phrase it as a question or assumption.
 
-5. Produce a fix-oriented QA report.
+6. Produce a fix-oriented QA report.
    - Lead with findings, ordered by severity and user impact.
    - For each finding include: severity, location, what differs, evidence, why it matters, and the concrete fix.
    - Include exact CSS/component/token suggestions when the implementation context is available.
@@ -93,6 +104,9 @@ Use this structure unless the user asks otherwise:
 
 **Implementation Checklist**
 - Ordered fixes that can be executed directly.
+
+**Follow-up Polish**
+- P3 refinements that can improve fidelity after handoff.
 ```
 
 If there are no substantive mismatches, say that clearly and list any residual test gaps.
@@ -105,13 +119,15 @@ When this skill is used before handoff, save the latest QA report as project-roo
 - implementation screenshot path
 - viewport
 - state
+- full-view comparison evidence
+- focused region comparison evidence, or why it was not needed
 - findings
 - patches made since the previous QA pass
 - final result
 
 `final result` must be exactly `passed` or `blocked`.
 
-Use `passed` only when there are no actionable P0/P1/P2/P3 findings.
-Use `blocked` when actionable findings remain and name the blocker.
+Use `passed` when there are no actionable P0/P1/P2 findings. P3 findings may remain as follow-up polish.
+Use `blocked` when actionable P0/P1/P2 findings remain and name the blocker.
 
 Return the file path with the QA report.

@@ -63,7 +63,7 @@ implementation:
 
 ## Overview
 
-Use this file as the portable design extension contract for generated Data Analytics reports and dashboards. The base visual system is the local Codex contract in `_shared/codex-style-contract.md` and `src/styles/codex-theme.css`. This file carries analytics-specific machine-readable tokens in YAML front matter and human-readable rationale below, so future agents can preserve chart, KPI, table, report, and dashboard roles without re-deriving the source design system for every edit.
+Use this file as the portable design extension contract for generated Data Analytics reports and dashboards. The base visual system is the local Codex contract in `src/codex-style-contract.md` and `src/styles/codex-theme.css`. This file carries analytics-specific machine-readable tokens in YAML front matter and human-readable rationale below, so future agents can preserve chart, KPI, table, report, and dashboard roles without re-deriving the source design system for every edit.
 
 This file is not runtime state. The React app loads the Codex baseline before `src/analytics-app/tokens.css`; the manifest and snapshot describe the data. `DESIGN.md` explains the analytics extensions, their design rationale, and what should remain customizable when a user edits an artifact.
 

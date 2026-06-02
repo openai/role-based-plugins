@@ -45,7 +45,18 @@ CORE_SOURCE_EXPLICIT_FALLBACK_RESOLUTIONS = {
     "user_skipped",
     "user_confirmed_not_applicable",
 }
-SEMANTIC_SETUP_COMPLETE_STATUSES = {"created", "planned", "skipped", "deferred", "blocked"}
+SEMANTIC_SETUP_COMPLETE_STATUSES = {
+    "created",
+    "refreshed",
+    "inspected",
+    "repaired",
+    "planned",
+    "skipped",
+    "deferred",
+    "unavailable",
+    "blocked",
+}
+SEMANTIC_SETUP_TARGET_STATUSES = {"created", "refreshed", "inspected", "repaired", "planned"}
 SEMANTIC_REFRESH_COMPLETE_STATUSES = {
     "accepted",
     "declined",
@@ -1084,6 +1095,15 @@ def semantic_layer_refresh_status(onboarding_state: dict[str, Any] | None) -> st
     return str((state.get("semantic_layer_refresh") or {}).get("status") or "pending")
 
 
+def semantic_layer_setup_resolved(onboarding_state: dict[str, Any] | None) -> bool:
+    setup_status = semantic_layer_setup_status(onboarding_state)
+    if setup_status not in SEMANTIC_SETUP_COMPLETE_STATUSES:
+        return False
+    if setup_status in SEMANTIC_SETUP_TARGET_STATUSES:
+        return semantic_layer_refresh_status(onboarding_state) in SEMANTIC_REFRESH_COMPLETE_STATUSES
+    return True
+
+
 def hero_prompt_state(onboarding_state: dict[str, Any] | None) -> dict[str, Any]:
     state = onboarding_state or {}
     choice = state.get("hero_prompt_choice")
@@ -1126,8 +1146,7 @@ def core_onboarding_complete(
     return (
         connector_setup_confirmation_status(source_category_config, onboarding_state)
         == "completed"
-        and semantic_layer_setup_status(onboarding_state) in SEMANTIC_SETUP_COMPLETE_STATUSES
-        and semantic_layer_refresh_status(onboarding_state) in SEMANTIC_REFRESH_COMPLETE_STATUSES
+        and semantic_layer_setup_resolved(onboarding_state)
     )
 
 
@@ -1145,16 +1164,14 @@ def progress_task_list(
         ),
         (
             "source_setup_confirmation",
-            "Confirm active/missing sources",
+            "Check main analytics sources",
             connector_setup_confirmation_status(source_category_config, onboarding_state)
             == "completed",
         ),
         (
             "semantic_layer_setup",
-            "Semantic layer setup",
-            semantic_layer_setup_status(onboarding_state) in SEMANTIC_SETUP_COMPLETE_STATUSES
-            and semantic_layer_refresh_status(onboarding_state)
-            in SEMANTIC_REFRESH_COMPLETE_STATUSES,
+            "Set Up Data Context",
+            semantic_layer_setup_resolved(onboarding_state),
         ),
         ("hero_prompt", "Hero prompt", first_hero_prompt_status(onboarding_state) == "completed"),
     )
@@ -1188,7 +1205,7 @@ def next_onboarding_action(
             ),
             "semantic_layer_setup": (
                 "introduce_semantic_layer_setup",
-                "set up one reusable semantic layer",
+                "set up data context",
             ),
             "hero_prompt": ("offer_first_hero_prompt", "run or resolve the first hero prompt"),
         }

@@ -274,7 +274,7 @@ Gaps
 - sales plugin setup friction: Reviewed transcript-like evidence, but speaker context was internal/vendor-eval rather than customer/prospect.
 
 Internal / Non-Customer Evidence
-- "Salesforce needed reauthentication..." - Alex Gerrese (speaker_role_guess=internal_seller, customer_conf=0.05, relevance=0.90, [Transcript](https://example.com/transcript/222222222)). Usage note: Useful for an internal product brief; do not present as a customer quote.
+- "Salesforce needed reauthentication..." - Internal Seller (speaker_role_guess=internal_seller, customer_conf=0.05, relevance=0.90, [Transcript](https://example.com/transcript/222222222)). Usage note: Useful for an internal product brief; do not present as a customer quote.
 ```
 
 ## Migration note

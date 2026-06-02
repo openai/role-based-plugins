@@ -1,0 +1,84 @@
+{
+  "apps": {
+    "slack": {
+      "id": "REPLACE_WITH_SLACK_APP_OR_CONNECTOR_ID"
+    },
+    "teams": {
+      "id": "REPLACE_WITH_MICROSOFT_TEAMS_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "notion": {
+      "id": "REPLACE_WITH_NOTION_APP_OR_CONNECTOR_ID"
+    },
+    "gmail": {
+      "id": "REPLACE_WITH_GMAIL_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "outlook_email": {
+      "id": "REPLACE_WITH_OUTLOOK_EMAIL_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "outlook_calendar": {
+      "id": "REPLACE_WITH_OUTLOOK_CALENDAR_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "google_calendar": {
+      "id": "REPLACE_WITH_GOOGLE_CALENDAR_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "google_drive": {
+      "id": "REPLACE_WITH_GOOGLE_DRIVE_APP_OR_CONNECTOR_ID"
+    },
+    "databricks": {
+      "id": "templated_apps_Databricks",
+      "optional": true
+    },
+    "bigquery": {
+      "id": "REPLACE_WITH_BIGQUERY_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "snowflake": {
+      "id": "templated_apps_Snowflake",
+      "optional": true
+    },
+    "sharepoint": {
+      "id": "REPLACE_WITH_MICROSOFT_SHAREPOINT_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "github": {
+      "id": "REPLACE_WITH_GITHUB_APP_OR_CONNECTOR_ID"
+    },
+    "statsig": {
+      "id": "REPLACE_WITH_STATSIG_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "hex": {
+      "id": "REPLACE_WITH_HEX_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "deepnote": {
+      "id": "REPLACE_WITH_DEEPNOTE_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "amplitude": {
+      "id": "REPLACE_WITH_AMPLITUDE_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "mixpanel": {
+      "id": "REPLACE_WITH_MIXPANEL_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "omni-analytics": {
+      "id": "REPLACE_WITH_OMNI_ANALYTICS_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "metabase": {
+      "id": "templated_apps_Metabase",
+      "optional": true
+    },
+    "thoughtspot": {
+      "id": "REPLACE_WITH_THOUGHTSPOT_APP_OR_CONNECTOR_ID",
+      "optional": true
+    }
+  }
+}

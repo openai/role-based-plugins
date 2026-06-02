@@ -1,0 +1,110 @@
+{
+  "schema_version": "sales_source_category_config.v1",
+  "description": "Author-owned Sales source category catalog. Runtime source resolution, preferred plugin/app routing hints, relevant helper skills, fallback, and durable user-approved preference rules live in ../references/source-category-runtime.md. Skills decide which categories they attempt. User-specific source preferences and source-of-truth pointers live in $CODEX_HOME/state/plugins/{marketplace_id}/{plugin_id}/user-context.md.",
+  "categories": {
+    "crm": {
+      "label": "CRM",
+      "preferred_apps": [
+        "Salesforce",
+        "Agentforce Sales",
+        "HubSpot",
+        "Close",
+        "Zoho",
+        "Pipedrive"
+      ],
+      "relevant_skills": [
+        {
+          "app": "Salesforce",
+          "skill": "salesforce"
+        },
+        {
+          "app": "Agentforce Sales",
+          "skill": "salesforce"
+        },
+        {
+          "app": "HubSpot",
+          "skill": "hubspot"
+        }
+      ]
+    },
+    "calendar": {
+      "label": "calendar",
+      "preferred_apps": [
+        "Google Calendar",
+        "Outlook Calendar",
+        "Calendly"
+      ]
+    },
+    "meeting_notes": {
+      "label": "meeting notes or call recordings",
+      "preferred_apps": [
+        "Zoom",
+        "Granola",
+        "Otter.ai",
+        "Fireflies",
+        "Outreach",
+        "Rox"
+      ]
+    },
+    "document_store": {
+      "label": "docs",
+      "preferred_apps": [
+        "Google Drive",
+        "Microsoft SharePoint",
+        "Notion",
+        "Monday.com"
+      ]
+    },
+    "spreadsheets": {
+      "label": "sheets, spreadsheets, Excel, or CSV outputs",
+      "preferred_plugins": [
+        "Spreadsheets",
+        "Microsoft Excel"
+      ],
+      "preferred_apps": [
+        "Google Drive",
+        "Microsoft SharePoint"
+      ]
+    },
+    "data_enrichment": {
+      "label": "data enrichment",
+      "preferred_apps": [
+        "ZoomInfo",
+        "Clay",
+        "HG Insights",
+        "Rox",
+        "Apollo",
+        "Meticulate"
+      ],
+      "relevant_skills": [
+        {
+          "app": "ZoomInfo",
+          "skill": "zoominfo"
+        }
+      ]
+    },
+    "external_messaging": {
+      "label": "customer email or external threads",
+      "preferred_apps": [
+        "Gmail",
+        "Outlook Email",
+        "Outreach",
+        "Close",
+        "Rox"
+      ]
+    },
+    "internal_messaging": {
+      "label": "internal messages",
+      "preferred_apps": [
+        "Slack",
+        "Microsoft Teams"
+      ]
+    },
+    "agreements": {
+      "label": "agreements, contracts, signatures, or approval workflows",
+      "preferred_apps": [
+        "Docusign"
+      ]
+    }
+  }
+}

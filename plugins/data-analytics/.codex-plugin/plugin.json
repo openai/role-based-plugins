@@ -1,0 +1,66 @@
+{
+  "name": "data-analytics",
+  "version": "0.1.29",
+  "description": "Analyze product usage, investigate metric movements, prepare KPI reports, build high-quality dashboards and notebooks, create source-backed semantic layers, guide first-run analytics setup, and generate analytics-grade report apps.",
+  "author": {
+    "name": "Data Analytics Maintainers"
+  },
+  "homepage": "https://github.com/openai/role-based-plugins",
+  "repository": "https://github.com/openai/role-based-plugins/tree/main/plugins/data-analytics",
+  "license": "MIT",
+  "keywords": [
+    "data-analytics",
+    "analytics",
+    "business-context",
+    "dashboards",
+    "funnel-analysis",
+    "kpi-reporting",
+    "market-sizing",
+    "metric-diagnostics",
+    "post-launch-updates",
+    "product-analysis",
+    "retention",
+    "root-cause-analysis",
+    "scorecards",
+    "validation",
+    "visualization",
+    "jupyter-notebooks",
+    "databricks",
+    "bigquery",
+    "snowflake",
+    "deepnote",
+    "mixpanel",
+    "mixpanel-headless",
+    "metabase",
+    "thoughtspot",
+    "onboarding",
+    "semantic-layer"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Data Analytics",
+    "shortDescription": "Turn data and business context into validated insights, dashboards, reports, and decision-ready artifacts.",
+    "longDescription": "Data Analytics helps turn messy analytical questions into reliable, reusable answers. Use it to diagnose metric movements, analyze product usage, design KPIs, size markets, investigate data quality, and build dashboards, reports, notebooks, and concise recommendations. It guides the work end to end: clarify the question, find the right sources, inspect definitions and assumptions, run the analysis, validate the result, and package the output for stakeholders. Connect the tools your team already uses to ground the work in warehouses such as Databricks, BigQuery, and Snowflake; notebook labs such as Deepnote; behavior analytics such as Mixpanel; BI tools such as ThoughtSpot and Metabase; plus dashboards, definitions, and operating context, or start with pasted context and uploaded files.",
+    "developerName": "Data Analytics Maintainers",
+    "category": "Analytics",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://example.com/",
+    "privacyPolicyURL": "https://example.com/privacy",
+    "termsOfServiceURL": "https://example.com/terms",
+    "defaultPrompt": [
+      "Onboard me to Data Analytics and help me set up my first semantic layer.",
+      "Analyze product usage and recommend where the team should focus next.",
+      "Diagnose why a key metric changed and identify the biggest drivers."
+    ],
+    "brandColor": "#0285FF",
+    "composerIcon": "./assets/datascience-small.svg",
+    "logo": "./assets/datascience.png",
+    "screenshots": []
+  }
+}

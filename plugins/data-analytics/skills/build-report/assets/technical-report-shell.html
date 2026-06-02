@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}}</title>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 0; background: #f8fafc; color: #0f172a; }
+    main { max-width: 920px; margin: 0 auto; padding: 40px 20px 64px; }
+    header, section { margin-bottom: 32px; }
+    h1, h2 { line-height: 1.15; margin: 0 0 12px; }
+    p, li { line-height: 1.65; }
+    pre { overflow-x: auto; background: #e2e8f0; padding: 14px; border-radius: 12px; }
+    figure { margin: 20px 0; }
+    figcaption { color: #475569; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main data-report-audience="technical">
+    <header data-contract-section="title">
+      <h1>{{TITLE}}</h1>
+    </header>
+
+    <section data-contract-section="technical-summary">
+      <h2>Technical Summary</h2>
+      <p>{{Main result directly, with the most important conditions}} [1]</p>
+    </section>
+
+    <section data-contract-section="key-findings">
+      <h2>{{Insight-led findings heading}}</h2>
+      <p>{{Claim first, then evidence and interpretation}} [1]</p>
+      <figure>
+        {{Full-width chart or table}}
+        <figcaption>{{Short evidence note or caption}} [1]</figcaption>
+      </figure>
+    </section>
+
+    <section data-contract-section="scope-data-and-metric-definitions">
+      <h2>Scope, Data, and Metric Definitions</h2>
+      <p>{{Scope, tables, definitions, filters, and grain}} [1]</p>
+    </section>
+
+    <section data-contract-section="methodology">
+      <h2>Methodology</h2>
+      <p>{{Method summary, validation approach, or modeling logic}} [2]</p>
+      <pre>{{Optional formula, pseudo-code, or query excerpt}}</pre>
+    </section>
+
+    <section data-contract-section="limitations-uncertainty-and-robustness-checks">
+      <h2>Limitations, Uncertainty, and Robustness Checks</h2>
+      <p>{{Known limitations and the checks that matter for trust}} [2]</p>
+    </section>
+
+    <section data-contract-section="recommended-next-steps">
+      <h2>Recommended Next Steps</h2>
+      <p>{{Actionable next step grounded in the results}} [3]</p>
+    </section>
+
+    <section data-contract-section="further-questions">
+      <h2>Further Questions</h2>
+      <p>{{Important unresolved follow-up question}} [3]</p>
+    </section>
+
+  </main>
+</body>
+</html>

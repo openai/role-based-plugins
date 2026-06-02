@@ -1,0 +1,49 @@
+{
+  "apps": {
+    "slack": {
+      "id": "REPLACE_WITH_SLACK_APP_OR_CONNECTOR_ID"
+    },
+    "pitchbook": {
+      "id": "REPLACE_WITH_PITCHBOOK_APP_OR_CONNECTOR_ID"
+    },
+    "factset": {
+      "id": "REPLACE_WITH_FACTSET_APP_OR_CONNECTOR_ID"
+    },
+    "morningstar": {
+      "id": "REPLACE_WITH_MORNINGSTAR_APP_OR_CONNECTOR_ID"
+    },
+    "lseg": {
+      "id": "REPLACE_WITH_LSEG_APP_OR_CONNECTOR_ID"
+    },
+    "s-p": {
+      "id": "REPLACE_WITH_S_P_APP_OR_CONNECTOR_ID"
+    },
+    "third-bridge": {
+      "id": "REPLACE_WITH_THIRD_BRIDGE_APP_OR_CONNECTOR_ID"
+    },
+    "daloopa": {
+      "id": "REPLACE_WITH_DALOOPA_APP_OR_CONNECTOR_ID"
+    },
+    "quartr": {
+      "id": "REPLACE_WITH_QUARTR_APP_OR_CONNECTOR_ID"
+    },
+    "alpaca": {
+      "id": "REPLACE_WITH_ALPACA_APP_OR_CONNECTOR_ID"
+    },
+    "google_drive": {
+      "id": "REPLACE_WITH_GOOGLE_DRIVE_APP_OR_CONNECTOR_ID"
+    },
+    "gmail_connector": {
+      "id": "REPLACE_WITH_GMAIL_APP_OR_CONNECTOR_ID"
+    },
+    "outlook_email_connector": {
+      "id": "REPLACE_WITH_OUTLOOK_EMAIL_APP_OR_CONNECTOR_ID"
+    },
+    "sharepoint_connector": {
+      "id": "REPLACE_WITH_MICROSOFT_SHAREPOINT_APP_OR_CONNECTOR_ID"
+    },
+    "teams_connector": {
+      "id": "REPLACE_WITH_MICROSOFT_TEAMS_APP_OR_CONNECTOR_ID"
+    }
+  }
+}

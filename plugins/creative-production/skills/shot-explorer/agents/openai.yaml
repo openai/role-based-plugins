@@ -1,0 +1,7 @@
+interface:
+  display_name: "Shot Explorer"
+  short_description: "Generate selected shot angles from an image"
+  brand_color: "#F0C441"
+  default_prompt: "Choose shot directions for this image, generate the selected angle, crop, zoom, and macro variants, and show them in the shared image-wall review page."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,158 @@
+{
+  "status": "active",
+  "orientation": {
+    "status": null,
+    "last_shown": null
+  },
+  "last_orientation_shown": null,
+  "last_skill_suggested": null,
+  "connector_confirmation": {},
+  "core_onboarding": {
+    "status": null,
+    "completed_at": null
+  },
+  "hero_prompt_choice": {
+    "status": null,
+    "options": [
+      "prepare-for-meeting",
+      "follow-up-after-call",
+      "prioritize-accounts"
+    ],
+    "last_offered_skills": [],
+    "selected_skill": null,
+    "selected_anchor": null,
+    "last_shown": null,
+    "selected_at": null
+  },
+  "meeting_prep_prompt": {
+    "status": null,
+    "suggested_prompt": null,
+    "selected_prompt": null,
+    "meeting_ref": null
+  },
+  "meeting_prep_run": {
+    "status": null,
+    "completed_at": null
+  },
+  "first_guided_workflow_review": {
+    "status": null,
+    "last_prompted": null
+  },
+  "plugin_memory_intro": {
+    "status": null,
+    "last_shown": null,
+    "shown_at": null
+  },
+  "accepted_preference_memory": {
+    "status": null,
+    "approved_at": null,
+    "saved_at": null,
+    "saved_ref": null
+  },
+  "automations_intro": {
+    "status": null,
+    "last_shown": null
+  },
+  "initial_resource_discovery": {
+    "status": null,
+    "last_run": null,
+    "target_thread_id": null,
+    "target_thread_title": null,
+    "proposal_ref": null
+  },
+  "automations": {},
+  "call_followup_intro": {
+    "status": null,
+    "last_shown": null
+  },
+  "internal_navigation_intro": {
+    "status": null,
+    "last_shown": null
+  },
+  "skill_experience": {
+    "analyze-account-signals": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "build-competitive-brief": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "follow-up-after-call": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "suggest-sales-next-step": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "enrich-company-and-contact-data": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "plan-deal-strategy": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "find-key-internal-sources": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "prepare-for-meeting": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "prioritize-accounts": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "find-customer-quotes": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "review-forecast": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "get-rep-call-feedback": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "review-rep-call-trends": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "build-business-case": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    }
+  }
+}

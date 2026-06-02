@@ -1,0 +1,69 @@
+type: object
+description: >
+  Rep-facing request schema for pipeline generation. The workflow prioritizes
+  account selection, suppression, and actionable next steps over broad lead generation.
+properties:
+  owner_scope:
+    type: string
+    description: >
+      Rep identifier, territory, or book-of-business scope when the user wants the
+      workflow to source candidates from an existing book.
+  candidate_accounts:
+    type: array
+    description: >
+      Explicit list of accounts to evaluate. Use this when the user already knows the target set.
+    items:
+      type: string
+  icp_definition:
+    type: string
+    description: >
+      Plain-language ICP definition for discovery-driven runs.
+  segment_description:
+    type: string
+    description: >
+      Segment or territory description when the request is not tied to a fixed account list.
+  motion_goal:
+    type: string
+    enum:
+      - net_new
+      - expansion
+      - mixed
+    description: >
+      Primary pipeline motion. Defaults to mixed when not specified.
+  batch_size:
+    type: integer
+    minimum: 1
+    description: >
+      Maximum number of top accounts to return in the output package.
+  capacity_window:
+    type: integer
+    minimum: 1
+    description: >
+      Practical number of accounts the rep can work now. Prefer this over broad output.
+  signal_preference:
+    type: string
+    enum:
+      - product_usage
+      - intent_or_event
+      - named_accounts
+      - mixed
+    description: >
+      Preference for the main source of why-now evidence.
+  product_focus:
+    type: string
+    description: >
+      Product or workflow focus when the user wants the pipeline constrained to a specific motion.
+  exclude_accounts:
+    type: array
+    items:
+      type: string
+    description: >
+      Accounts to exclude from ranking and drafting.
+  uploaded_examples:
+    type: array
+    items:
+      type: string
+    description: >
+      Optional examples of prior successful outbound or account prioritization.
+required: []
+additionalProperties: true

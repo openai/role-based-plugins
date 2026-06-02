@@ -1,0 +1,7 @@
+interface:
+  display_name: "Positioning Explorer"
+  short_description: "Explore business positioning routes"
+  brand_color: "#123F34"
+  default_prompt: "Use $positioning-explorer to explore audience, occasion, proof, and growth-route options before visual generation."
+policy:
+  allow_implicit_invocation: true

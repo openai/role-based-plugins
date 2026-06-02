@@ -1,0 +1,250 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --ink: #242426;
+  --muted: #6f6f73;
+  --chip-bg: #ffffff;
+  --chip-bg-hover: #f7f7f7;
+  --chip-ink: #4d4d52;
+  --chip-ink-hover: #2b2b2f;
+  --line: #e7e7e7;
+  --selected-bg: #eeeeef;
+  --selected-ink: #242426;
+  --selected-line: #d4d4d8;
+  --accent: #171717;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+button {
+  font: inherit;
+}
+
+.keyword-intake,
+.style-intake,
+.shot-intake {
+  display: grid;
+  gap: 9px;
+  max-width: 760px;
+  padding: 2px;
+}
+
+.section-grid {
+  display: grid;
+  gap: 9px;
+}
+
+.intake-section {
+  display: grid;
+  gap: 6px;
+  padding: 9px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.intake-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.section-title {
+  display: grid;
+  gap: 2px;
+}
+
+.section-title h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.section-helper {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.25;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--chip-bg);
+  color: var(--chip-ink);
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 590;
+  line-height: 1;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.chip::before {
+  content: "+";
+  color: #8a8a8f;
+  font-weight: 720;
+}
+
+.chip:hover {
+  border-color: #dcdcdc;
+  background: var(--chip-bg-hover);
+  color: var(--chip-ink-hover);
+}
+
+.chip.selected {
+  border-color: var(--selected-line);
+  background: var(--selected-bg);
+  color: var(--selected-ink);
+}
+
+.chip.selected::before {
+  content: "\2713";
+  color: #68686e;
+}
+
+.chip:focus-visible,
+.action:focus-visible,
+.secondary-action:focus-visible {
+  outline: 2px solid rgba(23, 23, 23, 0.22);
+  outline-offset: 2px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.action,
+.secondary-action {
+  min-height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.action {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.secondary-action {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: #4a4a4f;
+}
+
+.status {
+  min-height: 14px;
+  color: var(--muted);
+  font-size: 10.5px;
+}
+
+.fallback-panel {
+  display: grid;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.fallback-panel p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.fallback-prompt {
+  width: 100%;
+  min-height: 92px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 7px;
+  background: #ffffff;
+  color: #2d2d31;
+  font: 11px/1.35 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+.fallback-copy {
+  justify-self: start;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f4f4f5;
+    --muted: #c8c8cf;
+    --line: rgba(255, 255, 255, 0.28);
+    --chip-bg: #ffffff;
+    --chip-bg-hover: #f2f2f3;
+    --chip-ink: #333338;
+    --chip-ink-hover: #18181b;
+    --selected-bg: #e7edf7;
+    --selected-ink: #18181b;
+    --selected-line: #cfd8e8;
+    --accent: #ffffff;
+  }
+
+  .action {
+    background: #ffffff;
+    color: #171717;
+  }
+
+  .secondary-action {
+    border-color: rgba(255, 255, 255, 0.36);
+    background: #ffffff;
+    color: #333338;
+  }
+
+  .fallback-panel {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+@media (max-width: 560px) {
+  .footer {
+    align-items: stretch;
+  }
+
+  .actions,
+  .action,
+  .secondary-action {
+    width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}

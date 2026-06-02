@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Creative Production</title>
+  <desc id="desc">Three connected visual panels representing explore, build, and polish.</desc>
+  <rect width="256" height="256" rx="52" fill="#245F4C"/>
+
+  <rect x="45" y="75" width="52" height="76" rx="14" fill="#DCEBE2"/>
+  <rect x="39" y="69" width="52" height="76" rx="14" fill="#EFF7F2"/>
+  <circle cx="62" cy="99" r="10" stroke="#245F4C" stroke-width="6"/>
+  <path d="M70 107L80 117" stroke="#245F4C" stroke-width="6" stroke-linecap="round"/>
+  <path d="M55 128H76" stroke="#245F4C" stroke-width="6" stroke-linecap="round"/>
+
+  <rect x="106" y="58" width="52" height="96" rx="14" fill="#DCEBE2"/>
+  <rect x="100" y="52" width="52" height="96" rx="14" fill="#FFFFFF"/>
+  <rect x="115" y="109" width="8" height="22" rx="4" fill="#245F4C"/>
+  <rect x="127" y="91" width="8" height="40" rx="4" fill="#245F4C"/>
+  <rect x="139" y="75" width="8" height="56" rx="4" fill="#245F4C"/>
+  <path d="M113 132H147" stroke="#245F4C" stroke-width="6" stroke-linecap="round"/>
+
+  <rect x="167" y="79" width="52" height="76" rx="14" fill="#DCEBE2"/>
+  <rect x="161" y="73" width="52" height="76" rx="14" fill="#CDE6D5"/>
+  <path d="M187 91L191 105L205 109L191 113L187 127L183 113L169 109L183 105L187 91Z" fill="#245F4C"/>
+  <circle cx="203" cy="92" r="4" fill="#245F4C"/>
+  <circle cx="172" cy="128" r="4" fill="#245F4C"/>
+
+  <path d="M65 181H191" stroke="#A8D1BD" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="65" cy="181" r="12" fill="#EFF7F2"/>
+  <circle cx="128" cy="181" r="12" fill="#FFFFFF"/>
+  <circle cx="191" cy="181" r="12" fill="#CDE6D5"/>
+</svg>

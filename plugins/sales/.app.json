@@ -1,0 +1,88 @@
+{
+  "apps": {
+    "slack": {
+      "id": "REPLACE_WITH_SLACK_APP_OR_CONNECTOR_ID"
+    },
+    "microsoft_teams": {
+      "id": "REPLACE_WITH_MICROSOFT_TEAMS_APP_OR_CONNECTOR_ID"
+    },
+    "zoom": {
+      "id": "REPLACE_WITH_ZOOM_APP_OR_CONNECTOR_ID"
+    },
+    "granola": {
+      "id": "REPLACE_WITH_GRANOLA_APP_OR_CONNECTOR_ID"
+    },
+    "fireflies": {
+      "id": "REPLACE_WITH_FIREFLIES_APP_OR_CONNECTOR_ID"
+    },
+    "otter_ai": {
+      "id": "REPLACE_WITH_OTTER_AI_APP_OR_CONNECTOR_ID"
+    },
+    "salesforce": {
+      "id": "REPLACE_WITH_SALESFORCE_APP_OR_CONNECTOR_ID"
+    },
+    "hubspot": {
+      "id": "REPLACE_WITH_HUBSPOT_APP_OR_CONNECTOR_ID"
+    },
+    "close": {
+      "id": "REPLACE_WITH_CLOSE_APP_OR_CONNECTOR_ID"
+    },
+    "zoho": {
+      "id": "REPLACE_WITH_ZOHO_APP_OR_CONNECTOR_ID"
+    },
+    "pipedrive": {
+      "id": "REPLACE_WITH_PIPEDRIVE_APP_OR_CONNECTOR_ID"
+    },
+    "zoominfo": {
+      "id": "REPLACE_WITH_ZOOMINFO_APP_OR_CONNECTOR_ID"
+    },
+    "clay": {
+      "id": "REPLACE_WITH_CLAY_APP_OR_CONNECTOR_ID"
+    },
+    "hg_insights": {
+      "id": "REPLACE_WITH_HG_INSIGHTS_APP_OR_CONNECTOR_ID"
+    },
+    "rox": {
+      "id": "REPLACE_WITH_ROX_APP_OR_CONNECTOR_ID"
+    },
+    "apollo": {
+      "id": "REPLACE_WITH_APOLLO_APP_OR_CONNECTOR_ID"
+    },
+    "meticulate": {
+      "id": "REPLACE_WITH_METICULATE_APP_OR_CONNECTOR_ID"
+    },
+    "gmail": {
+      "id": "REPLACE_WITH_GMAIL_APP_OR_CONNECTOR_ID"
+    },
+    "outlook_email": {
+      "id": "REPLACE_WITH_OUTLOOK_EMAIL_APP_OR_CONNECTOR_ID"
+    },
+    "outreach": {
+      "id": "REPLACE_WITH_OUTREACH_APP_OR_CONNECTOR_ID"
+    },
+    "notion": {
+      "id": "REPLACE_WITH_NOTION_APP_OR_CONNECTOR_ID"
+    },
+    "google_drive": {
+      "id": "REPLACE_WITH_GOOGLE_DRIVE_APP_OR_CONNECTOR_ID"
+    },
+    "microsoft_sharepoint": {
+      "id": "REPLACE_WITH_MICROSOFT_SHAREPOINT_APP_OR_CONNECTOR_ID"
+    },
+    "google_calendar": {
+      "id": "REPLACE_WITH_GOOGLE_CALENDAR_APP_OR_CONNECTOR_ID"
+    },
+    "outlook_calendar": {
+      "id": "REPLACE_WITH_OUTLOOK_CALENDAR_APP_OR_CONNECTOR_ID"
+    },
+    "calendly": {
+      "id": "REPLACE_WITH_CALENDLY_APP_OR_CONNECTOR_ID"
+    },
+    "monday": {
+      "id": "REPLACE_WITH_MONDAY_APP_OR_CONNECTOR_ID"
+    },
+    "docusign": {
+      "id": "REPLACE_WITH_DOCUSIGN_APP_OR_CONNECTOR_ID"
+    }
+  }
+}

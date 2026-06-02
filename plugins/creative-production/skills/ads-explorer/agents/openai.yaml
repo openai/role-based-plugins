@@ -1,0 +1,7 @@
+interface:
+  display_name: "Ads Explorer"
+  short_description: "Explore 25 image-ad directions"
+  brand_color: "#245F4C"
+  default_prompt: "Use $ads-explorer to create a 25-ad review wall from this product image, offer, service, venue, or campaign brief."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,43 @@
+{
+  "name": "creative-production",
+  "version": "0.1.14",
+  "description": "Explore, build, and polish business-ready visual assets: mood boards, product scenes, ads, logos, charts, and videos.",
+  "author": {
+    "name": "Creative Production"
+  },
+  "homepage": "https://github.com/openai/role-based-plugins",
+  "repository": "https://github.com/openai/role-based-plugins/tree/main/plugins/creative-production",
+  "license": "MIT",
+  "keywords": [
+    "creative-production",
+    "marketing",
+    "visual-exploration",
+    "asset-production"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Creative Production",
+    "shortDescription": "Create business-ready visuals from brief to production asset.",
+    "longDescription": "Creative Production helps you explore, build, and polish visuals for work: campaign mood boards, product or venue scenes, logo concepts, ad directions, shot routes, reusable styles, and publish-ready variants. It starts as a creative studio flow, then keeps the output business-useful by preserving selected concepts, reusable assets, and production-ready context.",
+    "developerName": "OpenAI",
+    "category": "Creative",
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Create a visual board and ad concept territories for this campaign brief.",
+      "Place this product or app in realistic scenes and use cases for launch.",
+      "Turn this ad or selected asset into polished variations for review."
+    ],
+    "brandColor": "#924FF7",
+    "composerIcon": "./assets/composerIcon.svg",
+    "logo": "./assets/logo.png",
+    "screenshots": []
+  }
+}

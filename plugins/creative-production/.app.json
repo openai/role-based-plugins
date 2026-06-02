@@ -1,0 +1,12 @@
+{
+  "apps": {
+    "figma": {
+      "id": "REPLACE_WITH_FIGMA_APP_OR_CONNECTOR_ID",
+      "optional": true
+    },
+    "canva": {
+      "id": "REPLACE_WITH_CANVA_APP_OR_CONNECTOR_ID",
+      "optional": true
+    }
+  }
+}

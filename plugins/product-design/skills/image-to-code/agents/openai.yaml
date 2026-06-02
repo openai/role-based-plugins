@@ -1,0 +1,6 @@
+interface:
+  display_name: "Image To Code"
+  short_description: "Build a responsive frontend from a selected visual target"
+  default_prompt: "Build this selected design as an interactive frontend."
+policy:
+  allow_implicit_invocation: false

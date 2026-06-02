@@ -1,0 +1,48 @@
+{
+  "name": "sales",
+  "version": "0.2.11",
+  "description": "Practical sales workflows that help sellers prepare meetings, follow up after calls, plan deals, review pipeline, find internal answers, and reuse saved preferences.",
+  "author": {
+    "name": "OpenAI"
+  },
+  "homepage": "https://github.com/openai/role-based-plugins",
+  "repository": "https://github.com/openai/role-based-plugins/tree/main/plugins/sales",
+  "license": "MIT",
+  "keywords": [
+    "sales",
+    "competitive-brief",
+    "account-intelligence",
+    "meeting-preparation",
+    "product-feedback",
+    "forecasting",
+    "pipeline",
+    "coaching",
+    "follow-up"
+  ],
+  "skills": "./skills/",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Sales",
+    "shortDescription": "Turn sales notes, account context, and connected tools into practical seller-ready work",
+    "longDescription": "The sales plugin helps sales teams bring customer context into the work that moves deals forward. Sales teams can find high-priority accounts and signals, prepare for customer meetings, complete follow-ups, update customer records, build close plans, and review deals at risk using tools like Salesforce, HubSpot, Slack, Outreach, Clay, Rox, and Actively.",
+    "developerName": "OpenAI",
+    "category": "Business",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/row-privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/row-terms-of-use/",
+    "defaultPrompt": [
+      "Let's onboard",
+      "Prep me for my next customer meeting.",
+      "Follow up from my latest customer call."
+    ],
+    "brandColor": "#FB6A22",
+    "composerIcon": "./assets/codex-sales-plugin-composer-icon.svg",
+    "logo": "./assets/codex-sales-plugin-icon.png",
+    "screenshots": []
+  }
+}

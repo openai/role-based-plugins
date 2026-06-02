@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sales User Context"
+  short_description: "Manage saved Sales context so it learns how your team sells"
+  default_prompt: "Read Sales user context, apply saved preferences, and look for useful team selling guidance to fill setup gaps."
+policy:
+  allow_implicit_invocation: false

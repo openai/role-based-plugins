@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sales Company Research"
+  short_description: "Find durable company resources that improve Sales workflows"
+  default_prompt: "Run Sales Company Research."
+policy:
+  allow_implicit_invocation: false

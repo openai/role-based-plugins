@@ -1,0 +1,6 @@
+interface:
+  display_name: "Public Equity Investing Router"
+  short_description: "Routes explicit or unmistakable listed-equity mandates only"
+  default_prompt: "Use $public-equity-investing only for an explicitly requested Public Equity Investing workflow or an unmistakable listed-equity investor mandate."
+policy:
+  allow_implicit_invocation: true

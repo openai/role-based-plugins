@@ -1,0 +1,29 @@
+{
+  "name": "creative-production",
+  "version": "0.1.14",
+  "private": true,
+  "type": "module",
+  "files": [
+    ".codex-plugin/",
+    ".app.json",
+    ".mcp.json",
+    "README.md",
+    "assets/",
+    "mcp/",
+    "references/",
+    "requirements.txt",
+    "requirements-dev.txt",
+    "runtime/",
+    "scripts/",
+    "skills/"
+  ],
+  "scripts": {
+    "check": "node --check ./mcp/server.mjs && node --check ./mcp/lib/moodboard-run-state.mjs && node --check ./mcp/lib/widget-resource.mjs && node --check ./mcp/registrations/moodboard-board/register.mjs && node --check ./mcp/registrations/shot-intake/register.mjs && node --check ./mcp/registrations/style-intake/register.mjs && node --check ./mcp/widget-assets/keyword-intake/widget.js && node --check ./mcp/widget-assets/style-intake/widget.js",
+    "quality": "npm run check"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^1.7.1",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.2"
+  }
+}

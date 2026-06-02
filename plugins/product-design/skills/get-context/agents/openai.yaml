@@ -1,0 +1,6 @@
+interface:
+  display_name: "Get Context"
+  short_description: "Gather missing product and visual context"
+  default_prompt: "Gather the missing product and visual context for this Product Design task."
+policy:
+  allow_implicit_invocation: false

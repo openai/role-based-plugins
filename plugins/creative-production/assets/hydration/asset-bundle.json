@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "creative-production.asset-bundle.v1",
+  "bundleId": "creative-production-assets-v0.1.0",
+  "description": "Hydratable assets for creative-production.",
+  "driveFolderUrl": null,
+  "preferredSource": "zip-with-progressive-file-fallback",
+  "zip": {
+    "fileName": "creative-production-assets-v0.1.0.zip",
+    "archiveRoot": "creative-production-assets-v0.1.0",
+    "driveFileId": null,
+    "downloadUrl": null,
+    "sizeBytes": 1749235,
+    "sha256": "6b39021d6500ace9bc5a7e3f953f688941dce776400dae62ec5dc06391b39112"
+  },
+  "externalManifest": {
+    "fileName": "creative-production-assets-v0.1.0.manifest.json",
+    "driveFileId": null,
+    "downloadUrl": null,
+    "flatFilesDirectory": "files"
+  },
+  "pathPreserving": true,
+  "assetsAreComplete": false,
+  "counts": {
+    "files": 22,
+    "bytesUncompressed": 2027396
+  },
+  "sourceGroups": {
+    "generated_registry": {
+      "files": 3,
+      "bytes": 1525
+    },
+    "raw_image_or_svg": {
+      "files": 13,
+      "bytes": 1656385
+    },
+    "reference_dataset": {
+      "files": 6,
+      "bytes": 369486
+    }
+  },
+  "sentinelAssets": [
+    {
+      "original_path": "plugins/creative-production/assets/image-ad-library/registry-index.json",
+      "archive_path": "creative-production-assets-v0.1.0/plugins/creative-production/assets/image-ad-library/registry-index.json",
+      "size_bytes": 461,
+      "sha256": "abdc23181d631386e0e3fd657dee1b2fb249e04c19067433421e75d6a845070a"
+    },
+    {
+      "original_path": "plugins/creative-production/assets/offer-library/packs/cross-industry-product-ad-archetypes.json",
+      "archive_path": "creative-production-assets-v0.1.0/plugins/creative-production/assets/offer-library/packs/cross-industry-product-ad-archetypes.json",
+      "size_bytes": 59875,
+      "sha256": "99f1dca1bf5cd6781ae31001bbbc2120745d1b8e8ad4e6004746151c7f067d5e"
+    },
+    {
+      "original_path": "plugins/creative-production/skills/offer-explorer/references/expansion-packs.json",
+      "archive_path": "creative-production-assets-v0.1.0/plugins/creative-production/skills/offer-explorer/references/expansion-packs.json",
+      "size_bytes": 136025,
+      "sha256": "b4d8247ed930539a524934224dab27c87de2cebf63f1c3053aa46a75ae2a65ac"
+    },
+    {
+      "original_path": "plugins/creative-production/skills/charts-polish/assets/favorites/01-executive-visual-one-pager.png",
+      "archive_path": "creative-production-assets-v0.1.0/plugins/creative-production/skills/charts-polish/assets/favorites/01-executive-visual-one-pager.png",
+      "size_bytes": 122432,
+      "sha256": "a2a5eafe593e03edebc59f93bd7383f5db23503130080c460fae824894cb8910"
+    }
+  ],
+  "progressive": {
+    "enabled": true,
+    "driveFolderUrl": null,
+    "strategy": "Use zip as the fast path; fall back to external manifest plus per-file downloads."
+  }
+}

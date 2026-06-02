@@ -1,0 +1,8 @@
+interface:
+  display_name: "Mood Board Explorer"
+  short_description: "Explore visual territories"
+  brand_color: "#14532D"
+  default_prompt: "Use $moodboard-explorer to create a personalized image-only mood board from my profile and goal."
+
+policy:
+  allow_implicit_invocation: true

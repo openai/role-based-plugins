@@ -1,0 +1,6 @@
+interface:
+  display_name: "Data Analytics User Context"
+  short_description: "Manage source routing, onboarding, and semantic layers"
+  default_prompt: "Read Data Analytics source-routing preferences, apply semantic-layer registry entries, and help me finish analytics setup."
+policy:
+  allow_implicit_invocation: false

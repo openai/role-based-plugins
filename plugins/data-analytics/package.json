@@ -1,0 +1,43 @@
+{
+  "name": "datascience-mcp-widgets",
+  "version": "0.1.29",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:chart && npm run build:table && npm run build:artifact && npm run normalize:assets",
+    "build:artifact": "cross-env INPUT=datascience-artifact-widget.html vite build",
+    "build:chart": "cross-env INPUT=datascience-chart-widget.html vite build",
+    "build:table": "cross-env INPUT=datascience-table-widget.html vite build",
+    "dev": "concurrently \"npm:dev:chart\" \"npm:dev:table\" \"npm:dev:artifact\"",
+    "dev:artifact": "cross-env INPUT=datascience-artifact-widget.html vite build --watch",
+    "dev:chart": "cross-env INPUT=datascience-chart-widget.html vite build --watch",
+    "dev:table": "cross-env INPUT=datascience-table-widget.html vite build --watch",
+    "preview:widgets": "vite --host 127.0.0.1",
+    "normalize:assets": "node scripts/normalize-widget-assets.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lexical/history": "^0.44.0",
+    "@lexical/link": "^0.44.0",
+    "@lexical/list": "^0.44.0",
+    "@lexical/markdown": "^0.44.0",
+    "@lexical/react": "^0.44.0",
+    "@lexical/rich-text": "^0.44.0",
+    "@modelcontextprotocol/ext-apps": "^1.7.0",
+    "html-to-image": "1.11.13",
+    "lexical": "^0.44.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}

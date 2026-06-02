@@ -1,0 +1,6 @@
+interface:
+  display_name: "Generative Polish"
+  short_description: "Make selected visuals publish-ready with ImageGen polish."
+  default_prompt: "Make this selected business visual publish-ready while preserving exact copy, data, logos, dimensions, and review metadata."
+policy:
+  allow_implicit_invocation: true

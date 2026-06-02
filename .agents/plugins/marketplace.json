@@ -1,0 +1,68 @@
+{
+  "name": "role-based-plugins",
+  "interface": {
+    "displayName": "Role-Based Plugins"
+  },
+  "plugins": [
+    {
+      "name": "sales",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sales"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Business"
+    },
+    {
+      "name": "data-analytics",
+      "source": {
+        "source": "local",
+        "path": "./plugins/data-analytics"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Analytics"
+    },
+    {
+      "name": "product-design",
+      "source": {
+        "source": "local",
+        "path": "./plugins/product-design"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Design"
+    },
+    {
+      "name": "financial-markets",
+      "source": {
+        "source": "local",
+        "path": "./plugins/financial-markets"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Business"
+    },
+    {
+      "name": "creative-production",
+      "source": {
+        "source": "local",
+        "path": "./plugins/creative-production"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE"
+      },
+      "category": "Creative"
+    }
+  ]
+}

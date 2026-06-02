@@ -1,0 +1,138 @@
+---
+name: build-dashboard
+description: "Build source-backed analytical dashboards that help teams monitor performance, explore drivers, and act on product or business metrics. Use when the user needs a dashboard, scorecard, monitoring view, BI dashboard, MCP artifact dashboard, or Streamlit dashboard with clear metrics, filters, validation, and handoff."
+---
+
+# Dashboard Building
+
+Use this skill when the user needs a dashboard rather than a report, notebook-only analysis, spreadsheet, or transient chat summary. A good dashboard is summary-first, chart-led, scannable, and organized around what the audience needs to monitor, understand, or act on.
+
+Clarify with the user when a missing input would materially change the dashboard brief, analysis, or recommendation. Otherwise make a reasonable assumption, state it, and proceed.
+
+This skill owns the dashboard brief, delivery-mode selection, metric definitions, source expectations, layout logic, dashboard QA, and handoff. Delivery-specific mechanics belong in the selected dashboard specification.
+
+## Skill Configuration
+
+### Source Access Guardrail
+
+Before building a source-backed dashboard, determine whether the workflow depends on a specific required source of truth.
+
+If a required source is blocked, stop that build path. Tell the user what source is needed, ask them to make it available, and do not build a dashboard that appears source-backed from substitutes.
+
+Continue only when the required source is available. Optional enrichment is different: if it is missing, continue only when the dashboard's core metrics remain source-backed and trustworthy without it.
+
+### User Context
+
+Mandatory pre-answer gate: Invoke `data-analytics:user-context` in preflight mode by loading [data-analytics:user-context](../user-context/SKILL.md) and running its preflight script before answering, searching connectors, retrieving evidence, creating artifacts, or drafting output. Do not look for a callable MCP tool named `data-analytics:user-context`. Use the returned `data_analytics_preflight` envelope as authoritative for saved context, source-category mapping, semantic-layer registry, onboarding/final-response obligations, and conditional guidance. Do not read or reinterpret raw plugin state files unless preflight fails, declares required content omitted, local shell access is unavailable, or the user explicitly asks for raw state inspection.
+
+## Workflow
+
+### 1. Define The Dashboard Brief
+
+Understand who will use the dashboard, what they need to measure or monitor, which metrics matter, what surface it should live in, and what constraints could change the build.
+
+Clarify only the inputs that materially affect the dashboard, such as the primary audience, measurement goal, metric scope, delivery surface, refresh expectations, required filters, access constraints, or sharing needs. Decide whether the dashboard is mainly for status monitoring, recurring operating review, or analytical exploration, because that changes the layout, filter design, and validation bar.
+
+Use $gather-business-context when dashboard purpose, metric definitions, operating context, audience expectations, or existing dashboard conventions are not clear enough to design the dashboard well.
+
+### 2. Select The Delivery Surface
+
+Pick the first delivery surface that fits the user's need and available access. If the user specifies the destination or surface, use that instead of the default order.
+
+1. Use a connected BI tool by default. Use the BI surface identified during onboarding or user context; if none is specified, look for an available connected BI solution before choosing another surface.
+2. Use the MCP artifact app when a connected BI build is unavailable, too heavy for the request, or the user needs a compact in-Codex analytical dashboard.
+3. Use HTML when BI and MCP are not suitable and the user needs a portable static dashboard.
+
+Use Streamlit only when the user explicitly asks for it or an existing Streamlit app must be changed.
+
+Read the matching specification before building:
+
+- `../../_shared/analytics-app-core.md` for shared MCP artifact mechanics, source safety, runtime behavior, and validation helpers.
+- `specifications/bi-platform-dashboard.md` for BI platform dashboards.
+- `specifications/mcp-artifact-dashboard.md` for dashboards rendered by the MCP artifact app.
+- `specifications/html-dashboard.md` for portable static HTML dashboards.
+- `specifications/streamlit-dashboard.md` for Streamlit dashboards.
+
+### 3. Gather And Validate The Data
+
+Do the data work in this order:
+
+- **Find the source path before rendering.** Source discovery is part of dashboard building, not optional enrichment. Identify the source path for the core dashboard metrics. Use `~~structured_data` when the dashboard needs data from a warehouse or another structured data source. Use context lanes such as `~~company_docs`, `~~team_communication`, or `~~dashboards_or_bi` when the dashboard needs business meaning, source-of-truth guidance, metric definitions, or requirements that are not captured in structured data alone.
+- **Use durable dashboard data.** Validate the data before wiring it into the dashboard. Keep final extracts compact and aggregated unless a bounded detail table is part of the dashboard's purpose. Avoid final dashboards that depend on scratch or temporary tables.
+- **Validate trust.** For straightforward dashboards, confirm the source, grain, freshness, and basic reconciliation needed to trust the displayed metrics. Use $analyze-data-quality when data trust is a material risk, such as a new source, recent backfill, complex join, or surprising result.
+- **Resolve time and context anchors.** Before selecting metrics, establish any date anchor, comparison window, latest complete data date, source coverage, or authoritative artifact needed to shape the dashboard, such as a launch date, incident window, or campaign period. Use $gather-business-context when the prompt does not provide it. If still unclear, ask only when it would materially change the dashboard; otherwise state the assumption and shape queries around it.
+- **Stop if source-backed data is unavailable.** Do not render dashboards from fallback, sample, scratch, or partially blocked data unless the user explicitly asked for a mockup. If the core dashboard data is not available, stop the build path and tell the user what source or access is needed. Do not claim a dashboard was created from real data when the source path is missing.
+
+### 4. Define The Metric Model
+
+**Select the metrics.**
+
+When selecting dashboard metrics, classify the measurement object and choose a balanced metric model for that object. Do not use a fixed checklist. Identify which metric families are decision-relevant and which are intentionally out of scope.
+
+Consider these metric families as prompts, not required sections:
+
+- Reach: who or what is using the thing, eligible population, penetration, activation, adoption, coverage.
+- Volume: events, usage, transactions, sessions, requests, units, throughput, frequency.
+- Value: revenue, cost, margin, savings, conversion, retention value, productivity, business outcome.
+- Quality: success, failure, reliability, latency, satisfaction, correctness, safety, support burden.
+- Depth: repeat usage, intensity, feature mix, workflow completion, productionization, maturity, lifecycle stage.
+- Mix: segment, customer type, geography, channel, model/product/version, plan, use case, cohort.
+- Movement: trend, growth, seasonality, pre/post change, benchmark, target, forecast, leading indicators.
+- Risk and constraints: data coverage, source freshness, known blind spots, capacity, compliance, operational limits.
+
+**Build breadth without flattening the dashboard.**
+
+Build enough metric breadth to cover every family that is relevant to the dashboard's measurement object and decision. Keep the default view hierarchical rather than exhaustive: lead with the primary outcome and the highest-signal drivers, then use sections, tabs, filters, detail tables, or supporting views for additional relevant metrics. A selected family can be represented by one or many KPIs, drivers, guardrails, or breakdowns, depending on what the user needs to monitor or diagnose.
+
+Map the selected families into dashboard roles before building: hero metrics for the default view, diagnostic metrics for movement and breakdowns, guardrails for interpretation, and detail metrics for lookup or follow-up.
+
+**Escalate when metric design is the hard part.**
+
+Invoke $design-kpis when this baseline metric-family pass is not enough, such as when the dashboard needs a deeper metric framework, target-setting, formal KPI tradeoff analysis, or clearer definitions than this workflow can safely infer. Pass the dashboard brief, business context, source context, existing metric definitions, and constraints so the recommended metrics fit the audience and use case.
+
+**Keep the data model consistent.**
+
+Build from a reusable compact data model where possible instead of many slightly different tile queries. Keep date logic, filters, dimensions, and metric definitions consistent across cards, charts, and tables so numbers reconcile. Reuse shared metric definitions from the selected tool or semantic layer when available.
+
+### 5. Design The Dashboard Layout
+
+Make the default view useful before the viewer interacts. Arrange the dashboard from summary to detail: lead with the key status or primary KPI context, follow with movement over time, then show the breakdowns that explain the pattern, and put detail tables lower on the page when lookup or operational follow-up is needed.
+
+Use global filters only when they materially update the dashboard-wide view. Prefer a few high-signal controls over a dense filter panel. Keep dashboards visual-heavy and neutral: short labels, direct metric names, sparse annotations, and minimal explanatory text on the main canvas. Use human-readable short date form in visible labels and freshness text; keep ISO timestamps for machine-readable source metadata.
+
+Prefer human-readable short date forms in visible labels and tooltips unless the dashboard needs timestamps for operational precision.
+
+### 6. Choose The Right Charts
+
+Use $visualize-data when the dashboard needs chart selection, visual encoding, or chart polish. This skill should define what each chart needs to communicate; $visualize-data handles the detailed visual design.
+
+Choose the simplest visual that answers the viewer's question. Use a chart when it makes the pattern easier to understand than text or a table.
+
+Put metrics in the same chart only when comparing them directly makes sense. Otherwise, split them into separate charts, KPI cards, or tables.
+
+Use the selected dashboard specification for exact schema, renderer, and interaction requirements.
+
+### 7. Build And Validate In The Selected Surface
+
+Build in the selected surface using its native patterns. Before handoff, check that the dashboard opens cleanly, filters work, charts render, numbers reconcile, access is handled clearly, and performance is acceptable.
+
+Record the source or query path when it would be hard to rediscover later.
+
+### 8. Hand Off The Dashboard
+
+Include the dashboard link or local artifact path, what validation was performed, source or access caveats, and any remaining sharing or operational steps. For MCP artifact dashboards, follow the validation and render handoff rules in `specifications/mcp-artifact-dashboard.md`.
+
+## Dashboard Quality Bar
+
+Before handoff, make sure the dashboard is usable as a measurement surface:
+
+- The default view answers the primary audience question before the viewer interacts.
+- Filters are few, meaningful, and work across the surfaces they claim to control.
+- Cards, charts, and tables reconcile unless differences are clearly labeled.
+- Charts answer clear questions with compatible metrics.
+- Tables support lookup, comparison, or operational follow-up after the chart-led summary.
+- The metric set is broad enough for the measurement object: it covers the relevant families with primary outcomes, important drivers, guardrails, and supporting breakdowns while keeping the default view usable.
+- KPI cards are precisely defined: business-defined metrics include enough visible or nearby context for a reader to understand what is counted, over what window, and under what denominator or eligibility rule.
+- Source freshness, access limits, and caveats are visible where they matter.
+- The layout, labels, and performance work for the selected delivery mode.
+- The selected dashboard specification's validation and render rules were followed.

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style id="keywordIntakeInlineCss">
+/* __KEYWORD_INTAKE_WIDGET_CSS__ */
+  </style>
+  <script>
+    (function () {
+      var css = document.getElementById("keywordIntakeInlineCss");
+      if (!css || !css.textContent.trim()) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "../keyword-intake/widget.css";
+        document.head.appendChild(link);
+      }
+    }());
+  </script>
+</head>
+<body>
+  <main id="app" class="keyword-intake" data-intake-kind="shot" aria-label="Shot intake"></main>
+  <script id="keywordIntakeInlineJs">
+/* __KEYWORD_INTAKE_WIDGET_JS__ */
+  </script>
+  <script>
+    (function () {
+      if (!window.__KEYWORD_INTAKE_WIDGET_LOADED__) {
+        var script = document.createElement("script");
+        script.src = "../keyword-intake/widget.js";
+        document.body.appendChild(script);
+      }
+    }());
+  </script>
+</body>
+</html>

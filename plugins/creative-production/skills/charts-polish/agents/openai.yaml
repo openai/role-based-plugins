@@ -1,0 +1,4 @@
+interface:
+  display_name: "Charts Polish"
+  short_description: "Polish benchmark charts into high-craft business visuals."
+  default_prompt: "Use $charts-polish to turn this chart into polished business visual variants while preserving all chart data."

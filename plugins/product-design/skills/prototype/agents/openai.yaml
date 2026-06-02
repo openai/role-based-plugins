@@ -1,0 +1,6 @@
+interface:
+  display_name: "Prototype"
+  short_description: "Route Product Design prototype, redesign, clone, and UI build requests"
+  default_prompt: "Build a Product Design prototype."
+policy:
+  allow_implicit_invocation: false

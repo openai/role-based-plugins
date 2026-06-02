@@ -1,0 +1,11 @@
+{
+  "name": "product-design",
+  "version": "0.1.36",
+  "private": true,
+  "type": "module",
+  "description": "The Product Design plugin is built for turning early ideas into prototypes teams can review. Teams can explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive, with work that can be carried forward in tools like Figma and Canva.",
+  "repository": "https://github.com/openai/role-based-plugins/tree/main/plugins/product-design",
+  "scripts": {
+    "prototype:bootstrap": "node scripts/bootstrap-prototype.mjs"
+  }
+}

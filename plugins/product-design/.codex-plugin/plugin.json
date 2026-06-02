@@ -1,0 +1,49 @@
+{
+  "name": "product-design",
+  "version": "0.1.36",
+  "description": "The Product Design plugin is built for turning early ideas into prototypes teams can review. Teams can explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive, with work that can be carried forward in tools like Figma and Canva.",
+  "author": {
+    "name": "OpenAI",
+    "url": "https://openai.com/"
+  },
+  "homepage": "https://github.com/openai/role-based-plugins",
+  "repository": "https://github.com/openai/role-based-plugins/tree/main/plugins/product-design",
+  "license": "MIT",
+  "keywords": [
+    "prototype",
+    "frontend",
+    "ux-research",
+    "ux-audit",
+    "accessibility-audit",
+    "research",
+    "context-gathering",
+    "ideation",
+    "image-generation",
+    "prototype"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Product Design",
+    "shortDescription": "Audit flows, ideate, research, build and share prototypes.",
+    "longDescription": "The Product Design plugin is built for turning early ideas into prototypes teams can review. Teams can explore product directions, audit user flows, prototype from a live URL, and make static screenshots interactive, with work that can be carried forward in tools like Figma and Canva.",
+    "developerName": "OpenAI",
+    "category": "Design",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://openai.com/",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "defaultPrompt": [
+      "Help me design an app",
+      "Build a prototype of my app from a URL",
+      "What can you do?"
+    ],
+    "composerIcon": "./assets/composerIcon.svg",
+    "logo": "./assets/logo.png",
+    "brandColor": "#FF66AD",
+    "screenshots": []
+  }
+}

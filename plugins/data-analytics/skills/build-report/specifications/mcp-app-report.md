@@ -1,0 +1,59 @@
+# MCP App Report Specification
+
+Use this when the selected report surface is a bounded manifest/snapshot rendered by the Data Analytics MCP artifact app.
+
+Before creating or revising an MCP app report artifact, read `../../../_shared/analytics-app-core.md`. It defines the shared dashboard/report artifact contract, bounded snapshot, source safety, runtime behavior, validation helpers, and MCP-specific payload/encoding rules.
+
+## Build Shape
+
+- Define ordered `blocks[]`, `sources[]`, and bounded cards/charts/tables in the manifest. Treat `blocks[]` as the narrative reading path.
+- Set `manifest.title` to the reader-facing title.
+- For MCP app reports, make the first reader-facing block a normal `type: "markdown"` block whose body is a single `#` heading matching `manifest.title`. Do not rely on the app chrome as the report's only visible title.
+- The title block is only the report title. For stakeholder reports, the next narrative markdown block must start with a visible `## Executive Summary` heading before the summary content. Do not collapse the executive summary into the title block or rely on bold opening paragraphs, KPI cards, subtitles, or metric strips to satisfy the executive-summary section role.
+- Use reader-facing headings inside markdown blocks to separate major report segments. Do not rely on chart titles, table titles, or non-rendered metadata as the only visible title for a major segment.
+- Use `type: "metric-strip"` with `cardIds` when a KPI strip is needed; do not create standalone metric blocks.
+- Connect block evidence to source references when the surface supports it, and preserve the full audit trail in source metadata or supporting artifacts.
+- MCP app reports must include at least one native manifest chart block backed by reviewed snapshot data.
+- Default to built-in report artifact blocks for MCP app reports: `markdown`, `metric-strip`, `chart`, and `table`. Use native blocks for ordinary narrative sections, KPI strips, charts, tables, caveats, and source notes instead of hand-authored HTML.
+- Use report chart types supported by the current MCP artifact schema. Keep report interaction bounded; use dashboards, not reports, for filterable exploration.
+- Include report-native visual/table blocks when quantitative evidence is available and useful, not only markdown summaries.
+- Do not render filters or dashboard-style exploration controls in an MCP app report.
+- Metric cards use one `metrics[]` list. The first metric renders as the large value; later metrics render as labeled secondary badges. Each metric declares `label`, `field`, optional `format`, and `signed: true` for signed changes.
+- When a metric label is not self-defining, include a card description or nearby markdown that explains the metric in reader terms, and include the exact calculation in `source.query.metric_definitions`.
+- Percent values rendered with `format: "percent"` or `valueFormat: "percent"` must use the same numeric scale consistently in the provided data. Use decimal rates for computed numeric fields, such as `0.149` for `14.9%`, or pass preformatted reader-facing strings where exact display text matters.
+
+## Source And Data Requirements
+
+- Every native chart and table block must expose provenance through the canonical `source` structure, either directly on the block or by `sourceId` reference to `manifest.sources[]`. Put runnable SQL/code in `source.query.sql`, a human-readable query summary in `source.query.description`, table names in `source.query.tables_used`, material predicates in `source.query.filters`, and metric formulas in `source.query.metric_definitions`. Do not rely on dataset names, source labels, or source order to attach provenance.
+- Do not create artifact `manifest.filters` just to document SQL predicates in a report. Report predicate provenance belongs in `source.query.filters`; `manifest.filters` is only for interactive controls.
+- Every native chart block must be backed by a source dataset that is richer than the chart's visible encodings. Do not create chart datasets or expanded source-data tables with only the plotted fields when the reviewed analysis can expose more context. Preserve useful dimensions, including relevant customer, account, company, segment, and product names, plus time/cohort fields, potential grouping columns, numerator/denominator components, ranks, baselines, comparison periods, and adjacent measures that help the reader audit or re-encode the chart.
+- Retaining a potential grouping column for auditability does not mean the shipped chart should bind it as `encodings.color`, series, or grouped/stacked behavior; only add visible grouping when it is a second categorical dimension beyond the axis category.
+- If a chart must use a minimal dataset because of privacy, query cost, source limits, or metric-definition constraints, record that exception in report source notes or a visible caveat when it affects interpretation.
+- Use `snapshot.accessIssues` only for required report data that could not load, and set the snapshot status to `partial` or `blocked` in those cases. Do not use `accessIssues` for optional source limitations, denied exploratory joins, methodology caveats, or provenance notes in an otherwise ready report; place those in a markdown body block, source metadata, or report notes instead so the artifact does not render a top-of-report blocker.
+
+## Chart And Custom Block Rules
+
+- For chart widgets and native manifest charts, provide the chart family and fields explicitly according to the MCP tool descriptions. Validate before rendering; the app should not choose the first dimension/measure, flip horizontal bar axes, infer grouping fields, or guess units.
+- Use `type: "html"` blocks when the user requests report customization that requires custom rendering, including requests to use Seaborn, Matplotlib, a bespoke visual/layout treatment, or a chart form that cannot be represented with built-in report blocks and native chart/table options.
+- Route custom chart work through `$visualize-data`, generate the chart from the Seaborn templates as a compact Matplotlib SVG, embed it in the HTML block, and document the exception. Keep ordinary narrative, KPI, native chart, table, caveat, and source sections in built-in blocks.
+- Keep custom chart HTML blocks as containers around generated chart images with title, caption, alt text, and source context. Do not ship hand-authored SVG, CSS bars, canvas, or JavaScript as the chart itself.
+- HTML blocks auto-size to their content; inspect the rendered artifact for clipping, missing images, and collisions with nearby blocks before handoff.
+- MCP report chart cards and detail pages should share the same native renderer and chart-type compatibility logic. Do not embed the standalone inline chart widget or rebuild a separate detail-page chart implementation.
+- Do not emit inline MCP chart or table widgets during report-mode work, and do not treat inline MCP chart/table widgets as report visuals or evidence previews. Report charts, tables, and previews must live in the selected report surface and be backed by reviewed snapshot data or static PNG assets.
+
+## Revision And Rendering
+
+- When modifying an existing MCP app report, update the complete manifest and bounded snapshot from the previous full artifact. The revised artifact must contain all unaffected report parts exactly as before, plus only the requested addition or modification. Validate and render that full artifact; never replace a full report with an excerpt, follow-up card, or abbreviated report unless the user explicitly asks for a separate slim version.
+- Validate with `validate_artifact` before the first visible `render_artifact` call. Fix validation errors with the validator only; do not use the visible renderer as an iterative validator.
+
+## Hosted Sharing
+
+- The artifact app's `Share` menu may offer `Publish to Sites` for publishing the current report or dashboard through Site Creator.
+- Treat hosted sharing as agent-mediated production publishing. The artifact UI should launch a Codex follow-up; it should not directly call Site Creator, hold deployment credentials, or mutate production access from the browser.
+- Before publishing, call `export_artifact_package` on the validated current artifact payload. The exporter materializes a Cloudflare Worker-compatible Site Creator package using the real MCP artifact runtime and serves the report data through `/api/manifest`, `/api/snapshot`, `/api/package`, `/api/source-file`, and `/api/inline-chart-widget`. Do not deploy a viewer that depends on MCP-only `window.openai.toolOutput` state, and do not hand-roll a standalone HTML renderer.
+- Hosted Site Creator exports are reader surfaces by default. Hide artifact editing controls and remove `Publish to Sites` from the hosted export menu; revise the MCP artifact and redeploy a new version when shared content needs to change.
+- Preserve the current manifest, bounded snapshot, inline-safe source text, package metadata, reading order, visuals, tables, source details, and narrative.
+- Keep static HTML and PDF exports content-only: include the report title, narrative, visuals, tables, and source details, but omit the interactive top bar and app-only controls.
+- Use the `sites-hosting` workflow for project resolution, local validation, source provenance, artifact preparation, version creation, deployment polling, and access control.
+- Default new hosted report access to `workspace_all` unless the user explicitly requests narrower access. Report the production URL and the configured access mode.
+- If the local report package files or validated artifact payload are unavailable, stop and ask for the missing source instead of publishing an empty, fallback, or stale report.

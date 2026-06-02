@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prioritize Accounts</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f8fb;
+        --panel: #ffffff;
+        --panel-soft: #fbfcfe;
+        --text: #182230;
+        --muted: #667085;
+        --line: #d9dee7;
+        --line-strong: #c9d1df;
+        --blue: #0b5cab;
+        --blue-soft: #e8f1ff;
+        --green: #16794c;
+        --green-soft: #e9f7ef;
+        --amber: #b65e00;
+        --amber-soft: #fff4df;
+        --red: #b42318;
+        --red-soft: #fff1f0;
+        --shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scrollbar-gutter: stable;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      html,
+      body,
+      #app {
+        min-height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Roboto", "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.45;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      button,
+      input,
+      select {
+        color: inherit;
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        min-height: 100vh;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 58px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: var(--shadow);
+        padding: 10px 16px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        gap: 10px;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        flex: 0 0 auto;
+        border-radius: 7px;
+        background: var(--blue);
+        color: #ffffff;
+        font-weight: 900;
+      }
+
+      .brand-text {
+        min-width: 0;
+      }
+
+      .brand-text strong {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .brand-text strong {
+        color: #092b5a;
+        font-size: 15px;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .control {
+        min-height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #ffffff;
+        color: var(--text);
+        padding: 7px 9px;
+      }
+
+      .search {
+        width: min(280px, 32vw);
+      }
+
+      .main {
+        display: grid;
+        gap: 12px;
+        width: min(1480px, 100%);
+        margin: 0 auto;
+        padding: 12px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .section > .summary-grid {
+        padding: 0 12px 12px;
+      }
+
+      .metric {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        padding: 10px;
+      }
+
+      .metric span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        display: block;
+        overflow: hidden;
+        margin-top: 5px;
+        font-size: 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .section {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        background: var(--panel-soft);
+        padding: 12px;
+      }
+
+      .section-title {
+        min-width: 0;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 22px;
+        line-height: 28px;
+        overflow-wrap: anywhere;
+      }
+
+      h2 {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .subtle {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 3px 9px;
+        white-space: nowrap;
+      }
+
+      .tone-ready,
+      .tone-ready-now,
+      .tone-high {
+        background: var(--green-soft);
+        color: var(--green);
+      }
+
+      .tone-partial,
+      .tone-monitor,
+      .tone-medium {
+        background: var(--amber-soft);
+        color: var(--amber);
+      }
+
+      .tone-blocked,
+      .tone-suppressed,
+      .tone-low {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+
+      .tone-info {
+        background: var(--blue-soft);
+        color: #092b5a;
+      }
+
+      .scope-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .field {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #ffffff;
+        padding: 9px;
+      }
+
+      .field span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .field strong {
+        display: block;
+        margin-top: 3px;
+        overflow-wrap: anywhere;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        scrollbar-gutter: stable;
+      }
+
+      table {
+        width: 100%;
+        min-width: 900px;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      .table-suggested-focus {
+        min-width: 1900px;
+      }
+
+      .table-monitor {
+        min-width: 980px;
+      }
+
+      .table-suppress-or-block {
+        min-width: 1100px;
+      }
+
+      th {
+        border-bottom: 1px solid var(--line-strong);
+        background: #f8fafc;
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+        padding: 8px;
+        text-align: left;
+        text-transform: uppercase;
+      }
+
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 9px 8px;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+      }
+
+      tbody tr:hover {
+        background: #f8fbff;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      td strong {
+        display: block;
+        overflow-wrap: anywhere;
+      }
+
+      .col-account {
+        width: 180px;
+      }
+
+      .col-rank {
+        width: 72px;
+      }
+
+      .col-confidence,
+      .col-status {
+        width: 112px;
+      }
+
+      .col-contact {
+        width: 190px;
+      }
+
+      .col-why,
+      .col-next {
+        width: 250px;
+      }
+
+      .col-angle {
+        width: 230px;
+      }
+
+      .col-opp {
+        width: 200px;
+      }
+
+      .col-evidence {
+        width: 280px;
+      }
+
+      .account-link {
+        color: var(--blue);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .account-link:hover {
+        text-decoration: underline;
+      }
+
+      .cards {
+        display: none;
+        padding: 10px;
+      }
+
+      .card {
+        display: grid;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        padding: 10px;
+      }
+
+      .card + .card {
+        margin-top: 10px;
+      }
+
+      .card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .card-field {
+        min-width: 0;
+      }
+
+      .card-field span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .card-field strong {
+        display: block;
+        margin-top: 2px;
+        overflow-wrap: anywhere;
+      }
+
+      .gaps {
+        display: grid;
+        gap: 8px;
+        padding: 12px;
+      }
+
+      .gap {
+        display: grid;
+        grid-template-columns: 10px 1fr;
+        gap: 9px;
+      }
+
+      .dot {
+        width: 7px;
+        height: 7px;
+        margin-top: 7px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
+
+      .empty {
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        margin: 12px;
+        padding: 22px;
+        text-align: center;
+      }
+
+      .footnote {
+        color: var(--muted);
+        font-size: 12px;
+        padding: 0 2px 4px;
+      }
+
+      @media (max-width: 1180px) {
+        .summary-grid,
+        .scope-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .topbar {
+          position: static;
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .controls {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .search {
+          width: 100%;
+        }
+
+        .summary-grid,
+        .scope-grid,
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .table-wrap {
+          display: none;
+        }
+
+        .cards {
+          display: block;
+        }
+      }
+
+      @media (forced-colors: active) {
+        .brand-mark {
+          background: Highlight;
+          color: HighlightText;
+        }
+
+        .field,
+        .metric,
+        .pill,
+        .section,
+        .card {
+          border: 1px solid CanvasText;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script id="prioritize-accounts-data" type="application/json">
+__PRIORITIZE_ACCOUNTS_DATA_JSON__
+    </script>
+    <div id="app"></div>
+    <script>
+      const templateToken = ["__PRIORITIZE", "ACCOUNTS", "DATA", "JSON__"].join("_");
+      const rawData = document.getElementById("prioritize-accounts-data").textContent.trim();
+      const data = prepare(parseData(rawData));
+      const state = { q: "", filter: "all" };
+
+      function parseData(raw) {
+        if (!raw || raw === templateToken) {
+          return {
+            title: "Prioritize Accounts",
+            generatedAt: new Date().toISOString(),
+            source: { label: "No source selected", status: "No account ranking loaded" },
+            scope: {},
+            workNow: [],
+            monitor: [],
+            suppressOrBlock: [],
+            evidenceGaps: ["No account ranking has been loaded yet."],
+          };
+        }
+        try {
+          return JSON.parse(raw);
+        } catch (error) {
+          return {
+            title: "Prioritize Accounts",
+            generatedAt: new Date().toISOString(),
+            source: { label: "Account ranking", status: "Could not load source results" },
+            scope: {},
+            workNow: [],
+            monitor: [],
+            suppressOrBlock: [],
+            evidenceGaps: ["The account ranking could not be loaded. Regenerate the view from connected source results."],
+          };
+        }
+      }
+
+      function prepare(payload) {
+        const workNow = array(payload.workNow || payload.work_now || payload.accounts).map(normalizeWorkNow);
+        const monitor = array(payload.monitor).map(normalizeMonitor);
+        const suppressOrBlock = array(payload.suppressOrBlock || payload.suppress_or_block || payload.suppressions).map(normalizeSuppress);
+        return {
+          title: payload.title || "Prioritize Accounts",
+          generatedAt: payload.generatedAt || payload.generated_at || new Date().toISOString(),
+          source: normalizeSource(payload.source),
+          scope: payload.scope || {},
+          workNow,
+          monitor,
+          suppressOrBlock,
+          evidenceGaps: array(payload.evidenceGaps || payload.evidence_gaps || payload.gaps),
+          nextStep: payload.nextStep || payload.next_step || "",
+        };
+      }
+
+      function normalizeSource(source) {
+        if (!source) return { label: "Connected sources", status: "Source results used" };
+        if (typeof source === "string") return { label: source, status: "Source results used" };
+        return source;
+      }
+
+      function accountUrl(row) {
+        return pick(row, "accountUrl", "account_url", "accountRecordUrl", "account_record_url", "accountSourceUrl", "account_source_url", "sourceUrl", "source_url", "recordUrl", "record_url", "url", "Url", "link", "Link", "account.url", "Account.url");
+      }
+
+      function normalizeWorkNow(row, index) {
+        return {
+          rank: pick(row, "rank", "Rank") || index + 1,
+          account: pick(row, "account", "Account", "name", "Name"),
+          accountUrl: accountUrl(row),
+          motion: pick(row, "motion", "Motion"),
+          whyNow: pick(row, "whyNow", "why_now", "Why Now", "Reason"),
+          primaryContact: pick(row, "primaryContact", "primary_contact", "Primary Contact"),
+          secondaryContact: pick(row, "secondaryContact", "secondary_contact", "Secondary Contact") || "None",
+          oppRecommendation: pick(row, "oppRecommendation", "opp_recommendation", "Opp Recommendation"),
+          nextStep: pick(row, "nextStep", "next_step", "suggestedNextStep", "suggested_next_step", "Suggested Next Step", "Next Step"),
+          sequenceAngle: pick(row, "sequenceAngle", "sequence_angle", "Sequence Angle"),
+          confidence: pick(row, "confidence", "Confidence"),
+          status: pick(row, "status", "Status") || "ready_now",
+        };
+      }
+
+      function normalizeMonitor(row) {
+        return {
+          account: pick(row, "account", "Account", "name", "Name"),
+          accountUrl: accountUrl(row),
+          motion: pick(row, "motion", "Motion"),
+          reasonToMonitor: pick(row, "reasonToMonitor", "reason_to_monitor", "Reason To Monitor", "Reason"),
+          triggerToRevisit: pick(row, "triggerToRevisit", "trigger_to_revisit", "Trigger To Revisit", "Trigger"),
+          status: pick(row, "status", "Status") || "monitor",
+        };
+      }
+
+      function normalizeSuppress(row) {
+        return {
+          account: pick(row, "account", "Account", "name", "Name"),
+          accountUrl: accountUrl(row),
+          motion: pick(row, "motion", "Motion"),
+          suppressorOrBlocker: pick(row, "suppressorOrBlocker", "suppressor_or_blocker", "Suppressor Or Blocker", "Blocker"),
+          evidence: pick(row, "evidence", "Evidence"),
+          status: pick(row, "status", "Status") || "suppressed",
+        };
+      }
+
+      function pick(record, ...keys) {
+        for (const key of keys) {
+          const value = key.split(".").reduce((current, part) => current?.[part], record);
+          if (value !== undefined && value !== null && String(value).trim() !== "") return value;
+        }
+        return "";
+      }
+
+      function array(value) {
+        return Array.isArray(value) ? value : value ? [value] : [];
+      }
+
+      function text(value) {
+        if (value === null || value === undefined || value === "") return "";
+        if (typeof value === "object") {
+          const name = pick(value, "name", "Name");
+          const title = pick(value, "title", "Title", "role", "Role");
+          const email = pick(value, "email", "Email");
+          return [name, title, email].filter(Boolean).join(" - ") || JSON.stringify(value);
+        }
+        return String(value);
+      }
+
+      function esc(value) {
+        return humanizeDates(text(value)).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+      }
+
+      function humanizeDates(value) {
+        return String(value).replace(/\b(\d{4})-(\d{2})-(\d{2})(?:[T ][0-9:.]+(?:Z|[+-]\d{2}:?\d{2})?)?\b/g, (_, year, month, day) => humanDate(year, month, day));
+      }
+
+      function humanDate(year, month, day) {
+        const numericYear = Number(year);
+        const date = new Date(Date.UTC(numericYear, Number(month) - 1, Number(day)));
+        if (Number.isNaN(date.valueOf())) return [year, month, day].join("-");
+        const options = { month: "short", day: "numeric", timeZone: "UTC" };
+        if (numericYear !== new Date().getFullYear()) options.year = "numeric";
+        return new Intl.DateTimeFormat(undefined, options).format(date);
+      }
+
+      function safeUrl(value) {
+        const url = String(value || "").trim();
+        return /^https?:\/\//i.test(url) ? url : "";
+      }
+
+      function linkedText(label, url, className = "") {
+        const href = safeUrl(url);
+        const classAttr = className ? ` class="${esc(className)}"` : "";
+        return href
+          ? `<a${classAttr} href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`
+          : `<span${classAttr}>${esc(label)}</span>`;
+      }
+
+      function statusTone(status) {
+        const normalized = String(status || "").toLowerCase().replace(/[^a-z]+/g, "-");
+        if (["high", "ready-now", "ready"].includes(normalized)) return "high";
+        if (["medium", "partial", "monitor", "watch"].includes(normalized)) return "medium";
+        if (["low", "blocked", "suppressed"].includes(normalized)) return "low";
+        return normalized || "info";
+      }
+
+      function matches(row) {
+        const haystack = Object.values(row).map(text).join(" ").toLowerCase();
+        const queryMatch = !state.q || haystack.includes(state.q.toLowerCase());
+        const filterMatch =
+          state.filter === "all" ||
+          row.status === state.filter ||
+          String(row.status || "").toLowerCase() === state.filter ||
+          String(row.confidence || "").toLowerCase() === state.filter;
+        return queryMatch && filterMatch;
+      }
+
+      function renderMetric(label, value) {
+        return `<div class="metric"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`;
+      }
+
+      function renderRunDetails(counts) {
+        const scope = data.scope || {};
+        const fields = [
+          ["Source of truth", pick(scope, "sourceOfTruth", "source_of_truth", "sourceScope", "source_scope")],
+          ["Sources checked", array(pick(scope, "sourcesChecked", "sources_checked", "evidenceLanes", "evidence_lanes")).join(", ") || pick(scope, "evidence", "sources")],
+          ["Last updated", dateText(data.generatedAt)],
+          ["Account set", pick(scope, "accountSet", "account_set")],
+          ["Ranking basis", pick(scope, "rankingBasis", "ranking_basis")],
+          ["Action owner", pick(scope, "actionOwner", "action_owner", "accountOwner", "account_owner", "ownershipActionModel", "ownership_action_model", "ownership")],
+          ["Capacity", pick(scope, "capacityWindow", "capacity_window", "batchSize", "batch_size")],
+          ["Assumptions", pick(scope, "assumptions")],
+        ];
+        return `
+          <section class="section">
+            <div class="section-header">
+              <div class="section-title"><h2>Source & Run Details</h2></div>
+              <span class="pill tone-info">${esc(data.source.label || "Sales")}</span>
+            </div>
+            <div class="scope-grid">
+              ${fields.map(([label, value]) => `<div class="field"><span>${esc(label)}</span><strong>${esc(value || "Not available")}</strong></div>`).join("")}
+            </div>
+            <div class="summary-grid">
+              ${renderMetric("Suggested Focus", counts.workNow)}
+              ${renderMetric("Monitor", counts.monitor)}
+              ${renderMetric("Suppress / Block", counts.suppress)}
+              ${renderMetric("Evidence Gaps", data.evidenceGaps.length)}
+            </div>
+          </section>
+        `;
+      }
+
+      function renderWorkNow() {
+        const rows = data.workNow.filter(matches);
+        return renderSection(
+          "Suggested Focus",
+          rows.length,
+          workColumns(),
+          rows,
+          renderWorkCard,
+          "No suggested focus accounts match the current filter.",
+        );
+      }
+
+      function renderMonitor() {
+        const rows = data.monitor.filter(matches);
+        return renderSection(
+          "Monitor",
+          rows.length,
+          [
+            ["Account", "account", "col-account"],
+            ["Reason To Monitor", "reasonToMonitor", "col-why"],
+            ["Trigger To Revisit", "triggerToRevisit", "col-next"],
+            ["Status", "status", "col-status"],
+          ],
+          rows,
+          renderMonitorCard,
+          "No monitor accounts.",
+        );
+      }
+
+      function renderSuppress() {
+        const rows = data.suppressOrBlock.filter(matches);
+        return renderSection(
+          "Suppress Or Block",
+          rows.length,
+          [
+            ["Account", "account", "col-account"],
+            ["Suppressor Or Blocker", "suppressorOrBlocker", "col-why"],
+            ["Evidence", "evidence", "col-evidence"],
+            ["Status", "status", "col-status"],
+          ],
+          rows,
+          renderSuppressCard,
+          "No suppressed or blocked accounts.",
+        );
+      }
+
+      function workColumns() {
+        return [
+          ["Priority", "rank", "col-rank"],
+          ["Account", "account", "col-account"],
+          ["Suggested Next Step", "nextStep", "col-next"],
+          ["Why Now", "whyNow", "col-why"],
+          ["Primary Contact", "primaryContact", "col-contact"],
+          ["Secondary Contact", "secondaryContact", "col-contact"],
+          ["Opp Recommendation", "oppRecommendation", "col-opp"],
+          ["Sequence Angle", "sequenceAngle", "col-angle"],
+          ["Confidence", "confidence", "col-confidence"],
+          ["Status", "status", "col-status"],
+        ];
+      }
+
+      function renderSection(title, count, columns, rows, cardRenderer, emptyText) {
+        const sectionId = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        return `
+          <section class="section" data-section="${esc(title)}">
+            <div class="section-header">
+              <div class="section-title"><h2>${esc(title)}</h2></div>
+              <span class="pill tone-info">${count}</span>
+            </div>
+            ${
+              rows.length
+                ? `<div class="table-wrap"><table class="table-${esc(sectionId)}">
+                    <thead><tr>${columns.map(([label, , className]) => `<th class="${className || ""}">${esc(label)}</th>`).join("")}</tr></thead>
+                    <tbody>${rows.map((row) => renderRow(columns, row)).join("")}</tbody>
+                  </table></div>
+                  <div class="cards">${rows.map(cardRenderer).join("")}</div>`
+                : `<div class="empty">${esc(emptyText)}</div>`
+            }
+          </section>
+        `;
+      }
+
+      function renderRow(columns, row) {
+        return `<tr>${columns
+          .map(([, key]) => {
+            const value = row[key];
+            if (key === "account") return `<td>${linkedText(value, row.accountUrl, "account-link")}</td>`;
+            if (key === "status" || key === "confidence") return `<td><span class="pill tone-${statusTone(value)}">${esc(value)}</span></td>`;
+            return `<td>${esc(value)}</td>`;
+          })
+          .join("")}</tr>`;
+      }
+
+      function renderCard(title, rows, status, titleUrl = "") {
+        return `
+          <article class="card">
+            <div class="card-top">
+              <strong>${linkedText(title, titleUrl, "account-link")}</strong>
+              <span class="pill tone-${statusTone(status)}">${esc(status)}</span>
+            </div>
+            <div class="card-grid">
+              ${rows.map(([label, value]) => `<div class="card-field"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}
+            </div>
+          </article>
+        `;
+      }
+
+      function renderWorkCard(row) {
+        return renderCard(`#${row.rank} ${row.account}`, [
+          ["Suggested Next Step", row.nextStep],
+          ["Why Now", row.whyNow],
+          ["Primary Contact", row.primaryContact],
+          ["Secondary Contact", row.secondaryContact],
+          ["Opp Recommendation", row.oppRecommendation],
+          ["Sequence Angle", row.sequenceAngle],
+          ["Confidence", row.confidence],
+        ], row.status, row.accountUrl);
+      }
+
+      function renderMonitorCard(row) {
+        return renderCard(row.account, [
+          ["Reason To Monitor", row.reasonToMonitor],
+          ["Trigger To Revisit", row.triggerToRevisit],
+        ], row.status, row.accountUrl);
+      }
+
+      function renderSuppressCard(row) {
+        return renderCard(row.account, [
+          ["Suppressor Or Blocker", row.suppressorOrBlocker],
+          ["Evidence", row.evidence],
+        ], row.status, row.accountUrl);
+      }
+
+      function renderGaps() {
+        const gaps = data.evidenceGaps.map(text).filter(Boolean);
+        return `
+          <section class="section">
+            <div class="section-header">
+              <div class="section-title"><h2>Evidence Gaps</h2></div>
+              <span class="pill tone-info">${gaps.length}</span>
+            </div>
+            ${gaps.length ? `<div class="gaps">${gaps.map((gap) => `<div class="gap"><span class="dot"></span><span>${esc(gap)}</span></div>`).join("")}</div>` : `<div class="empty">No material evidence gaps called out.</div>`}
+          </section>
+        `;
+      }
+
+      function dateText(value) {
+        const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+        return match ? humanDate(match[1], match[2], match[3]) : humanizeDates(value || "");
+      }
+
+      function render() {
+        const app = document.getElementById("app");
+        const visibleWorkNow = data.workNow.filter(matches).length;
+        const visibleMonitor = data.monitor.filter(matches).length;
+        const visibleSuppress = data.suppressOrBlock.filter(matches).length;
+        app.innerHTML = `
+          <div class="shell">
+            <header class="topbar">
+              <div class="brand">
+                <div class="brand-mark">S</div>
+                <div class="brand-text"><strong>Prioritize Accounts</strong></div>
+              </div>
+              <div class="controls">
+                <input class="control search" id="q" placeholder="Search accounts" value="${esc(state.q)}" />
+                <select class="control" id="filter">
+                  <option value="all">All accounts</option>
+                  <option value="ready_now">Ready now</option>
+                  <option value="partial">Partial</option>
+                  <option value="monitor">Monitor</option>
+                  <option value="suppressed">Suppressed</option>
+                  <option value="blocked">Blocked</option>
+                  <option value="high">High confidence</option>
+                  <option value="medium">Medium confidence</option>
+                  <option value="low">Low confidence</option>
+                </select>
+              </div>
+            </header>
+            <main class="main">
+              ${renderWorkNow()}
+              ${renderMonitor()}
+              ${renderSuppress()}
+              ${renderGaps()}
+              ${renderRunDetails({ workNow: visibleWorkNow, monitor: visibleMonitor, suppress: visibleSuppress })}
+              <p class="footnote">Based on the connected sources shown above. Review source records before outreach or CRM updates.</p>
+            </main>
+          </div>
+        `;
+        document.getElementById("filter").value = state.filter;
+      }
+
+      document.addEventListener("input", (event) => {
+        if (event.target.id === "q") {
+          state.q = event.target.value;
+          render();
+        }
+      });
+
+      document.addEventListener("change", (event) => {
+        if (event.target.id === "filter") {
+          state.filter = event.target.value;
+          render();
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>

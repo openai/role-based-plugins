@@ -1,0 +1,6 @@
+interface:
+  display_name: "Plan Deal Strategy"
+  short_description: "Post-discovery deal strategy from grounded evidence"
+  default_prompt: "Build a deal strategy for an active account."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}}</title>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 0; background: #faf8f5; color: #171411; }
+    main { max-width: 880px; margin: 0 auto; padding: 40px 20px 64px; }
+    header, section { margin-bottom: 32px; }
+    h1, h2 { line-height: 1.15; margin: 0 0 12px; }
+    p, li { line-height: 1.6; }
+    figure { margin: 20px 0; }
+    figcaption { color: #5f5750; font-size: 14px; }
+    .callout { padding: 16px 18px; background: #f2ede6; border-radius: 12px; }
+    .executive-summary-box {
+      padding: 20px 22px;
+      background: linear-gradient(180deg, #f6f0e8 0%, #efe7dc 100%);
+      border: 1px solid #ddd1c2;
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(23, 20, 17, 0.06);
+    }
+    .executive-summary-box ul { margin: 0; padding-left: 22px; }
+    .executive-summary-box li + li { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <main data-report-audience="product stakeholders">
+    <header data-contract-section="title">
+      <h1>{{TITLE}}</h1>
+    </header>
+
+    <section class="executive-summary-box" data-contract-section="executive-summary">
+      <h2>Executive Summary</h2>
+      <ul>
+        <li><strong>{{Summary bullet 1}}</strong> [1]</li>
+        <li><strong>{{Summary bullet 2}}</strong> [2]</li>
+        <li><strong>{{Summary bullet 3}}</strong> [3]</li>
+      </ul>
+    </section>
+
+    <section data-contract-section="key-findings">
+      <h2>{{Insight-led findings heading}}</h2>
+      <p>{{Claim first, then evidence and interpretation}} [1]</p>
+      <figure>
+        {{Full-width chart or table}}
+        <figcaption>{{Short evidence note or caption}} [1]</figcaption>
+      </figure>
+    </section>
+
+    <section data-contract-section="recommended-next-steps">
+      <h2>Recommended Next Steps</h2>
+      <p>{{Actionable next step grounded in the findings}} [2]</p>
+    </section>
+
+    <section data-contract-section="further-questions">
+      <h2>Further Questions</h2>
+      <p>{{Important unresolved follow-up or narrowing question}} [3]</p>
+    </section>
+
+    <section data-contract-section="caveats-and-assumptions">
+      <h2>Caveats and Assumptions</h2>
+      <div class="callout">
+        <p>{{Only caveats that materially change interpretation}} [1]</p>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

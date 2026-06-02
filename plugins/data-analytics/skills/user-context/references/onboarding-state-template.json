@@ -1,0 +1,87 @@
+{
+  "status": "active",
+  "orientation": {
+    "status": null,
+    "shown_at": null,
+    "last_shown": null
+  },
+  "connector_confirmation": {},
+  "core_onboarding": {
+    "status": null,
+    "completed_at": null,
+    "remaining_steps": []
+  },
+  "semantic_layer_setup": {
+    "status": "pending",
+    "area": null,
+    "mode": null,
+    "seed_source_count": 0,
+    "skill_name": null,
+    "skill_path": null,
+    "source_inventory_path": null,
+    "resolution": null,
+    "last_prompted": null,
+    "completed_at": null
+  },
+  "semantic_layer_refresh": {
+    "status": "pending",
+    "automation_id": "weekly_semantic_layer_refresh",
+    "automation_name": "Semantic Layer Weekly Source Polling",
+    "frequency": "Weekly, after a semantic layer has a stable target path and pollable source inventory.",
+    "last_shown": null,
+    "last_offered_at": null,
+    "canonical_automation_id": null,
+    "target_thread_id": null,
+    "target_thread_title": null,
+    "readback_status": null,
+    "resolution": null
+  },
+  "hero_prompt_choice": {
+    "status": null,
+    "selected": null,
+    "selected_skill": null,
+    "selected_prompt": null,
+    "selected_anchor": null,
+    "suggested": [],
+    "last_offered_prompts": [],
+    "history": [],
+    "last_shown": null
+  },
+  "hero_workflow": {
+    "current_skill": null,
+    "current_status": null,
+    "history": []
+  },
+  "completed_hero_prompts": [],
+  "deferred_hero_prompts": [],
+  "skill_experience": {
+    "metric-diagnostics": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "product-business-analysis": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    },
+    "kpi-reporting": {
+      "introduced_at": null,
+      "first_tried_at": null,
+      "last_suggested_at": null,
+      "dismissed_at": null
+    }
+  },
+  "environment_conflict_audit": {
+    "last_audited": null,
+    "summary": null,
+    "conflicts": [],
+    "recommended_cleanup": null
+  },
+  "quiet_mode": {
+    "status": null,
+    "reason": null
+  }
+}

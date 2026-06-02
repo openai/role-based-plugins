@@ -1,0 +1,6 @@
+interface:
+  display_name: "Studio Voice"
+  short_description: "Polish Creative Production response tone"
+  default_prompt: "Rewrite this Creative Production response so it feels like a concise creative production handoff."
+policy:
+  allow_implicit_invocation: false

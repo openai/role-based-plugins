@@ -1,0 +1,7 @@
+interface:
+  display_name: "Explore"
+  short_description: "Choose a visual direction path"
+  brand_color: "#123F34"
+  default_prompt: "Use $explore to show the best Creative Production starting paths for this business brief."
+policy:
+  allow_implicit_invocation: true

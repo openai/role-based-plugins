@@ -1,0 +1,7 @@
+interface:
+  display_name: "Logo Explorer"
+  short_description: "Explore selectable logo concepts"
+  brand_color: "#245F4C"
+  default_prompt: "Use $logo-explorer to explore logo direction routes from this brand brief."
+policy:
+  allow_implicit_invocation: true

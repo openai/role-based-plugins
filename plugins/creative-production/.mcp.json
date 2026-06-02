@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "creative_production_mcp": {
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "./mcp/server.mjs"
+      ]
+    }
+  }
+}

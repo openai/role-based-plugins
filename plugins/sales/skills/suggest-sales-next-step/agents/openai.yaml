@@ -1,0 +1,6 @@
+interface:
+  display_name: "Suggest Sales Next Step"
+  short_description: "7-day sales usage recap with next use, source gaps, and a fresh tip"
+  default_prompt: "Suggest my next best Sales step."
+policy:
+  allow_implicit_invocation: false

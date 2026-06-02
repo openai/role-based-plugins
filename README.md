@@ -1,8 +1,12 @@
 # Role-Based Plugins
 
-This repository contains role-based plugin templates for Codex. Each plugin
-packages skills, connector bindings, and supporting assets for a specific type
-of work.
+Role-based plugins make Codex easier to customize for a team's day-to-day work.
+These templates package domain-specific skills, connector bindings, and starter
+assets so teams can adapt Codex for roles like sales, data analytics, product
+design, and financial markets. They were built with OpenAI subject matter
+experts around workflows that are already helping teams move faster internally
+and with alpha partners. Over the coming weeks, we'll continue expanding this
+collection with more roles, workflows, and examples.
 
 The plugins are intended to be customized before use. Connector-backed plugins
 include placeholder app and connector ids that must be replaced with ids from

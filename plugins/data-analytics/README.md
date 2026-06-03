@@ -6,21 +6,23 @@ Answer product and business questions with data, explain why metrics changed, an
 
 Use Data Analytics when you need to understand product or business performance, explain why a metric changed, define a success measurement plan, assess whether data is trustworthy, or package analysis for stakeholders. You can start from connected data in a data warehouse, dashboards, notebooks, spreadsheets, uploaded files, or pasted context.
 
-## Get started
+## Onboarding
 
 Ask Codex:
 
 `@Data Analytics Help me get started and set up reusable data context for future data work`
 
-Codex will help you confirm the right data sources, save reusable metric and source-of-truth context you provide, and pick a useful first workflow to try.
+Data Analytics has a guided onboarding flow that helps confirm the right data sources, save reusable metric and source-of-truth context you provide, and build a context-specific first analysis prompt.
 
 Already have a focused task? Start directly with one of the workflows below.
 
 ## Example workflows
 
+The primary hero workflow is bolded.
+
 | Workflow | Try this | Skill | Result |
 | --- | --- | --- | --- |
-| Analyze a product or business question | `Analyze activation and recommend where the team should focus next` | `product-business-analysis` | A decision-ready analysis with evidence, measurable opportunities, and a clear recommendation |
+| **Analyze a product or business question** | `Analyze activation and recommend where the team should focus next` | `product-business-analysis` | A decision-ready analysis with evidence, measurable opportunities, and a clear recommendation |
 | Diagnose a metric movement | `Diagnose why weekly active users dropped last week` | `metric-diagnostics` | A calibrated explanation of verified drivers, likely contributors, unresolved questions, and next actions |
 | Design KPIs | `Design a KPI framework for this new product area` | `design-kpis` | A measurement plan with outcome metrics, drivers, guardrails, targets, and validation priorities |
 | Prepare a KPI readout | `Turn this month's metrics into a leadership-ready operating update` | `kpi-reporting` | A concise KPI update with actuals, comparisons, validated drivers, and operating implications |
@@ -46,3 +48,11 @@ Data Analytics can use available tools when they are connected:
 | Email and calendar | Gmail, Outlook Email, Outlook Calendar | Supporting context for stakeholder questions, operating cadence, and analytical handoff |
 
 You can also start with spreadsheets, uploaded files, pasted query results, schema descriptions, or manually provided business context.
+
+## Local development
+
+The published plugin does not require users to install Node.js dependencies. For local development of the Data Analytics MCP server and widgets, install dependencies from the plugin directory:
+
+```sh
+npm ci
+```

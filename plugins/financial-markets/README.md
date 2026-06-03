@@ -6,27 +6,29 @@ Make sense of market and company information, pressure-test investment theses, a
 
 Use Public Equity Investing when you need to review earnings, compare companies, track signals, assess whether an investment thesis is strengthening or weakening, update valuation work, generate ideas, or prepare investor-facing research artifacts. It is designed for long-only investors, long/short teams, sell-side research, event-driven investors, and ETF or index diligence. Use Credit Markets instead when the core question is about debt securities, spreads, yields, covenants, distressed recovery, or creditworthiness.
 
-## Get started
+## Optional onboarding
 
 Ask Codex:
 
 `@Public Equity Investing Help me get started`
 
-This optional setup flow helps you save useful output and audience defaults, choose the tools and sources to use, decide whether to add a weekday source check, and pick a first workflow.
+Public Equity Investing has an optional onboarding flow that helps you save useful output and audience defaults, choose the tools and sources to use, decide whether to add a weekday source check, and pick a first workflow.
 
 You can also skip setup and start any workflow directly.
 
 ## Example workflows
 
+Hero workflows are bolded.
+
 | Workflow | Try this | Skill | Result |
 | --- | --- | --- | --- |
 | Create a company tearsheet | `Build a public-equity tearsheet for this issuer` | `company-tearsheet` | A source-backed issuer profile for screening, monitoring, or meeting context |
 | Prepare an earnings preview | `Build a pre-earnings preview with the expectation bar, scenarios, and call questions` | `earnings-preview` | A full preview report covering expectations, KPI setup, scenarios, credibility, and decision-relevant questions |
-| Analyze earnings results | `Analyze this quarter's results and transcript against the pre-print debate` | `earnings-deep-dive` | A post-earnings deep dive covering the print, guidance, transcript, thesis read-through, and action implications |
+| **Analyze earnings results** | `Analyze this quarter's results and transcript against the pre-print debate` | `earnings-deep-dive` | A post-earnings deep dive covering the print, guidance, transcript, thesis read-through, and action implications |
 | Build initiating coverage | `Build an initiating-coverage report for this listed company` | `initiating-coverage` | A structured equity-research report with sources, thesis, valuation, risks, and monitoring priorities |
 | Draft an investment memo | `Turn this analysis into a formal public-equity investment memo` | `memo-builder` | An investment memo, PM update, committee note, client note, or research update grounded in the available evidence |
-| Build a long or short pitch | `Build a PM-facing long pitch with variant perception, catalysts, and exit rules` | `long-short-pitch` | A trade pitch covering what is mispriced, why now, proof points, thesis killers, sizing considerations, and action thresholds |
-| Generate ideas | `Screen this sector for the most interesting public-equity ideas to investigate` | `idea-generation` | A triage report for candidate ideas, market maps, or watchlist review |
+| **Build a long or short pitch** | `Build a PM-facing long pitch with variant perception, catalysts, and exit rules` | `long-short-pitch` | A trade pitch covering what is mispriced, why now, proof points, thesis killers, sizing considerations, and action thresholds |
+| **Generate ideas** | `Screen this sector for the most interesting public-equity ideas to investigate` | `idea-generation` | A triage report for candidate ideas, market maps, or watchlist review |
 | Track a thesis | `Build a thesis tracker with milestones, risks, and evidence updates` | `thesis-tracker` | A monitoring view of what proves, weakens, or kills the thesis over time |
 | Prepare for a meeting | `Prepare an investor meeting brief for this company` | `meeting-prep` | A focused public-equity meeting brief with source-backed context and questions |
 | Build a DCF | `Build a public-equity DCF workbook for this issuer` | `dcf-model-builder` | A valuation workbook with assumptions, sensitivities, sources, and decision-relevant outputs |

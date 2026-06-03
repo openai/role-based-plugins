@@ -76,21 +76,6 @@ across workspaces is documented.
 If a plugin lists an optional app that your workspace does not use, remove that
 app binding before installing the plugin.
 
-## Development
-
-Most plugin content is markdown and JSON. Some plugins include JavaScript or
-Python helper code for MCP servers, widgets, validation, or asset generation.
-
-Plugins with Node.js dependencies require `npm ci` before local MCP-backed
-development:
-
-```sh
-cd plugins/data-analytics && npm ci
-```
-
-Financial Markets is packaged as `financial-markets`, but some skill names and
-bundled support playbook paths still use `public-equity-investing`.
-
 ## Contributing
 
 Fork the repository, make focused changes, and open a pull request.

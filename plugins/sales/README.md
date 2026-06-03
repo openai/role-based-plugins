@@ -6,24 +6,26 @@ Bring customer context into the work that moves deals forward.
 
 Use Sales when you need to prioritize accounts and signals, prepare for customer meetings, complete follow-ups, propose customer-record updates, build close plans, or review deals at risk.
 
-## Get started
+## Onboarding
 
 Ask Codex:
 
 `@Sales Help me get started`
 
-The plugin will help connect the sources your team uses, save useful preferences, and recommend a useful first workflow.
+Sales has a guided onboarding flow that helps connect the sources your team uses, save useful preferences, set up optional recurring support, and try a useful first workflow.
 
 You can also jump directly into any workflow below.
 
 ## Example workflows
 
+Hero workflows are bolded.
+
 | Workflow | Try this | Skill | Result |
 | --- | --- | --- | --- |
-| Prepare for a customer meeting | `Prep me for my next customer meeting` | `prepare-for-meeting` | A concise meeting brief with agenda, context, likely blockers, and next actions |
-| Follow up after a call | `Follow up from my latest customer call` | `follow-up-after-call` | A grounded recap, next-step list, external follow-up draft, and CRM-ready notes when useful |
+| **Prepare for a customer meeting** | `Prep me for my next customer meeting` | `prepare-for-meeting` | A concise meeting brief with agenda, context, likely blockers, and next actions |
+| **Follow up after a call** | `Follow up from my latest customer call` | `follow-up-after-call` | A grounded recap, next-step list, external follow-up draft, and CRM-ready notes when useful |
 | Plan a deal strategy | `Build a strategy for moving the Acme deal forward` | `plan-deal-strategy` | A deal map, buying-committee view, procurement risks, and prioritized next actions |
-| Prioritize accounts | `Rank the accounts I should work this week and explain why` | `prioritize-accounts` | A focused account action view with evidence, reachable contacts, and planning-only next steps |
+| **Prioritize accounts** | `Rank the accounts I should work this week and explain why` | `prioritize-accounts` | A focused account action view with evidence, reachable contacts, and planning-only next steps |
 | Review a forecast | `Review my forecast and tell me which deals could slip` | `review-forecast` | A manager-ready forecast readout with risks, change detection, and keep-or-downgrade recommendations |
 | Find internal answers | `Find the right people and docs for this customer's security question` | `find-key-internal-sources` | A ranked routing map of experts, documents, channels, and escalation paths |
 | Analyze account signals | `Tell me what changed for Acme and what I should do next` | `analyze-account-signals` | An evidence-backed account intelligence brief with a practical action plan |

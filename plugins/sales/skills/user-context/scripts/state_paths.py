@@ -6,7 +6,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-MARKETPLACE_ID = "role-based-plugins"
+MARKETPLACE_ID = "role-specific-plugins"
 PLUGIN_ID = "sales"
 STATE_FILENAMES = (
     "user-context.md",

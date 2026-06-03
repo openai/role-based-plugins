@@ -6,8 +6,8 @@
     "name": "OpenAI",
     "url": "https://openai.com/"
   },
-  "homepage": "https://github.com/openai/role-based-plugins",
-  "repository": "https://github.com/openai/role-based-plugins/tree/main/plugins/product-design",
+  "homepage": "https://github.com/openai/role-specific-plugins",
+  "repository": "https://github.com/openai/role-specific-plugins/tree/main/plugins/product-design",
   "license": "MIT",
   "keywords": [
     "prototype",

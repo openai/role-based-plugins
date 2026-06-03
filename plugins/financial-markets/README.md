@@ -14,6 +14,8 @@ Ask Codex:
 
 Public Equity Investing has an optional onboarding flow that helps you save useful output and audience defaults, choose the tools and sources to use, decide whether to add a weekday source check, and pick a first workflow.
 
+Optional onboarding is an interactive, step-by-step conversation that runs only when you ask for it. Codex will guide you through setup, ask for approval before making changes, and help you try a first workflow.
+
 You can also skip setup and start any workflow directly.
 
 ## Example workflows

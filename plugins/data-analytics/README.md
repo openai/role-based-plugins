@@ -14,6 +14,8 @@ Ask Codex:
 
 Data Analytics has a guided onboarding flow that helps confirm the right data sources, save reusable metric and source-of-truth context you provide, and build a context-specific first analysis prompt.
 
+Onboarding is an interactive, step-by-step conversation. Codex will guide you through setup, ask for approval before making changes, and help you try a first workflow.
+
 Already have a focused task? Start directly with one of the workflows below.
 
 ## Example workflows

@@ -14,6 +14,8 @@ Ask Codex:
 
 Sales has a guided onboarding flow that helps connect the sources your team uses, save useful preferences, set up optional recurring support, and try a useful first workflow.
 
+Onboarding is an interactive, step-by-step conversation. Codex will guide you through setup, ask for approval before making changes, and help you try a first workflow.
+
 You can also jump directly into any workflow below.
 
 ## Example workflows

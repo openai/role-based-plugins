@@ -157,7 +157,6 @@ class DataAnalyticsStateHelperTests(unittest.TestCase):
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory(
             prefix="data-analytics-user-context-tests-",
-            dir="/private/tmp",
         )
         self.tmp_path = Path(self._tmp.name)
         self.state_dir = self.tmp_path / "state"

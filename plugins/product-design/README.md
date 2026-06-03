@@ -12,7 +12,7 @@ Ask Codex:
 
 `@Product Design Help me get started`
 
-Product Design has a short optional setup flow, rather than guided onboarding. It helps save useful product context such as product URLs, relevant Figma files, screenshots, codebase paths, Storybook links, tokens, and brand assets.
+Product Design has a short optional setup flow that helps save useful product context such as product URLs, relevant Figma files, screenshots, codebase paths, Storybook links, tokens, and brand assets.
 
 Already have a task in mind? Skip setup and ask for the workflow you need directly.
 

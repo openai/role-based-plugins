@@ -3,10 +3,10 @@
 Role-based plugins make Codex easier to customize for a team's day-to-day work.
 These templates package domain-specific skills, connector bindings, and starter
 assets so teams can adapt Codex for roles like sales, data analytics, product
-design, and financial markets. They were built with OpenAI subject matter
-experts around workflows that are already helping teams move faster internally
-and with alpha partners. Over the coming weeks, we'll continue expanding this
-collection with more roles, workflows, and examples.
+design, financial markets, and life sciences research. They were built with
+OpenAI subject matter experts around workflows that are already helping teams
+move faster internally and with alpha partners. Over the coming weeks, we'll
+continue expanding this collection with more roles, workflows, and examples.
 
 The plugins are intended to be customized before use. Connector-backed plugins
 may include placeholder app and connector ids that must be replaced with ids
@@ -20,6 +20,8 @@ available to the target workspace.
 | [Data Analytics](./plugins/data-analytics) | Query, visualize, explain, and validate datasets; build dashboards; and investigate metrics. | Databricks, Snowflake, BigQuery, Hex, Amplitude, Mixpanel, Statsig, Metabase, ThoughtSpot, Google Drive, Slack, Microsoft 365, and more |
 | [Product Design](./plugins/product-design) | Create product specs, prototypes, UI critiques, and product design artifacts. | Sites |
 | [Financial Markets](./plugins/financial-markets) | Build public-equity research, earnings analysis, valuation work, model updates, long/short pitches, risk reviews, dashboards, and investment memos. | FactSet, LSEG, Morningstar, Daloopa, Quartr, S&P, PitchBook, Slack, Google Drive, Gmail, SharePoint, Teams, and more |
+| [Life Science Research](./plugins/life-science-research) | Synthesize evidence-backed life-sciences research across genetics, omics, biology, chemistry, structure, clinical evidence, and public dataset discovery. | None |
+| [Life Sciences NGS Analysis](./plugins/ngs-analysis) | Guide sequencing intake, route BCL/FASTQ and count-matrix workflows, validate references, and prepare reproducible local run envelopes for supported NGS assays. | None |
 
 ## Repository Layout
 
@@ -30,7 +32,9 @@ available to the target workspace.
     |-- sales/
     |-- data-analytics/
     |-- product-design/
-    `-- financial-markets/
+    |-- financial-markets/
+    |-- life-science-research/
+    `-- ngs-analysis/
 ```
 
 Each plugin generally follows this structure:

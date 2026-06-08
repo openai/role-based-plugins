@@ -1,6 +1,6 @@
-# Role-Based Plugins
+# Role-Specific Plugins
 
-Role-based plugins make Codex easier to customize for a team's day-to-day work.
+Role-specific plugins make Codex easier to customize for a team's day-to-day work.
 These templates package domain-specific skills, connector bindings, and starter
 assets so teams can adapt Codex for roles like sales, data analytics, product
 design, financial markets, and life sciences research. They were built with

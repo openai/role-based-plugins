@@ -1,7 +1,7 @@
 {
-  "name": "role-based-plugins",
+  "name": "role-specific-plugins",
   "interface": {
-    "displayName": "Role-Based Plugins"
+    "displayName": "Role-Specific Plugins"
   },
   "plugins": [
     {

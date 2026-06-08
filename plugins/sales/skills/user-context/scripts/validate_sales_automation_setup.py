@@ -12,7 +12,7 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
-MARKETPLACE_ID = "role-based-plugins"
+MARKETPLACE_ID = "role-specific-plugins"
 PLUGIN_ID = "sales"
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 AUTOMATION_CONFIG = SKILL_ROOT / "plugin-author-config/automation-config.md"

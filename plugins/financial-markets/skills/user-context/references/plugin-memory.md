@@ -4,7 +4,7 @@ Use this reference only for explicit requests to remember, save, update, forget,
 
 ## Save Boundary
 
-Save reusable Public Equity Investing context in `$CODEX_HOME/state/plugins/role-based-plugins/financial-markets/user-context.md`. Prefer the best matching existing scaffold category. Add a concise new category only when no existing category fits cleanly.
+Save reusable Public Equity Investing context in `$CODEX_HOME/state/plugins/role-specific-plugins/financial-markets/user-context.md`. Prefer the best matching existing scaffold category. Add a concise new category only when no existing category fits cleanly.
 
 Good memory includes output preferences, portfolio or watchlist pointers, stable research repositories, filing and transcript conventions, preferred first-look sources, modeling and valuation conventions, thesis or catalyst tracking rules, and compliance or review boundaries.
 

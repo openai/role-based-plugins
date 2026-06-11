@@ -12,11 +12,17 @@ Select the best workflow from the following options to solve the user's request
 ## Golden Rule of Prototyping
 
 - Do not build until you have a visual target and the chosen workflow reaches `$image-to-code` or `$url-to-code`.
-- A visual target is an app or website design to build from: a user-provided image, a source URL, or an ImageGen design selected by the user.
+- A visual target is an app or website design to build from: a user-provided image, a source URL, or an ImageGen design selected for the build.
 - A `$get-context` brief is not a visual target.
 - After `$get-context`, route to `$ideate` unless the user already provided a concrete visual source.
-- If `$ideate` creates options, stop and wait for the user to choose one.
+- If `$ideate` creates options, follow the selection rules below.
 - The chosen option becomes the required visual target for `$image-to-code`.
+
+### Selection rules
+
+- When the user requests an autonomous end-to-end build and does not ask to choose a direction, select the strongest generated option and continue to `$image-to-code` without stopping.
+- Stop for user selection when the user requests options or when the choice is materially consequential and cannot be inferred from the brief or available context.
+- If you select an option autonomously, tell the user which direction you chose in the next progress update; do not turn that update into a confirmation gate.
 
 ## Critical Overrides
 
@@ -65,8 +71,8 @@ Required next steps:
 Required next steps:
 
 - `$get-context` - confirm the design brief, including the product idea, user goal, visual direction, source constraints, and interactivity level.
-- `$ideate` - generate exactly three app or website design options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option.
+- `$ideate` - generate exactly three app or website design options and apply the selection rules above.
+- `$image-to-code` - build from the option selected by the user or selected autonomously under the rules above.
 
 ### Redesign product
 
@@ -75,16 +81,16 @@ Required next steps:
 Required next steps:
 
 - `$get-context` - confirm the design brief, including the redesign goal, visual direction, source constraints, and interactivity level.
-- `$ideate` - attach the provided app or website design to ImageGen; generate exactly three redesign options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option.
+- `$ideate` - attach the provided app or website design to ImageGen; generate exactly three redesign options and apply the selection rules above.
+- `$image-to-code` - build from the option selected by the user or selected autonomously under the rules above.
 
 "Redesign this {URL}"
 
 Required next steps:
 
 - `$get-context` - confirm the design brief, including the target URL, redesign goal, source constraints, and interactivity level.
-- `$ideate` - attach provided app or website screenshot at the URL to ImageGen; generate exactly three redesign options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option; use the URL as reference for existing content, structure, and interactions.
+- `$ideate` - attach provided app or website screenshot at the URL to ImageGen; generate exactly three redesign options and apply the selection rules above.
+- `$image-to-code` - build from the option selected by the user or selected autonomously under the rules above; use the URL as reference for existing content, structure, and interactions.
 
 "Redesign my app"
 
@@ -93,8 +99,8 @@ Required next steps:
 - `$get-context` - confirm the design brief, including the app surface, redesign goal, source constraints, and interactivity level.
 - Find the app or website in the codebase.
 - If there is more than one possible target, ask the user which one to redesign and whether they want to edit it directly or create a fresh prototype.
-- `$ideate` - use the existing app or website as the source; generate exactly three redesign options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option; refer to [references/existing-codebase-edits.md](references/existing-codebase-edits.md)
+- `$ideate` - use the existing app or website as the source; generate exactly three redesign options and apply the selection rules above.
+- `$image-to-code` - build from the option selected by the user or selected autonomously under the rules above; refer to [references/existing-codebase-edits.md](references/existing-codebase-edits.md)
 
 ### Extend product
 
@@ -120,9 +126,9 @@ When the user references a product name without a source URL or image, use the b
 
 - Written design direction is not a visual target. Use it as input to `$ideate` and ImageGen.
 - Do not build from a brief alone.
-- For redesigns, use `$ideate` to generate exactly three design options, show them, and wait for the user to choose one.
-- Do not build a redesign until the user has chosen a design option.
-- When a new product has no visual target after `$get-context`, use `$ideate` to generate exactly three design options, show them, and wait for the user to choose one.
+- For redesigns, use `$ideate` to generate exactly three design options, then apply the selection rules above.
+- Do not build a redesign until an option has been selected by the user or selected autonomously under the rules above.
+- When a new product has no visual target after `$get-context`, use `$ideate` to generate exactly three design options, then apply the selection rules above.
 - If the user gives feedback, or says they like more than one design, use `$ideate` to create a new ImageGen mock with the feedback or combined direction before build.
 - Pass the user's written direction and attached design references into `$ideate` and ImageGen.
 - If the current folder looks like an existing prototype and it is unclear whether to edit it or create a new one, ask the user.

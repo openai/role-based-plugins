@@ -12,10 +12,11 @@ Select the best workflow from the following options to solve the user's request
 ## Golden Rule of Prototyping
 
 - Do not build until you have a visual target and the chosen workflow reaches `$image-to-code` or `$url-to-code`.
-- A visual target is an app or website design to build from: a user-provided image, a source URL, or an ImageGen design selected by the user.
+- A visual target is an app or website design to build from: a user-provided image, a source URL, or an ImageGen design selected under the policy below.
 - A `$get-context` brief is not a visual target.
 - After `$get-context`, route to `$ideate` unless the user already provided a concrete visual source.
-- If `$ideate` creates options, stop and wait for the user to choose one.
+- If `$ideate` creates options, stop for selection by default. This selection policy applies to every workflow and hard rule below.
+- Continue without user selection only when the user's original request explicitly asks not to stop for selection or explicitly asks for end-to-end completion. In that case, select the strongest option and continue to `$image-to-code`.
 - The chosen option becomes the required visual target for `$image-to-code`.
 
 ## Critical Overrides
@@ -66,7 +67,7 @@ Required next steps:
 
 - `$get-context` - confirm the design brief, including the product idea, user goal, visual direction, source constraints, and interactivity level.
 - `$ideate` - generate exactly three app or website design options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option.
+- `$image-to-code` - after an option is selected under the policy above.
 
 ### Redesign product
 
@@ -76,7 +77,7 @@ Required next steps:
 
 - `$get-context` - confirm the design brief, including the redesign goal, visual direction, source constraints, and interactivity level.
 - `$ideate` - attach the provided app or website design to ImageGen; generate exactly three redesign options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option.
+- `$image-to-code` - after an option is selected under the policy above.
 
 "Redesign this {URL}"
 
@@ -84,7 +85,7 @@ Required next steps:
 
 - `$get-context` - confirm the design brief, including the target URL, redesign goal, source constraints, and interactivity level.
 - `$ideate` - attach provided app or website screenshot at the URL to ImageGen; generate exactly three redesign options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option; use the URL as reference for existing content, structure, and interactions.
+- `$image-to-code` - after an option is selected under the policy above; use the URL as reference for existing content, structure, and interactions.
 
 "Redesign my app"
 
@@ -94,7 +95,7 @@ Required next steps:
 - Find the app or website in the codebase.
 - If there is more than one possible target, ask the user which one to redesign and whether they want to edit it directly or create a fresh prototype.
 - `$ideate` - use the existing app or website as the source; generate exactly three redesign options; show them and wait for selection.
-- `$image-to-code` - only after the user selects an option; refer to [references/existing-codebase-edits.md](references/existing-codebase-edits.md)
+- `$image-to-code` - after an option is selected under the policy above; refer to [references/existing-codebase-edits.md](references/existing-codebase-edits.md)
 
 ### Extend product
 
@@ -121,7 +122,7 @@ When the user references a product name without a source URL or image, use the b
 - Written design direction is not a visual target. Use it as input to `$ideate` and ImageGen.
 - Do not build from a brief alone.
 - For redesigns, use `$ideate` to generate exactly three design options, show them, and wait for the user to choose one.
-- Do not build a redesign until the user has chosen a design option.
+- Do not build a redesign until an option is selected under the policy above.
 - When a new product has no visual target after `$get-context`, use `$ideate` to generate exactly three design options, show them, and wait for the user to choose one.
 - If the user gives feedback, or says they like more than one design, use `$ideate` to create a new ImageGen mock with the feedback or combined direction before build.
 - Pass the user's written direction and attached design references into `$ideate` and ImageGen.

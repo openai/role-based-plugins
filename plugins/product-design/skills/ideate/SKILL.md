@@ -95,7 +95,8 @@ Rules you must follow:
 - Only claim a visual reference was attached if the Image Gen call actually received that image or a readable local image path.
 - If you cannot attach the image, say that clearly and ask whether to continue with text-only direction.
 - Preserve hard constraints from the brief in every image.
-- After generating options, stop for the user's selection before any build work begins.
+- After generating options, stop for selection by default.
+- Continue without user selection only when the user's original request explicitly asks not to stop for selection or explicitly asks for end-to-end completion. In that case, select the strongest option and continue to `$image-to-code`.
 - The selected option is the visual target for `$image-to-code`.
 
 ## Feedback Loop
@@ -164,7 +165,7 @@ After generation, provide
 
 1. A short, memorable name for each concept that distills its choices down.
 
-2. A short closing question that asks whether the user wants to keep exploring or choose one direction to continue.
+2. When stopping for selection, a short closing question that asks whether the user wants to keep exploring or choose one direction to continue.
 
 If the image tool already displayed the generated images in the thread, do not embed the same images again in the final message.
 

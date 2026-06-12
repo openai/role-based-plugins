@@ -41,10 +41,9 @@ For new app, prototype, redesign, or UI build requests without a URL, screenshot
 
 - Run `$get-context`.
 - After the brief is approved, route to `$ideate`.
-- Show exactly three visual options and wait for the user to choose one.
-- Do not scaffold, edit files, or start a server before a visual option is selected.
-
-`Full working version`, `no refs`, `go for it`, `make an assumption`, or a confirmed brief do not waive this.
+- Generate exactly three visual options. Stop for selection by default.
+- Continue without user selection only when the user's original request explicitly asks not to stop for selection or explicitly asks for end-to-end completion, such as `build this end to end` or `finish the full working version`. In that case, select the strongest option and continue.
+- Do not scaffold, edit files, or start a server before a visual option is selected by the user or under the explicit end-to-end exception above.
 
 ## User Context
 
@@ -115,7 +114,7 @@ Clone a live URL as a runnable frontend-only local app using Browser or Chrome s
 
 ### $image-to-code
 
-Implement a selected visual target as a faithful, responsive, interactive frontend. Route here after `get-context` has confirmed the brief and the user has chosen an ImageGen mock, screenshot, Figma frame, mockup, reference image, or other visual source. Do not start here when no visual target has been selected; use `get-context` and `ideate` first.
+Implement a selected visual target as a faithful, responsive, interactive frontend. Route here after `get-context` has confirmed the brief and an ImageGen mock, screenshot, Figma frame, mockup, reference image, or other visual source has been selected under the policy above. Do not start here when no visual target has been selected; use `get-context` and `ideate` first.
 
 ### $share
 

@@ -21,10 +21,6 @@ These rules override generic assistant defaults for Product Design work.
 - A confirmed design brief is not a visual target. Use the confirmed brief as input to `$ideate` unless the user has already provided a concrete visual source such as a URL, screenshot, image, mockup, or Figma frame.
 - After the user approves the design brief and the next step is an involved app, prototype, clone, redesign, or build, send one short expectation-setting note before starting work. Say that involved builds often take about 10-15 minutes, ambitious builds can take longer, and invite the user to grab coffee or tend to other work while Product Design keeps moving. Simpler static prototypes can be faster, often 5-10 minutes. Keep it warm and lightly playful, not apologetic or over-explanatory. Skip this note for tiny static changes, quick audits, simple research, setup-only, or share-only requests.
 
-## Autonomous Build Override
-
-- This rule overrides any Product Design workflow instruction to stop for concept selection: when the user requests an autonomous end-to-end build and does not ask to choose a direction, select the strongest generated reference and continue. Stop for selection only when the user requests options or the choice is materially consequential and cannot be inferred.
-
 ## How to communicate
 
 - Follow [communication-protocol](communication-protocol.md)

@@ -95,7 +95,7 @@ Rules you must follow:
 - Only claim a visual reference was attached if the Image Gen call actually received that image or a readable local image path.
 - If you cannot attach the image, say that clearly and ask whether to continue with text-only direction.
 - Preserve hard constraints from the brief in every image.
-- After generating options, stop for the user's selection when they requested options or when the choice is materially consequential and cannot be inferred from the brief or available context.
+- After generating options, stop for the user's selection before any build work begins.
 - The selected option is the visual target for `$image-to-code`.
 
 ## Feedback Loop

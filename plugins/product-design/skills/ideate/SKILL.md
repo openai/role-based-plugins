@@ -96,8 +96,6 @@ Rules you must follow:
 - If you cannot attach the image, say that clearly and ask whether to continue with text-only direction.
 - Preserve hard constraints from the brief in every image.
 - After generating options, stop for the user's selection when they requested options or when the choice is materially consequential and cannot be inferred from the brief or available context.
-- When the user requested an autonomous end-to-end build and did not ask to choose a direction, select the strongest generated option and continue to `$image-to-code` without stopping.
-- If you select an option autonomously, tell the user which direction you chose in the next progress update; do not turn that update into a confirmation gate.
 - The selected option is the visual target for `$image-to-code`.
 
 ## Feedback Loop
@@ -166,7 +164,7 @@ After generation, provide
 
 1. A short, memorable name for each concept that distills its choices down.
 
-2. For an exploration request, a short closing question that asks whether the user wants to keep exploring or choose one direction to continue. For an autonomous end-to-end build, skip the question and continue with the strongest option.
+2. A short closing question that asks whether the user wants to keep exploring or choose one direction to continue.
 
 If the image tool already displayed the generated images in the thread, do not embed the same images again in the final message.
 
